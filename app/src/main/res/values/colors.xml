@@ -10,4 +10,7 @@
     <color name="grey_background">#ECECEC</color>
     <color name="green_comp">#35E3CD</color>
     <color name="blue_comp">#1C2D5E</color>
+    <color name="blue_splash_screen">#107FAA</color>
+    <color name="text_color_blue">#C5EAF3</color>
+    <color name="text_color_orange">#FFBD59</color>
 </resources>
