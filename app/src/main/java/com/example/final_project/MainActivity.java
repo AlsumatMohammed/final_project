@@ -1,10 +1,13 @@
 package com.example.final_project;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -13,9 +16,13 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ProgressBar;
+import android.widget.TextView;
+
 
 public class MainActivity extends AppCompatActivity {
 
+    FirebaseUser firebaseUser;
+    FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +37,16 @@ public class MainActivity extends AppCompatActivity {
 //        progressDialog.show();
 
 
+        mAuth = FirebaseAuth.getInstance();
+
+        firebaseUser = mAuth.getCurrentUser();
+
+        String email = firebaseUser.getEmail();
+
+        TextView textView = findViewById(R.id.textView4);
+
+        textView.setText(email);
+
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -37,6 +54,13 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+
+                mAuth.signOut();
+
+                Intent intent = new Intent(MainActivity.this, login_screen.class);
+
+                startActivity(intent);
+                finish();
             }
         });
     }
