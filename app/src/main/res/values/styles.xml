@@ -6,9 +6,11 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
     </style>
 
-    <style name="AppTheme.NoActionBar">
+        <style name="AppTheme.NoActionBar">
+            <item name="android:windowContentTransitions">true</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
@@ -21,7 +23,7 @@
         <item name="android:layout_centerHorizontal">true</item>
         <item name="android:layout_centerVertical">true</item>
         <item name="android:visibility">gone</item>
-        <item name="android:background">@color/red</item>
+        <item name="android:background">@color/button</item>
         <item name="android:indeterminateDrawable">@drawable/circular_progress_dialog</item>
     </style>
 

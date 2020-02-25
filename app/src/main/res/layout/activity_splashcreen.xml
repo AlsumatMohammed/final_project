@@ -5,12 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".splashcreen"
-    android:background="@color/blue_splash_screen">
+    android:background="@color/button">
 
     <ImageView
         android:id="@+id/y_parts_logo_splash"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:transitionName="logo_image"
         android:src="@drawable/yparts_logo_splash_screen"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -24,13 +25,13 @@
         android:id="@+id/y_parts_tv_splash"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="48dp"
         android:fontFamily="@font/noto_serif_bold"
         android:text="Y-PARTS"
         android:textColor="@color/text_color_blue"
         android:textSize="70sp"
+        android:transitionName="logo_text"
         app:layout_constraintEnd_toEndOf="@id/y_parts_logo_splash"
-        app:layout_constraintHorizontal_bias="0.512"
         app:layout_constraintStart_toStartOf="@id/y_parts_logo_splash"
         app:layout_constraintTop_toBottomOf="@id/y_parts_logo_splash">
 
@@ -41,7 +42,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:fontFamily="@font/"
+        android:fontFamily="@font/raleway_medium"
         android:text="Automobile parts at your fingertips"
         android:textColor="@color/text_color_orange"
         android:textSize="18sp"
