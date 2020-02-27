@@ -24,6 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/shape"
+            android:transitionName="shape_image"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -54,7 +55,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/shape_login"></TextView>
+            app:layout_constraintTop_toBottomOf="@id/shape_login"></TextView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -111,7 +112,7 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
+    <br.com.simplepass.loadingbutton.customViews.CircularProgressButton
         android:id="@+id/signin_button"
         android:layout_width="311dp"
         android:layout_height="49dp"
@@ -122,9 +123,12 @@
         app:layout_constraintTop_toBottomOf="@id/textInputLayoutPassword"
         app:layout_constraintRight_toRightOf="@id/textInputLayoutPassword"
         app:layout_constraintLeft_toLeftOf="@id/textInputLayoutPassword"
-        android:layout_margin="30dp">
+        android:layout_margin="30dp"
+        app:spinning_bar_width="4dp"
+        app:spinning_bar_color="@color/text_color_orange"
+        app:spinning_bar_padding="6dp">
 
-    </Button>
+    </br.com.simplepass.loadingbutton.customViews.CircularProgressButton>
 
 
     <TextView
@@ -134,9 +138,9 @@
         android:layout_marginTop="28dp"
         android:fontFamily="@font/montserrat_bold"
         android:text="Don't have an account?"
-        app:layout_constraintHorizontal_bias="0.138"
-        app:layout_constraintLeft_toLeftOf="@id/signin_button"
-        app:layout_constraintRight_toRightOf="@id/signin_button"
+        app:layout_constraintEnd_toEndOf="@id/textInputLayoutPassword"
+        app:layout_constraintHorizontal_bias="0.224"
+        app:layout_constraintStart_toStartOf="@id/textInputLayoutPassword"
         app:layout_constraintTop_toBottomOf="@id/signin_button">
 
     </TextView>
@@ -145,20 +149,18 @@
         android:id="@+id/signup_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
         android:fontFamily="@font/montserrat_bold"
         android:text="SIGN UP"
         android:textColor="@color/text_color_orange"
         app:layout_constraintBottom_toBottomOf="@id/dont"
-        app:layout_constraintHorizontal_bias="0.353"
+
+
         app:layout_constraintLeft_toRightOf="@id/dont"
-        app:layout_constraintRight_toRightOf="@id/signin_button"
-
-
         app:layout_constraintTop_toTopOf="@id/dont"
         app:layout_constraintVertical_bias="0.0">
 
     </TextView>
-
 
     <TextView
         android:id="@+id/textView5"
@@ -181,9 +183,9 @@
         android:layout_height="1dp"
         android:background="@color/text_color_orange"
         app:layout_constraintBottom_toBottomOf="@+id/textView5"
-        app:layout_constraintEnd_toEndOf="@+id/signup_tv"
-        app:layout_constraintStart_toEndOf="@+id/textView5"
-        app:layout_constraintTop_toTopOf="@+id/textView5">
+        app:layout_constraintEnd_toEndOf="@id/signup_tv"
+        app:layout_constraintStart_toEndOf="@id/textView5"
+        app:layout_constraintTop_toTopOf="@id/textView5">
 
     </view>
 
@@ -194,8 +196,8 @@
         android:background="@color/text_color_orange"
         app:layout_constraintBottom_toBottomOf="@+id/textView5"
         app:layout_constraintEnd_toStartOf="@id/dont"
-        app:layout_constraintStart_toEndOf="@+id/textView5"
-        app:layout_constraintTop_toTopOf="@+id/textView5">
+        app:layout_constraintStart_toEndOf="@id/textView5"
+        app:layout_constraintTop_toTopOf="@id/textView5">
 
     </view>
     <com.google.android.gms.common.SignInButton
@@ -206,8 +208,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/facebook_icon"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/facebook_icon"
-        app:layout_constraintTop_toBottomOf="@+id/facebook_icon"
+        app:layout_constraintStart_toStartOf="@id/facebook_icon"
+        app:layout_constraintTop_toBottomOf="@id/facebook_icon"
         app:layout_constraintVertical_bias="0.276">
 
     </com.google.android.gms.common.SignInButton>
@@ -219,7 +221,7 @@
         android:layout_marginTop="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5">
+        app:layout_constraintTop_toBottomOf="@id/textView5">
 
     </com.facebook.login.widget.LoginButton>
 

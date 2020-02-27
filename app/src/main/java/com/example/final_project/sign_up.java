@@ -2,6 +2,7 @@ package com.example.final_project;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import br.com.simplepass.loadingbutton.customViews.CircularProgressButton;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -26,12 +27,13 @@ import com.google.firebase.auth.FirebaseUser;
 
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.FacebookSdk;
+import com.tapadoo.alerter.Alerter;
 
 public class sign_up extends AppCompatActivity {
 
     public TextInputLayout email_layout, password_layout;
     public ImageView back_arrow;
-    public Button sign_up_button;
+    public CircularProgressButton sign_up_button;
     public TextInputEditText email_sign_up_et, password_sign_up_et;
     public FirebaseAuth mAuth;
     private ProgressDialog progressDialog;
@@ -117,8 +119,8 @@ public class sign_up extends AppCompatActivity {
 //                String email_signup_string = email_sign_up_et.getText().toString().trim();
 //                String password_singup_string = password_sign_up_et.getText().toString().trim();
 
-                showProgress();
-
+                //showProgress();
+                spinButton();
 
 
 
@@ -133,11 +135,24 @@ public class sign_up extends AppCompatActivity {
                                     //updateUI(user);
 //                                    Toast.makeText(sign_up.this, "done",
 //                                            Toast.LENGTH_SHORT).show();
-                                    hideProgress();
+                                    //hideProgress();
 
-                                    Snackbar.make(view, "Registered successfully!", Snackbar.LENGTH_LONG)
-                                            .setAction("Action", null).show();
+                                    stopButton();
 
+                                    Alerter.create(sign_up.this)
+                                            .setTitle("Y-parts")
+                                            .setText("Registered successfully. Try again !")
+                                            .enableSwipeToDismiss()
+                                            .setDuration(3000)
+                                            .setBackgroundColorRes(R.color.text_color_orange)
+                                            .show();
+
+//                                    Snackbar.make(view, "Registered successfully!", Snackbar.LENGTH_LONG)
+//                                            .setAction("Action", null).show();
+
+                                    Intent intent = new Intent(sign_up.this, getting_you.class);
+                                    startActivity(intent);
+                                    finish();
 
                                 }
 
@@ -145,10 +160,21 @@ public class sign_up extends AppCompatActivity {
                                     // If sign in fails, display a message to the user.
                                     //Log.w(TAG, "createUserWithEmail:failure", task.getException());
 
-                                    hideProgress();
+                                    //hideProgress();
 
-                                    Snackbar.make(view, "Registration failed or Account is already registered ", Snackbar.LENGTH_LONG)
-                                            .setAction("Action", null).show();
+                                    stopButton();
+
+                                    Alerter.create(sign_up.this)
+                                            .setTitle("Y-parts")
+                                            .setText("Registration failed or Account is already registered. Try again !")
+                                            .enableSwipeToDismiss()
+                                            .setDuration(3000)
+                                            .setBackgroundColorRes(R.color.text_color_orange)
+                                            .show();
+
+
+//                                    Snackbar.make(view, "Registration failed or Account is already registered ", Snackbar.LENGTH_LONG)
+//                                            .setAction("Action", null).show();
                                     //updateUI(null);
                                 }
 
@@ -214,6 +240,17 @@ public class sign_up extends AppCompatActivity {
         if (progressDialog.isShowing()){
             progressDialog.dismiss();
         }
+    }
+
+    public void spinButton(){
+
+        sign_up_button.startAnimation();
+
+    }
+
+    public void stopButton(){
+
+        sign_up_button.revertAnimation();
     }
 
 

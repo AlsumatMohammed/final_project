@@ -3,6 +3,7 @@ package com.example.final_project;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import br.com.simplepass.loadingbutton.customViews.CircularProgressButton;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -52,6 +53,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
+import com.tapadoo.alerter.Alerter;
 
 public class login_screen extends AppCompatActivity implements View.OnClickListener {
 
@@ -66,7 +68,7 @@ public class login_screen extends AppCompatActivity implements View.OnClickListe
     public TextInputEditText email_editText;
     public TextInputLayout password_layout;
     public TextInputEditText password_editText;
-    public Button sign_in_button;
+    public CircularProgressButton sign_in_button;
     public TextView sign_up_textview;
 
     public ProgressDialog progressDialog;
@@ -218,6 +220,9 @@ public class login_screen extends AppCompatActivity implements View.OnClickListe
             String password_singin_string = password_editText.getText().toString().trim();
             @Override
             public void onClick( final View view) {
+
+
+
                 if (!validateEmail()){
                     return;
                 }
@@ -227,7 +232,8 @@ public class login_screen extends AppCompatActivity implements View.OnClickListe
                 }
 
 
-               showProgress();
+               //showProgress();
+                spinButton();
 
                 mAuth.signInWithEmailAndPassword(email_editText.getText().toString().trim(), password_editText.getText().toString().trim())
                         .addOnCompleteListener(login_screen.this, new OnCompleteListener<AuthResult>() {
@@ -235,7 +241,8 @@ public class login_screen extends AppCompatActivity implements View.OnClickListe
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
 
-                                    hideProgress();
+                                    //hideProgress();
+                                    stopButton();
 
                                     Snackbar.make(view, " okaaay!", Snackbar.LENGTH_LONG)
                                             .setAction("Action", null).show();
@@ -247,7 +254,19 @@ public class login_screen extends AppCompatActivity implements View.OnClickListe
 
                                 else {
 
-                                    hideProgress();
+                                    //hideProgress();
+                                    stopButton();
+
+
+                                    Alerter.create(login_screen.this)
+                                            .setTitle("Y-parts")
+                                            .setText("something went wrong. Try again !")
+                                            .enableSwipeToDismiss()
+                                            .setDuration(3000)
+                                            .setBackgroundColorRes(R.color.text_color_orange)
+
+                                            .show();
+
                                     Snackbar.make(view, "Something went wrong!", Snackbar.LENGTH_LONG)
                                             .setAction("Action", null).show();
                                 }
@@ -489,6 +508,17 @@ public class login_screen extends AppCompatActivity implements View.OnClickListe
         if (progressDialog.isShowing()){
             progressDialog.dismiss();
         }
+    }
+
+    public void spinButton(){
+
+       sign_in_button.startAnimation();
+
+    }
+
+    public void stopButton(){
+
+        sign_in_button.revertAnimation();
     }
 
 

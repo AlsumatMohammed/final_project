@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ActivityOptions;
 import android.content.Intent;
+import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Pair;
@@ -21,29 +22,46 @@ import com.google.firebase.auth.FirebaseUser;
 public class splashcreen extends AppCompatActivity {
 
     Animation top, bottom;
-    ImageView logo;
-    TextView tv1, tv2;
+    ImageView logo, loading, shape;
+    TextView tv1, tv2, tv3_wait;
+    AnimationDrawable anim;
 
     FirebaseAuth mAuth;
-    public static int SPLASHTIME = 5000;
+    public static int SPLASHTIME = 7000;
     public FirebaseUser firebaseUser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splashcreen);
 
+
         logo = findViewById(R.id.y_parts_logo_splash);
+        //shape = findViewById(R.id.shape_splash);
+
+        loading = findViewById(R.id.loading);
+        //loading.setBackgroundResource(R.drawable.animation_loading);
+        //anim = (AnimationDrawable) loading.getBackground();
 
         tv1 = findViewById(R.id.y_parts_tv_splash);
         tv2  = findViewById(R.id.y_parts_tv_splash_add);
+        //tv3_wait = findViewById(R.id.internet_check_tv);
 
         top = AnimationUtils.loadAnimation(this, R.anim.top_animation);
         bottom = AnimationUtils.loadAnimation(this, R.anim.bottom_animation);
 
-
+        //shape.setAnimation(top);
         logo.setAnimation(top);
         tv1.setAnimation(bottom);
         tv2.setAnimation(bottom);
+        loading.setAnimation(bottom);
+
+//        tv3_wait.setVisibility(View.VISIBLE);
+//        tv3_wait.setAnimation(bottom);
+
+        //loading.setAnimation(bottom);
+
+        //anim.start();
+
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -70,6 +88,7 @@ public class splashcreen extends AppCompatActivity {
                 Pair[] pairs = new Pair[2];
                 pairs [0] = new Pair<View, String>(logo, "logo_image");
                 pairs [1] = new Pair<View, String>(tv1, "logo_text");
+                //pairs [1] = new Pair<View, String>(shape, "shape_image");
 
                 final ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(splashcreen.this, pairs);
 

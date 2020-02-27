@@ -8,6 +8,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserInfo;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
 //        progressDialog.setCancelable(false);
 //        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 //        progressDialog.show();
+
 
 
         mAuth = FirebaseAuth.getInstance();

@@ -5,21 +5,37 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".splashcreen"
-    android:background="@color/button">
+    android:background="@color/layout_color_white">
 
-    <ImageView
+<!--    <ImageView-->
+<!--        android:id="@+id/y_parts_logo_splash"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:transitionName="logo_image"-->
+<!--        android:src="@drawable/yparts_logo_splash_screen"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintLeft_toLeftOf="parent"-->
+<!--        app:layout_constraintRight_toRightOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:layout_constraintVertical_bias="0.207">-->
+
+<!--    </ImageView>-->
+
+
+    <com.airbnb.lottie.LottieAnimationView
+
         android:id="@+id/y_parts_logo_splash"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:transitionName="logo_image"
-        android:src="@drawable/yparts_logo_splash_screen"
+        android:layout_width="268dp"
+        android:layout_height="274dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.207">
-
-    </ImageView>
+        app:layout_constraintVertical_bias="0.23"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="servishero_loading.json"
+        app:lottie_loop="true"></com.airbnb.lottie.LottieAnimationView>
 
     <TextView
         android:id="@+id/y_parts_tv_splash"
@@ -28,7 +44,7 @@
         android:layout_marginTop="48dp"
         android:fontFamily="@font/noto_serif_bold"
         android:text="Y-PARTS"
-        android:textColor="@color/text_color_blue"
+        android:textColor="@color/button"
         android:textSize="70sp"
         android:transitionName="logo_text"
         app:layout_constraintEnd_toEndOf="@id/y_parts_logo_splash"
@@ -52,6 +68,41 @@
         app:layout_constraintTop_toBottomOf="@id/y_parts_tv_splash">
 
     </TextView>
+
+<!--    <TextView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:id="@+id/internet_check_tv"-->
+<!--        android:text="Please Wait..."-->
+<!--        app:layout_constraintTop_toBottomOf="@id/y_parts_tv_splash_add"-->
+<!--        app:layout_constraintRight_toRightOf="parent"-->
+<!--        app:layout_constraintLeft_toLeftOf="parent"-->
+<!--        android:layout_marginTop="40dp"-->
+<!--        android:visibility="invisible"-->
+<!--        android:textSize="18sp"-->
+<!--        android:textColor="@color/text_color_orange"-->
+<!--        android:fontFamily="@font/raleway_medium">-->
+<!--    </TextView>-->
+
+
+    <com.airbnb.lottie.LottieAnimationView
+
+        android:id="@+id/loading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/y_parts_tv_splash_add"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="lf30_editor_BlLI1Q.json"
+        app:lottie_loop="true">
+
+    </com.airbnb.lottie.LottieAnimationView>
+
+
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
