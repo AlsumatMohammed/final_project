@@ -204,7 +204,7 @@
         android:id="@+id/google_button"
         android:layout_width="311dp"
         android:layout_height="49dp"
-        android:background="@drawable/buttons"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/facebook_icon"
         app:layout_constraintHorizontal_bias="0.0"

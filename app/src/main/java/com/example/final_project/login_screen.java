@@ -299,6 +299,8 @@ public class login_screen extends AppCompatActivity implements View.OnClickListe
                 firebaseAuthWithgoogle(account);
             }
 
+
+
             catch (ApiException e){
 
                 Toast.makeText(this, "could not sign in with google", Toast.LENGTH_SHORT).show();
