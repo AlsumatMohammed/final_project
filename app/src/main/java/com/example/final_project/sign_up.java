@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -32,7 +33,7 @@ import com.tapadoo.alerter.Alerter;
 public class sign_up extends AppCompatActivity {
 
     public TextInputLayout email_layout, password_layout;
-    public ImageView back_arrow;
+    public TextView back_arrow;
     public CircularProgressButton sign_up_button;
     public TextInputEditText email_sign_up_et, password_sign_up_et;
     public FirebaseAuth mAuth;
@@ -101,6 +102,7 @@ public class sign_up extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), login_screen.class);
                 startActivity(intent);
+                finish();
             }
         });
 

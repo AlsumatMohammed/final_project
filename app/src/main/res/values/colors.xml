@@ -13,4 +13,11 @@
     <color name="blue_splash_screen">#107FAA</color>
     <color name="text_color_blue">#C5EAF3</color>
     <color name="text_color_orange">#FFBD59</color>
+
+    <color name="whiteTextColor">#fff</color>
+    <color name="primaryTextColor">#00a5ff</color>
+    <color name="loginBkColor">#f0f0f0</color>
+
+    <!--colros for card-->
+    <color name="whiteCardColor">#fff</color>
 </resources>
