@@ -192,7 +192,7 @@ public class sign_up extends AppCompatActivity {
 
     }
 
-    private boolean validateEmail(){
+    private boolean     validateEmail(){
 
         String email = email_sign_up_et.getText().toString().trim();
         if (email.isEmpty() || !isValidEmail(email)){

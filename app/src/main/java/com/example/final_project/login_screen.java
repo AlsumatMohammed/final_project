@@ -352,6 +352,7 @@ public class login_screen extends AppCompatActivity implements View.OnClickListe
 
                 if (task.isSuccessful()){
                     FirebaseUser user = mAuth.getCurrentUser();
+
                     Toast.makeText(login_screen.this, "task successful", Toast.LENGTH_SHORT).show();
 
                 }
