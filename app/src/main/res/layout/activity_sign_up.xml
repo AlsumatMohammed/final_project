@@ -138,6 +138,21 @@
 
 
 
+                <com.google.android.gms.common.SignInButton
+                    android:id="@+id/google_button_signup"
+                    android:layout_width="311dp"
+                    android:layout_height="49dp"
+
+                    />
+
+                <com.facebook.login.widget.LoginButton
+                    android:id="@+id/facebook_icon_signup"
+                    android:layout_width="311dp"
+                    android:layout_height="49dp"
+                    android:layout_marginTop="10dp"
+                    >
+
+                </com.facebook.login.widget.LoginButton>
 
 
 

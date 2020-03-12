@@ -14,7 +14,8 @@
     <color name="text_color_blue">#C5EAF3</color>
 <!--    <color name="text_color_orange">#FA7A00</color>-->
     <color name="text_color_orange">#FFBD59</color>
-
+    <color name="bottomNavigationTintColor">#B2B2B2</color>
+    <color name="bottomNavigationBackground">#F7F7F7</color>
     <color name="whiteTextColor">#fff</color>
     <color name="primaryTextColor">#00a5ff</color>
     <color name="loginBkColor">#f0f0f0</color>

@@ -4,6 +4,9 @@
     <string name="sign_in_with_social_networks">Sign In with Social Networks</string>
     <string name="facebook_app_id">710100962727231</string>
     <string name="fb_login_protocol_scheme">fb710100962727231</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
     <!--    <string name="default_web_client_id">671517666698-ujhb7doe0ksdf3ne823shpbcco72mcbf.apps.googleusercontent.com</string>-->
 
 </resources>

@@ -265,8 +265,6 @@ public class login_screen extends AppCompatActivity implements View.OnClickListe
 
                                             .show();
 
-                                    Snackbar.make(view, "Something went wrong!", Snackbar.LENGTH_LONG)
-                                            .setAction("Action", null).show();
                                 }
 
                                 // ...

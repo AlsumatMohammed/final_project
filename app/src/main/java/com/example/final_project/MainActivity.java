@@ -4,14 +4,19 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+import io.grpc.internal.SharedResourceHolder;
 
 import android.view.View;
 import android.view.Menu;
@@ -22,13 +27,14 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
+    Toolbar toolbar;
     FirebaseUser firebaseUser;
     FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
 //        final ProgressDialog progressDialog = new ProgressDialog(MainActivity.this);
@@ -38,6 +44,10 @@ public class MainActivity extends AppCompatActivity {
 //        progressDialog.show();
 
 
+        loadFragment(new AdsFragment());
+
+        BottomNavigationView navigation = findViewById(R.id.navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -45,9 +55,9 @@ public class MainActivity extends AppCompatActivity {
 
         String email = firebaseUser.getEmail();
 
-        TextView textView = findViewById(R.id.textView4);
-
-        textView.setText(email);
+//        TextView textView = findViewById(R.id.textView4);
+//
+//        textView.setText(email);
 
 
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -65,7 +75,47 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         });
+        fab.hide();
     }
+
+    private void loadFragment(Fragment fragment){
+
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.frame_container, fragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
+
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener =
+            new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+
+                    Fragment fragment;
+
+                    switch (menuItem.getItemId()) {
+                        case R.id.request_offers:
+                            toolbar.setTitle("Request_offers");
+                            fragment = new RequestsOffersFragment();
+                            loadFragment(fragment);
+                            return true;
+
+                        case R.id.ads:
+                            toolbar.setTitle("Ads");
+                            fragment = new AdsFragment();
+                            loadFragment(fragment);
+                            return true;
+
+                        case R.id.profile:
+                            toolbar.setTitle("Profile");
+                            fragment = new ProfileFragment();
+                            loadFragment(fragment);
+                            return true;
+                    }
+                    return false;
+                }
+            };
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
