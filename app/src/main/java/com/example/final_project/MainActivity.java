@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import io.grpc.internal.SharedResourceHolder;
 
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     Toolbar toolbar;
     FirebaseUser firebaseUser;
     FirebaseAuth mAuth;
+    BottomNavigationView navigation;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,12 +48,15 @@ public class MainActivity extends AppCompatActivity {
 
         loadFragment(new AdsFragment());
 
-        BottomNavigationView navigation = findViewById(R.id.navigation);
+        navigation = findViewById(R.id.navigation);
+        navigation.setSelectedItemId(R.id.ads);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         mAuth = FirebaseAuth.getInstance();
 
         firebaseUser = mAuth.getCurrentUser();
+
+
 
         String email = firebaseUser.getEmail();
 
@@ -82,8 +87,37 @@ public class MainActivity extends AppCompatActivity {
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.frame_container, fragment);
-        transaction.addToBackStack(null);
+        //transaction.addToBackStack(null);
         transaction.commit();
+
+
+
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        int selecteditem = navigation.getSelectedItemId();
+
+        if (R.id.ads != selecteditem){
+            navigation.setSelectedItemId(R.id.ads);
+
+        }
+//        else if (R.id.request_offers != selecteditem){
+//            navigation.setSelectedItemId(R.id.request_offers);
+//
+//        }
+//        else if (R.id.profile != selecteditem){
+//            navigation.setSelectedItemId(R.id.profile);
+//
+//        }
+
+        else{
+
+            super.onBackPressed();
+        }
+
+
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener =
@@ -139,3 +173,5 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 }
+
+
