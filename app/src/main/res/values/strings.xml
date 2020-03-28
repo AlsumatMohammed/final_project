@@ -9,4 +9,40 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <!--    <string name="default_web_client_id">671517666698-ujhb7doe0ksdf3ne823shpbcco72mcbf.apps.googleusercontent.com</string>-->
 
+    <string-array name="priceType_array">
+        <item>Select an Option</item>
+        <item>Free</item>
+        <item>Fixed</item>
+        <item>Negotiable</item>
+    </string-array>
+
+    <string-array name="condition_array">
+        <item>Select an Option</item>
+        <item>New</item>
+        <item>Used</item>
+        <item>Used Like New</item>
+    </string-array>
+
+    <string-array name="categories_array">
+        <item>Select an Option</item>
+        <item>Air &amp; Fuel Delivery</item>
+        <item>Brake Systems</item>
+        <item>Chassis &amp; Suspension</item>
+        <item>Engines &amp; Components</item>
+        <item>Exterior &amp; Accessories</item>
+        <item>Fasteners &amp; Hardware</item>
+        <item>Gasket &amp; Seal</item>
+        <item>Exhaust</item>
+        <item>Ignition &amp; Electrical</item>
+        <item>Interior &amp; Accessories</item>
+        <item>Lights &amp; Lightning</item>
+        <item>Marine</item>
+        <item>Mobile Electronics</item>
+        <item>Oils, Fluids &amp; Sealer</item>
+    </string-array>
+
+
+
+
+
 </resources>
