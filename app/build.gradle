@@ -65,4 +65,7 @@ dependencies {
     //Sweet alerts
     implementation 'com.github.f0ris.sweetalert:library:1.5.1'
 
+    //shimmer
+    implementation 'com.facebook.shimmer:shimmer:0.5.0'
+
 }
