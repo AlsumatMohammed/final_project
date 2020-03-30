@@ -1,0 +1,425 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".edit_profile">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/whiteTextColor">
+
+        <TextView
+            android:id="@+id/back_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:text=" Create Account  "
+            android:textSize="20sp"
+            android:textColor="@color/button"
+            android:fontFamily="@font/montserrat_bold"
+            android:drawableLeft="@drawable/back_arrow_orange"
+            android:drawablePadding="5dp"/>
+
+
+    </LinearLayout>
+
+
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Do not worry.."
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="30dp"
+            android:fontFamily="@font/montserrat_bold">
+
+        </TextView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="You can change this information later"
+            android:layout_marginTop="2dp"
+            android:layout_marginLeft="30dp"
+            android:fontFamily="@font/montserrat_bold">
+
+        </TextView>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:padding="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp">
+
+
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="30dp"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_fileName="1798-check-animation.json">
+
+        </com.airbnb.lottie.LottieAnimationView>
+
+
+
+        <view
+            class="android.widget.TextView"
+            android:layout_width="100dp"
+            android:layout_height="2dp"
+            android:background="@color/text_color_orange"
+            android:layout_gravity="center">
+
+        </view>
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_fileName="1081-basic-thick-circle-loader.json"
+            >
+
+        </com.airbnb.lottie.LottieAnimationView>
+
+        <view
+            class="android.widget.TextView"
+            android:layout_width="100dp"
+            android:layout_height="2dp"
+            android:background="#E8E8E8"
+            android:layout_gravity="center">
+
+        </view>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/dot_grey_edit_profile">
+
+        </ImageView>
+
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sign Up"
+            android:layout_marginLeft="30dp">
+
+        </TextView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Create Profile"
+            android:layout_marginLeft="50dp">
+
+        </TextView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Enjoy!"
+            android:layout_marginLeft="70dp">
+
+        </TextView>
+
+    </LinearLayout>
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/loginCard"
+        android:elevation="5dp"
+        app:cardCornerRadius="20dp"
+        android:layout_gravity="center"
+        android:background="@color/whiteCardColor"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:padding="10dp"
+                >
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/profile_image_editprofile"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/avatar"
+                    android:padding="10dp"
+                    app:civ_border_width="2dp"
+                    app:civ_border_color="@color/text_color_orange">
+
+                </de.hdodenhof.circleimageview.CircleImageView>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="10dp"
+                >
+
+
+
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+
+                    >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="User type:"
+                        android:textSize="15sp"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:layout_marginRight="20dp">
+
+                    </TextView>
+
+                    <RadioButton
+                        android:id="@+id/radio_customer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Customer"
+                        android:checked="true"
+                        android:fontFamily="@font/montserrat">
+
+                    </RadioButton>
+
+                    <RadioButton
+                        android:id="@+id/radio_supplier"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Supplier"
+                        android:layout_marginLeft="10dp"
+                        android:fontFamily="@font/montserrat">
+
+                    </RadioButton>
+                </RadioGroup>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/customer_supplier_name_inputlayout"
+                    android:layout_marginTop="20dp"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/customer_supplier_name_et"
+                        android:hint="Username"
+                        android:inputType="text"
+                        android:maxLines="1">
+
+                    </com.google.android.material.textfield.TextInputEditText>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/customer_supplier_phone_inputlayout"
+                    android:layout_marginTop="10dp"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/customer_supplier_phone_et"
+                        android:hint="Phone number"
+                        android:inputType="number"
+                        android:maxLines="1">
+
+                    </com.google.android.material.textfield.TextInputEditText>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Email Address: "
+                        android:textSize="17sp"
+                        android:fontFamily="@font/montserrat_bold">
+
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/userEmail_et"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="test@gmail.com "
+                        android:textSize="15sp"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:layout_marginLeft="5dp">
+
+                    </TextView>
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+
+
+    <br.com.simplepass.loadingbutton.customViews.CircularProgressButton
+        android:id="@+id/edit_profile_button"
+        android:layout_width="300dp"
+        android:layout_height="49dp"
+        android:background="@drawable/buttons"
+        android:fontFamily="@font/montserrat_bold"
+        android:text="Create Profile "
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center"
+        android:textColor="@color/layout_color_white"
+        app:spinning_bar_width="4dp"
+        app:spinning_bar_color="@color/text_color_orange"
+        app:spinning_bar_padding="6dp">
+
+    </br.com.simplepass.loadingbutton.customViews.CircularProgressButton>
+
+
+
+
+
+
+
+
+
+</LinearLayout>
+
+
+
+
+
+
+
+    <!--        <LinearLayout-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="match_parent"-->
+    <!--            android:orientation="vertical"-->
+    <!--            android:paddingBottom="50dp">-->
+
+    <!--            <RelativeLayout-->
+    <!--                android:layout_width="match_parent"-->
+    <!--                android:layout_height="345dp">-->
+
+
+    <!--                <LinearLayout-->
+    <!--                    android:layout_width="match_parent"-->
+    <!--                    android:layout_height="225dp"-->
+    <!--                    android:background="@drawable/login_shape_bk" />-->
+
+    <!--                <LinearLayout-->
+    <!--                    android:layout_width="match_parent"-->
+    <!--                    android:layout_height="225dp"-->
+    <!--                    android:background="@drawable/ic_login_bk" />-->
+
+
+    <!--                <FrameLayout-->
+    <!--                    android:layout_width="match_parent"-->
+    <!--                    android:layout_height="wrap_content"-->
+    <!--                    android:layout_alignParentBottom="true"-->
+    <!--                    android:layout_centerInParent="true"-->
+    <!--                    android:layout_gravity="center"-->
+    <!--                    android:layout_marginTop="0dp"-->
+    <!--                    android:elevation="3dp">-->
+
+    <!--                <FrameLayout-->
+    <!--                    android:layout_width="match_parent"-->
+    <!--                    android:layout_height="225dp"-->
+    <!--                    android:layout_marginLeft="10dp"-->
+    <!--                    android:layout_marginTop="47dp"-->
+    <!--                    android:layout_marginRight="10dp"-->
+    <!--                    android:elevation="5dp">-->
+
+
+    <!--                    <com.sdsmdg.harjot.materialshadows.MaterialShadowViewWrapper-->
+    <!--                        android:layout_width="match_parent"-->
+    <!--                        android:layout_height="match_parent"-->
+    <!--                        android:background="@color/whiteTextColor">-->
+
+    <!--                        <LinearLayout-->
+    <!--                        android:layout_width="match_parent"-->
+    <!--                        android:layout_height="match_parent"-->
+    <!--                        android:background="@drawable/rounded_corner_5dp"-->
+    <!--                        android:orientation="vertical">-->
+
+
+    <!--                            <com.mikhaellopez.circularimageview.CircularImageView-->
+    <!--                                android:layout_width="250dp"-->
+    <!--                                android:layout_height="200dp"-->
+    <!--                                android:layout_gravity="center"-->
+    <!--                                android:src="@drawable/avatar">-->
+
+    <!--                            </com.mikhaellopez.circularimageview.CircularImageView>-->
+
+
+    <!--                        </LinearLayout>-->
+
+
+    <!--                    </com.sdsmdg.harjot.materialshadows.MaterialShadowViewWrapper>-->
+    <!--                </FrameLayout>-->
+
+    <!--                </FrameLayout>-->
+
+    <!--            </RelativeLayout>-->
+    <!--        </LinearLayout>-->
+
+

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintLeft_toLeftOf="parent"
+    app:layout_constraintRight_toRightOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
+    <!--    style="@style/loginCard"-->
+    <!--    android:elevation="5dp"-->
+    <!--    app:cardCornerRadius="20dp"-->
+    <!--    android:layout_gravity="center"-->
+    <!--    android:background="@color/whiteCardColor"-->
+    <!--    android:layout_margin="10dp"-->
+
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/add_from_gallery"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/add_from_camera"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="gallery_animation.json"
+        app:lottie_loop="true">
+
+    </com.airbnb.lottie.LottieAnimationView>
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/add_from_camera"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginLeft="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@id/add_from_gallery"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="camera_animation .json"
+        app:lottie_loop="true">
+
+    </com.airbnb.lottie.LottieAnimationView>
+    <!--        <Button-->
+    <!--            android:layout_gravity="center"-->
+    <!--            android:layout_width="wrap_content"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:background="@color/colorAccent"-->
+    <!--            android:textColor="@color/colorPrimary"-->
+    <!--            android:id="@+id/add_from_gallery"-->
+    <!--            android:text="Add from gallery"/>-->
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Gallery"
+        app:layout_constraintEnd_toEndOf="@+id/add_from_gallery"
+        app:layout_constraintHorizontal_bias="0.485"
+        app:layout_constraintStart_toStartOf="@id/add_from_gallery"
+        app:layout_constraintTop_toBottomOf="@id/add_from_gallery"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:fontFamily="@font/montserrat_bold"
+        android:textSize="15sp">
+
+    </TextView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Camera"
+
+        app:layout_constraintEnd_toEndOf="@id/add_from_camera"
+        app:layout_constraintStart_toStartOf="@id/add_from_camera"
+        app:layout_constraintTop_toBottomOf="@id/add_from_camera"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:fontFamily="@font/montserrat_bold"
+        android:textSize="15sp">
+
+    </TextView>
+
+
+    <!--    -->
+
+
+    <!--    <Button-->
+    <!--        android:id="@+id/add_from_camera"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_gravity="center"-->
+    <!--        android:background="@color/colorAccent"-->
+    <!--        android:text="Add from Camera"-->
+    <!--        android:textColor="@color/colorPrimary" />-->
+</androidx.constraintlayout.widget.ConstraintLayout>
