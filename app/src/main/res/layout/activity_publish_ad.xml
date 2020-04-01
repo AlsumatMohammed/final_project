@@ -416,7 +416,7 @@
                 </TextView>
 
                 <RadioButton
-                    android:id="@+id/radio_customer"
+                    android:id="@+id/radioReal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="true"
@@ -426,7 +426,7 @@
                 </RadioButton>
 
                 <RadioButton
-                    android:id="@+id/radio_supplier"
+                    android:id="@+id/radioDollar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawableRight="@drawable/dollar_icon"

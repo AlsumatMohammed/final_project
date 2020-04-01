@@ -3,11 +3,16 @@ package com.example.final_project;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
 import br.com.simplepass.loadingbutton.customViews.CircularProgressButton;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -25,6 +30,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
@@ -40,9 +46,21 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.tapadoo.alerter.Alerter;
 
-public class publishAd extends AppCompatActivity {
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
+public class publishAd extends AppCompatActivity {
+    private static int PICK_IMAGE_CAMERA = 1;
     private static int PICK_IMAGE_GALLERY = 123;
+    File f;
+
+    SweetAlertDialog pDialog;
+
+    // image activity for results
+    String imageFilePath;
     public Uri imagepath;
     String ProductImage;
     String publisherImage;
@@ -71,23 +89,47 @@ public class publishAd extends AppCompatActivity {
     //title
     TextInputLayout title_layout;
     TextInputEditText title_et;
+    String title = "";
 
     //description
     TextInputLayout description_layout;
     TextInputEditText description_et;
+    String description ="";
 
     //imageButton
     Button addImage_but;
     ImageView check_image;
     ImageView loadedImage;
 
+    //
+    TextInputLayout price_etlayout;
+    TextInputEditText price_et;
+    String currency = "";
+    String priceType = "";
+    String price = "";
+
+
+
+    String publishDate = "";
+
+    RadioButton currencyReal, currencyDollar;
+
     //ad button
     CircularProgressButton publishad_but;
+
+    Boolean publisherImageConfirm = false, sendingImageConfirm = false, productImageReferenceConfirm = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_publish_ad);
 
+        getPublisherInfromation();
+//        getPublisherImage();
+
+        pDialog = new SweetAlertDialog(publishAd.this, SweetAlertDialog.PROGRESS_TYPE);
+        pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+        pDialog.setTitleText("Loading ...");
+        pDialog.setCancelable(false);
         //title
         title_layout = findViewById(R.id.title_et_layout);
         title_et = findViewById(R.id.title_et);
@@ -186,12 +228,15 @@ public class publishAd extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
 
-                if (priceType_spinner.getSelectedItem() == "Free"){
+                if (priceType_spinner.getSelectedItem().toString().trim().equals("Free")){
 
-                    price_layout.setVisibility(View.INVISIBLE);
+                    priceType = "Free";
+                    price_etlayout.setErrorEnabled(false);
+                    price_layout.setVisibility(View.GONE);
                 }
 
                 else{
+                    priceType = priceType_spinner.getSelectedItem().toString().trim();
                     price_layout.setVisibility(View.VISIBLE);
                 }
 
@@ -234,23 +279,48 @@ public class publishAd extends AppCompatActivity {
         addImage_but.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                pickFormGallery();
+                callbottomsheet();
             }
         });
 
         publishad_but = findViewById(R.id.publish_ad_button);
 
-        publishad_but.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
+
+        price_etlayout = findViewById(R.id.price_layout);
+        price_et = findViewById(R.id.price_et);
+        price_et.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+                isValidPrice();
             }
         });
 
+        currencyReal = findViewById(R.id.radioReal);
+        currencyDollar = findViewById(R.id.radioDollar);
+
+
+
+
+
+
+
         publishad_but.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
+                generalAd = new generalAds();
                 //getPublisherInfromation();
 
                 if (!isValidTitle()) {
@@ -285,6 +355,7 @@ public class publishAd extends AppCompatActivity {
                 if (warrantyNo.isChecked()){
                     warranty = "No";
                 }
+
                 if (warrantyYes.isChecked()){
                     warranty = "Yes";
                 }
@@ -293,7 +364,109 @@ public class publishAd extends AppCompatActivity {
                     return;
                 }
 
-                Toast.makeText(publishAd.this, category+" "+condition+" "+warranty+" "+imagepath, Toast.LENGTH_SHORT).show();
+                if (!isValidDescription()){
+                    return;
+                }
+
+                if (priceType.isEmpty() || priceType.equals("Select an Option")){
+
+                    Alerter.create(publishAd.this)
+                            .setTitle("Y-parts")
+                            .setText("You must select a price type.")
+                            .enableSwipeToDismiss()
+                            .setDuration(3000)
+                            .setBackgroundColorRes(R.color.text_color_orange)
+                            .show();
+
+                    return;
+                }
+
+                if (!isValidPrice()){
+                    return;
+                }
+
+                showDialog();
+
+                if (currencyReal.isChecked()){
+                    currency = "YER";
+                }
+                if (currencyDollar.isChecked()){
+                    currency = "$";
+                }
+
+
+                title = title_et.getText().toString().trim();
+                description = description_et.getText().toString().trim();
+                publishDate = new SimpleDateFormat("EEE, d MMM yyyy", Locale.getDefault()).format(new Date());
+
+                if (priceType.equals("Free")){
+                    price = "";
+                    currency = "";
+                }
+                else {
+                    price = price_et.getText().toString().trim();
+                }
+
+
+
+
+
+                db = FirebaseDatabase.getInstance().getReference();
+
+
+                if (publisher_name.isEmpty() || publisher_phone.isEmpty() || publisher_email.isEmpty()){
+
+                    Alerter.create(publishAd.this)
+                            .setTitle("Y-parts")
+                            .setText("could not attain user's information, try again.")
+                            .enableSwipeToDismiss()
+                            .setDuration(3000)
+                            .setBackgroundColorRes(R.color.text_color_orange)
+                            .show();
+                    Toast.makeText(publishAd.this, "publisher information not acquired, try again", Toast.LENGTH_SHORT).show();
+                    dismissDialog();
+                    getPublisherInfromation();
+                    return;
+
+                }
+
+
+
+                getPublisherImage();
+//
+
+                generalAd.setPublisherEmail(publisher_email);
+                generalAd.setPublisherphoneNumber(publisher_phone);
+                generalAd.setPublisherUsername(publisher_name);
+                generalAd.setTitle(title);
+                generalAd.setCategory(category);
+                generalAd.setCondition(condition);
+                generalAd.setWarranty(warranty);
+                generalAd.setDescription(description);
+                generalAd.setPriceType(priceType);
+                generalAd.setPrice(price);
+                generalAd.setCurrency(currency);
+                generalAd.setProductImage(" ");
+                generalAd.setPublisherImage(" ");
+
+                DatabaseReference databaseReference = db.child("GeneralAds").push();
+                databaseReference.setValue(generalAd);
+                String key = databaseReference.getKey();
+                generalAd.setKey(key);
+
+                sendPicture();
+
+//                if (publisherImageConfirm && sendingImageConfirm &&productImageReferenceConfirm){
+//
+//                    Toast.makeText(publishAd.this, "done", Toast.LENGTH_SHORT).show();
+//                }
+//                else {
+//                    Toast.makeText(publishAd.this, "not done", Toast.LENGTH_SHORT).show();
+//                }
+
+                Toast.makeText(publishAd.this, title+" "+category+" "+condition+" "+warranty
+                        +" "+imagepath+" "+description+" "+priceType+" "+price+" "+currency+" "
+                        +publishDate, Toast.LENGTH_SHORT).show();
             }
         });
 //        Button button = findViewById(R.id.button2);
@@ -369,12 +542,14 @@ public class publishAd extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Exception e) {
                 Toast.makeText(publishAd.this, "can't upload image", Toast.LENGTH_SHORT).show();
+                sendingImageConfirm = false;
             }
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 Toast.makeText(publishAd.this, "image uploaded", Toast.LENGTH_SHORT).show();
 
+                sendingImageConfirm = true;
                 StorageMetadata storageMetadata = taskSnapshot.getMetadata();
                 Task<Uri> downloadUrl = imageRef.getDownloadUrl();
                 downloadUrl.addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -384,6 +559,7 @@ public class publishAd extends AppCompatActivity {
                         ProductImage = uri.toString();
                         db.child("GeneralAds").child(generalAd.getKey()).child("productImage").setValue(ProductImage);
 
+                        productImageReferenceConfirm = true;
 
                     }
                 });
@@ -397,6 +573,7 @@ public class publishAd extends AppCompatActivity {
     }
 
     public void getPublisherImage(){
+        db = FirebaseDatabase.getInstance().getReference();
         FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
 
         final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
@@ -411,6 +588,7 @@ public class publishAd extends AppCompatActivity {
                 publisherImage = uri.toString();
                 db.child("GeneralAds").child(generalAd.getKey()).child("publisherImage").setValue(publisherImage);
 
+                publisherImageConfirm = true;
                 Toast.makeText(publishAd.this, "publisher image updated", Toast.LENGTH_SHORT).show();
 
             }
@@ -418,6 +596,7 @@ public class publishAd extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Exception e) {
 
+                publisherImageConfirm = false;
                 Toast.makeText(publishAd.this, "couldn't get publisher image", Toast.LENGTH_SHORT).show();
             }
         });
@@ -494,6 +673,20 @@ public class publishAd extends AppCompatActivity {
                     .apply(options).override(100, 100).centerCrop().into(loadedImage);
 
         }
+
+        else if (requestCode == PICK_IMAGE_CAMERA && resultCode == RESULT_OK){
+            imagepath = Uri.fromFile(f);
+
+            RequestOptions options = new RequestOptions()
+                    .centerCrop()
+                    .placeholder(R.drawable.avatar)
+                    .error(R.drawable.ads_icon);
+
+            Glide.with(loadedImage.getContext())
+                    .load(imagepath)
+                    .apply(options).override(100, 100).centerCrop().into(loadedImage);
+
+        }
     }
 
         public boolean addPicture () {
@@ -549,5 +742,126 @@ public class publishAd extends AppCompatActivity {
         return true;
         }
 
+        private boolean  isValidPrice(){
+
+        String price = price_et.getText().toString().trim();
+
+        if (priceType.equals("Free")){
+            return true;
+        }
+
+        else if (price.isEmpty()){
+            price_etlayout.setError("Price field cannot be empty");
+            return false;
+        }
+
+
+        else{
+            price_etlayout.setErrorEnabled(false);
+        }
+
+        return true;
+
+        }
+
+
+    public void callbottomsheet() {
+
+        View v = getLayoutInflater().inflate(R.layout.bottomsheet, null);
+        final BottomSheetDialog dialog = new BottomSheetDialog(publishAd.this);
+        dialog.setContentView(v);
+
+
+        dialog.show();
+        ImageView fromG = v.findViewById(R.id.add_from_gallery);
+
+        ImageView fromC = v.findViewById(R.id.add_from_camera);
+
+        fromG.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                pickFormGallery();
+                dialog.hide();
+            }
+        });
+
+        fromC.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                pickFormCamera();
+                dialog.hide();
+            }
+        });
 
     }
+
+    public void pickFormCamera() {
+
+//        Intent takePicture = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+//        startActivityForResult(takePicture, PICK_IMAGE_CAMERA);
+
+        Intent pictureIntent = new Intent(
+                MediaStore.ACTION_IMAGE_CAPTURE);
+        if (pictureIntent.resolveActivity(getPackageManager()) != null) {
+            //Create a file to store the image
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+            } catch (IOException ex) {
+                // Error occurred while creating the File
+
+            }
+            if (photoFile != null) {
+                Uri photoURI = FileProvider.getUriForFile(this, "com.example.final_project", photoFile);
+                pictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,
+                        photoURI);
+                startActivityForResult(pictureIntent,
+                        PICK_IMAGE_CAMERA);
+            }
+        }
+
+    }
+
+    private File createImageFile() throws IOException {
+        String timeStamp =
+                new SimpleDateFormat("yyyyMMdd_HHmmss",
+                        Locale.getDefault()).format(new Date());
+        String imageFileName = "IMG_" + timeStamp + "_";
+        File storageDir =
+                getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+
+        imageFilePath = image.getAbsolutePath();
+        f = new File(imageFilePath);
+        return image;
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    public void showDialog(){
+        pDialog.show();
+
+        //editprofileButton.startAnimation();
+
+    }
+
+    public void dismissDialog(){
+        pDialog.dismiss();
+
+        //editprofileButton.revertAnimation();
+    }
+}

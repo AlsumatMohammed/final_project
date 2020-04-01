@@ -1,11 +1,84 @@
 package com.example.final_project;
 
+import android.widget.Toast;
+
 public class generalAds {
 
+
+
     String title;
+    String category;
+    String condition;
+    String warranty;
+    String description;
+    String price;
+    String priceType;
+    String currency;
+    String publishDate;
+    String productImage;
+
+    String key;
+
     String publisherImage;
     String publisherUsername;
     String publisherEmail;
+    String publisherphoneNumber;
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    public String getCondition() {
+        return condition;
+    }
+
+    public void setCondition(String condition) {
+        this.condition = condition;
+    }
+
+    public String getWarranty() {
+        return warranty;
+    }
+
+    public void setWarranty(String warranty) {
+        this.warranty = warranty;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getPriceType() {
+        return priceType;
+    }
+
+    public void setPriceType(String priceType) {
+        this.priceType = priceType;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
+
+    public String getPublishDate() {
+        return publishDate;
+    }
+
+    public void setPublishDate(String publishDate) {
+        this.publishDate = publishDate;
+    }
 
     public String getPublisherUsername() {
         return publisherUsername;
@@ -31,10 +104,7 @@ public class generalAds {
         this.publisherphoneNumber = publisherphoneNumber;
     }
 
-    String publisherphoneNumber;
-    String productImage;
-    String price;
-    String key;
+
 
     public String getKey() {
         return key;
