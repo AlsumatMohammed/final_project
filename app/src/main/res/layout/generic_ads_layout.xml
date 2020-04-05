@@ -35,6 +35,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
+        <TextView
+            android:id="@+id/category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="40dp"
+            android:text="Brake systems"
+            android:textColor="@color/content_text_color"
+            android:textSize="10sp"
+
+            />
 
         <TextView
             android:id="@+id/title_ad"
@@ -46,7 +58,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginStart="40dp"
             android:layout_marginLeft="40dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="25dp"
             android:text="Title Text"
             android:textColor="@color/title_text_color"
             android:textSize="18sp" />
@@ -59,13 +71,42 @@
             android:layout_below="@id/title_ad"
             android:layout_alignStart="@id/title_ad"
             android:layout_alignLeft="@id/title_ad"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="3dp"
             android:layout_marginRight="16dp"
             android:lineSpacingExtra="8dp"
-            android:text="price"
+            android:text="$ 200"
             android:textColor="@color/content_text_color"
             android:textSize="15sp" />
 
+        <TextView
+            android:id="@+id/by_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/price"
+            android:layout_alignStart="@id/price"
+            android:layout_alignLeft="@id/price"
+            android:layout_marginTop="3dp"
+            android:layout_marginRight="16dp"
+            android:lineSpacingExtra="8dp"
+            android:text="By:"
+            android:textColor="@color/content_text_color"
+            android:textSize="15sp" />
+
+
+        <TextView
+            android:id="@+id/publisherName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/price"
+            android:layout_alignLeft="@id/price"
+            android:layout_marginStart="25dp"
+            android:layout_marginLeft="60dp"
+            android:layout_marginTop="3dp"
+            android:layout_toEndOf="@+id/by_tv"
+            android:lineSpacingExtra="8dp"
+            android:text="publisherName"
+            android:textColor="@color/content_text_color"
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/date"
@@ -73,7 +114,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
             android:text="March.25.2020"

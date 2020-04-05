@@ -117,7 +117,7 @@ public class publishAd extends AppCompatActivity {
     //ad button
     CircularProgressButton publishad_but;
 
-    Boolean publisherImageConfirm = false, sendingImageConfirm = false, productImageReferenceConfirm = false;
+    boolean publisherImageConfirm = false, sendingImageConfirm = false, productImageReferenceConfirm = false, publiserInformationConfirm = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -446,6 +446,7 @@ public class publishAd extends AppCompatActivity {
                 generalAd.setPriceType(priceType);
                 generalAd.setPrice(price);
                 generalAd.setCurrency(currency);
+                generalAd.setPublishDate(publishDate);
                 generalAd.setProductImage(" ");
                 generalAd.setPublisherImage(" ");
 
@@ -541,8 +542,10 @@ public class publishAd extends AppCompatActivity {
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                Toast.makeText(publishAd.this, "can't upload image", Toast.LENGTH_SHORT).show();
+                Toast.makeText(publishAd.this, "can't upload product image", Toast.LENGTH_SHORT).show();
                 sendingImageConfirm = false;
+                confirm(publiserInformationConfirm, publisherImageConfirm, sendingImageConfirm, productImageReferenceConfirm);
+
             }
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
@@ -550,6 +553,9 @@ public class publishAd extends AppCompatActivity {
                 Toast.makeText(publishAd.this, "image uploaded", Toast.LENGTH_SHORT).show();
 
                 sendingImageConfirm = true;
+
+                confirm(publiserInformationConfirm, publisherImageConfirm, sendingImageConfirm, productImageReferenceConfirm);
+
                 StorageMetadata storageMetadata = taskSnapshot.getMetadata();
                 Task<Uri> downloadUrl = imageRef.getDownloadUrl();
                 downloadUrl.addOnSuccessListener(new OnSuccessListener<Uri>() {
@@ -560,6 +566,16 @@ public class publishAd extends AppCompatActivity {
                         db.child("GeneralAds").child(generalAd.getKey()).child("productImage").setValue(ProductImage);
 
                         productImageReferenceConfirm = true;
+                        confirm(publiserInformationConfirm, publisherImageConfirm, sendingImageConfirm, productImageReferenceConfirm);
+
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(publishAd.this, "can't put image reference", Toast.LENGTH_SHORT).show();
+
+                        productImageReferenceConfirm = false;
+                        confirm(publiserInformationConfirm, publisherImageConfirm, sendingImageConfirm, productImageReferenceConfirm);
 
                     }
                 });
@@ -590,6 +606,7 @@ public class publishAd extends AppCompatActivity {
 
                 publisherImageConfirm = true;
                 Toast.makeText(publishAd.this, "publisher image updated", Toast.LENGTH_SHORT).show();
+                confirm(publiserInformationConfirm, publisherImageConfirm, sendingImageConfirm, productImageReferenceConfirm);
 
             }
         }).addOnFailureListener(new OnFailureListener() {
@@ -598,6 +615,9 @@ public class publishAd extends AppCompatActivity {
 
                 publisherImageConfirm = false;
                 Toast.makeText(publishAd.this, "couldn't get publisher image", Toast.LENGTH_SHORT).show();
+                confirm(publiserInformationConfirm, publisherImageConfirm, sendingImageConfirm, productImageReferenceConfirm);
+
+
             }
         });
 
@@ -624,14 +644,18 @@ public class publishAd extends AppCompatActivity {
                 publisher_name = userProfile.getUserName();
                 publisher_email = firebaseUser.getEmail();
                 publisher_phone = userProfile.getPhoneNumber();
+                publiserInformationConfirm = true;
                 Toast.makeText(publishAd.this, "publisher Information acquired", Toast.LENGTH_SHORT).show();
-
+                confirm(publiserInformationConfirm, publisherImageConfirm, sendingImageConfirm, productImageReferenceConfirm);
+                
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                publiserInformationConfirm = false;
                 Toast.makeText(publishAd.this, "publisher Information was not acquired", Toast.LENGTH_SHORT).show();
+
+                confirm(publiserInformationConfirm, publisherImageConfirm, sendingImageConfirm, productImageReferenceConfirm);
 
             }
         });
@@ -795,6 +819,30 @@ public class publishAd extends AppCompatActivity {
             }
         });
 
+    }
+    
+    public void confirm(boolean publiserInformationConfirm, boolean publisherImageConfirm, boolean sendingImageConfirm, boolean productImageReferenceConfirm ){
+        
+        if (publiserInformationConfirm && publisherImageConfirm  && sendingImageConfirm && productImageReferenceConfirm ){
+
+            Toast.makeText(this, "done", Toast.LENGTH_SHORT).show();
+            dismissDialog();
+            new SweetAlertDialog(publishAd.this, SweetAlertDialog.SUCCESS_TYPE)
+                    .setTitleText("Awesome!")
+                    .setContentText("Ad published!")
+                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                            Intent intent = new Intent(publishAd.this, MainActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }
+                    })
+                    .show();
+        }
+        else{
+            Toast.makeText(this, "not yet", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void pickFormCamera() {

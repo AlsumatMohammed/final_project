@@ -29,9 +29,11 @@ import com.firebase.ui.database.SnapshotParser;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 
 
 /**
@@ -47,6 +49,7 @@ public class AdsFragment extends Fragment {
     private LinearLayoutManager linearLayoutManager;
     private FirebaseRecyclerAdapter adapter;
     SweetAlertDialog pDialog;
+    ImageView publishButton;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -97,6 +100,8 @@ public class AdsFragment extends Fragment {
 
         }
 
+
+
         pDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.PROGRESS_TYPE);
         pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
         pDialog.setTitleText("Loading ...");
@@ -115,6 +120,43 @@ public class AdsFragment extends Fragment {
 
         View view =  inflater.inflate(R.layout.fragment_ads, container, false);
 
+        publishButton = view.findViewById(R.id.add_ad);
+        publishButton.setVisibility(View.GONE);
+
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference databaseReference = firebaseDatabase.getReference();
+
+        databaseReference.child("userInfromation").child(firebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                Userinformation userProfile = dataSnapshot.getValue(Userinformation.class);
+
+                if (userProfile.getUserType().equals("supplier")){
+
+                    publishButton.setVisibility(View.VISIBLE);
+                }
+                else{
+                    publishButton.setVisibility(View.GONE);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        publishButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(getActivity() , publishAd.class);
+                startActivity(intent);
+                getActivity().finish();
+            }
+        });
+
         recyclerView = view.findViewById(R.id.recycler_view1);
         linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -125,7 +167,7 @@ public class AdsFragment extends Fragment {
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView title, price;
+        public TextView title, price, date, publisherName;
         public CardView cardView;
         public ImageView productimage, publisherImage;
         public RelativeLayout rev_layout;
@@ -139,7 +181,8 @@ public class AdsFragment extends Fragment {
             //productimage = itemView.findViewById(R.id.prodcutImage);
             publisherImage = itemView.findViewById(R.id.publisherImage);
             rev_layout = itemView.findViewById(R.id.relativeLayout);
-
+            publisherName = itemView.findViewById(R.id.publisherName);
+            date = itemView.findViewById(R.id.date);
         }
 
         public void setTxtTitle(String string) {
@@ -204,9 +247,26 @@ public class AdsFragment extends Fragment {
 
                 holder.publisherImage.setAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.rv_fade_transition));
                 holder.rev_layout.setAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.rv_scale_animation));
-                holder.setTxtPrice(model.getPrice());
-                holder.setTxtTitle(model.getTitle());
 
+                String currency = model.getCurrency();
+                String price = model.getPrice();
+
+
+                if (currency.equals("YER")){
+                    holder.price.setText(model.getPrice()+" "+currency);
+                }
+                else if (currency.equals("$")){
+                    holder.price.setText(currency+" "+model.getPrice());
+                }
+
+
+                if (price.isEmpty()){
+                    holder.price.setText("FREE");
+                }
+//
+                holder.title.setText(model.getTitle());
+                holder.date.setText(model.getPublishDate());
+                holder.publisherName.setText(model.getPublisherUsername());
                 Uri productImage = Uri.parse(model.getProductImage());
                 Uri publisherImage = Uri.parse(model.getPublisherImage());
 
@@ -223,13 +283,15 @@ public class AdsFragment extends Fragment {
                 Glide.with(holder.publisherImage.getContext())
                         .load(publisherImage)
                         .apply(options).override(40, 40).into(holder.publisherImage);
+
+                dismissDialog();
             }
         };
 
 
         recyclerView.setAdapter(adapter);
 
-        dismissDialog();
+
     }
 
     @Override
