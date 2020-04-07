@@ -35,6 +35,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -167,7 +169,7 @@ public class AdsFragment extends Fragment {
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView title, price, date, publisherName;
+        public TextView title, price, date, publisherName, category;
         public CardView cardView;
         public ImageView productimage, publisherImage;
         public RelativeLayout rev_layout;
@@ -183,6 +185,7 @@ public class AdsFragment extends Fragment {
             rev_layout = itemView.findViewById(R.id.relativeLayout);
             publisherName = itemView.findViewById(R.id.publisherName);
             date = itemView.findViewById(R.id.date);
+            category = itemView.findViewById(R.id.category);
         }
 
         public void setTxtTitle(String string) {
@@ -219,6 +222,7 @@ public class AdsFragment extends Fragment {
 
                                 generalAds generalAd = snapshot.getValue(generalAds.class);
 
+
                                 return generalAd;
                             }
                         }).build();
@@ -243,7 +247,7 @@ public class AdsFragment extends Fragment {
             }
 
             @Override
-            protected void onBindViewHolder(@NonNull MyViewHolder holder, int position, @NonNull generalAds model) {
+            protected void onBindViewHolder(@NonNull final MyViewHolder holder, int position, @NonNull final generalAds model) {
 
                 holder.publisherImage.setAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.rv_fade_transition));
                 holder.rev_layout.setAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.rv_scale_animation));
@@ -267,6 +271,7 @@ public class AdsFragment extends Fragment {
                 holder.title.setText(model.getTitle());
                 holder.date.setText(model.getPublishDate());
                 holder.publisherName.setText(model.getPublisherUsername());
+                holder.category.setText(model.getCategory());
                 Uri productImage = Uri.parse(model.getProductImage());
                 Uri publisherImage = Uri.parse(model.getPublisherImage());
 
@@ -285,11 +290,50 @@ public class AdsFragment extends Fragment {
                         .apply(options).override(40, 40).into(holder.publisherImage);
 
                 dismissDialog();
+
+                holder.rev_layout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        openDetailActivity(model.getProductImage() , model.getDescription(), model.getCategory()
+                                , model.getPublishDate() , model.getPrice() , model.getCurrency() , model.getPriceType()
+                                , model.getWarranty() , model.getCondition() , model.getPublisherImage()
+                                , model.getPublisherUsername() , model.getPublisherEmail(), model.getPublisherphoneNumber());
+
+                    }
+                });
             }
         };
 
 
         recyclerView.setAdapter(adapter);
+
+
+    }
+
+    public void openDetailActivity(String... detail){
+
+        Intent intent = new Intent(getActivity(), detail_activity.class);
+
+        intent.putExtra("PRODUCT_IMAGE" , detail[0]);
+        intent.putExtra("DESCRIPTION" , detail[1]);
+        intent.putExtra("CATEGORY" , detail[2]);
+        intent.putExtra("PUBLISHDATE" , detail[3]);
+        intent.putExtra("PRICE" , detail[4]);
+            intent.putExtra("CURRENCY" , detail[5]);
+        intent.putExtra("PRICETYPE" , detail[6]);
+        intent.putExtra("WARRANTY" , detail[7]);
+        intent.putExtra("CONDITION" , detail[8]);
+
+        //PUBLISHER
+            intent.putExtra("PUBLISHERIMAGE" , detail[9]);
+            intent.putExtra("PUBLISHERUSERNAME" , detail[10]);
+            intent.putExtra("PUBLSIHEREMAIL" , detail[11]);
+            intent.putExtra("PUBLISHERPHONE" , detail[12]);
+
+
+        getActivity().startActivity(intent);
+
 
 
     }

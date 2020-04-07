@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -47,10 +48,9 @@ public class detail_activity extends AppCompatActivity {
 //    RecyclerView rv;
     SweetAlertDialog pDialog;
 
-    //firebase rec
-    private RecyclerView recyclerView;
-    private LinearLayoutManager linearLayoutManager;
-    private FirebaseRecyclerAdapter adapter;
+    ImageView productImageView, publisherImageView;
+    TextView descriptionView, categoryView, publishDateView, priceView, warrantyView, conditionView, publisherUserNameView, publisherPhoneView, publisherEmailView;
+
 
     ArrayList<generalAds> generalAdsArrayList;
 
@@ -65,149 +65,102 @@ public class detail_activity extends AppCompatActivity {
         pDialog.setTitleText("Loading ...");
         pDialog.setCancelable(false);
 
-////        firebaseDatabase = FirebaseDatabase.getInstance();
-////        databaseReference = FirebaseDatabase.getInstance().getReference();
-//
-//        generalAdsArrayList = new ArrayList<generalAds>();
-//        rv = (RecyclerView) findViewById(R.id.recycler_view2);
-//        rv.setLayoutManager(new LinearLayoutManager(this));
-//
-//        db= FirebaseDatabase.getInstance().getReference();
-//        helper=new FirebaseAdsHelper(db);
-//
-//        //atabaseReference databaseReference = firebaseDatabase.getReference();
-//        adapter=new GenericAdsAdapter(helper.retrieve(),this);
-//        rv.setAdapter(adapter);
+        productImageView = findViewById(R.id.productImage);
+        publisherImageView = findViewById(R.id.publisherImage_detail);
+        descriptionView = findViewById(R.id.description_detail);
+        categoryView = findViewById(R.id.cateogryDetail);
+        publishDateView = findViewById(R.id.date_detail);
+        priceView = findViewById(R.id.price_detail);
+        warrantyView = findViewById(R.id.warranty_detail);
+        conditionView = findViewById(R.id.condition_detail);
+        publisherUserNameView = findViewById(R.id.publisherUsername_detail);
+        publisherPhoneView = findViewById(R.id.publisherPhone_detail);
+        publisherEmailView = findViewById(R.id.publisherEmail_detail);
 
-        recyclerView = findViewById(R.id.recycler_view2);
-        linearLayoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setHasFixedSize(true);
-        fetch();
+        Intent intent = this.getIntent();
 
-        //afsdddddddddddddddddddddddddddddddddddddddddd
+        String productImage = intent.getExtras().getString("PRODUCT_IMAGE");
+        String description = intent.getExtras().getString("DESCRIPTION");
+        String category = intent.getExtras().getString("CATEGORY");
+        String publishDate = intent.getExtras().getString("PUBLISHDATE");
+        String price = intent.getExtras().getString("PRICE");
+        String currency = intent.getExtras().getString("CURRENCY");
+        String priceType = intent.getExtras().getString("PRICETYPE");
+        String warranty = intent.getExtras().getString("WARRANTY");
+        String condition = intent.getExtras().getString("CONDITION");
+        //PUBLISHERINFORMATION
+        String publisherImage = intent.getExtras().getString("PUBLISHERIMAGE");
+        String publisherUserName = intent.getExtras().getString("PUBLISHERUSERNAME");
+        String publisherEmail = intent.getExtras().getString("PUBLSIHEREMAIL");
+        String publisherPhone = intent.getExtras().getString("PUBLISHERPHONE");
 
+        Uri productImagePath = Uri.parse(productImage);
+        Uri publisherImagePath = Uri.parse(publisherImage);
+
+
+
+
+        RequestOptions options = new RequestOptions()
+                .centerCrop()
+                .placeholder(R.mipmap.ic_launcher_round)
+                .error(R.drawable.ads_icon);
+
+
+        Glide.with(getApplicationContext())
+                .load(productImage)
+                .apply(options).into(productImageView);
+
+        Glide.with(getApplicationContext())
+                .load(publisherImage)
+                .apply(options).override(90, 90).into(publisherImageView);
+
+
+        if (currency.equals("YER")){
+            priceView.setText(price+" "+currency+" "+"("+priceType+")");
+        }
+        else if (currency.equals("$")){
+            priceView.setText(currency+" "+price+"("+priceType+")");
+        }
+
+
+        if (price.isEmpty()){
+            priceView.setText("FREE");
+        }
+
+        descriptionView.setText(description);
+        categoryView.setText(category);
+        publishDateView.setText(publishDate);
+
+        warrantyView.setText(warranty);
+        conditionView.setText(condition);
+        //PUBLISHER
+
+        publisherUserNameView.setText(publisherUserName);
+        publisherEmailView.setText(publisherEmail);
+        publisherPhoneView.setText(publisherPhone);
 
     }
 
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
-
-        public TextView title, price;
-        public CardView cardView;
-        public ImageView productimage, publisherImage;
-
-
-        public MyViewHolder(@NonNull View itemView) {
-            super(itemView);
-
-            title = itemView.findViewById(R.id.title_ad);
-            price = itemView.findViewById(R.id.price);
-            //productimage = itemView.findViewById(R.id.prodcutImage);
-            publisherImage = itemView.findViewById(R.id.publisherImage);
-        }
-
-        public void setTxtTitle(String string) {
-            title.setText(string);
-        }
-
-
-        public void setTxtPrice(String string) {
-            price.setText(string);
-        }
-
-    }
-
-
-
-        private void fetch() {
-            Query query = FirebaseDatabase.getInstance()
-                    .getReference()
-                    .child("GeneralAds");
-
-
-            FirebaseRecyclerOptions<generalAds> options =
-                    new FirebaseRecyclerOptions.Builder<generalAds>()
-                            .setQuery(query, new SnapshotParser<generalAds>() {
-                                @NonNull
-                                @Override
-                                public generalAds parseSnapshot(@NonNull DataSnapshot snapshot) {
-//                                    return new generalAds(snapshot.child("price").getValue().toString(),
-//                                            snapshot.child("productImage").getValue().toString(),
-//                                            snapshot.child("publisherImage").getValue().toString(),
-//                                            snapshot.child("title").getValue().toString());
-
-                                    generalAds generalAd = snapshot.getValue(generalAds.class);
-
-                                    return generalAd;
-                                }
-                            }).build();
-
-
-            //adapter settings
-
-
-
-            adapter = new FirebaseRecyclerAdapter<generalAds, MyViewHolder>(options) {
-
-                @NonNull
-                @Override
-                public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
-                    View itemview = LayoutInflater.from(parent.getContext()).inflate(R.layout.generic_ads_layout, parent, false);
-
-                    return new MyViewHolder(itemview);
-                }
-
-                @Override
-                protected void onBindViewHolder(@NonNull MyViewHolder holder, int position, @NonNull generalAds model) {
-
-                    holder.setTxtPrice(model.getPrice());
-                    holder.setTxtTitle(model.getTitle());
-
-                    Uri productImage = Uri.parse(model.getProductImage());
-                    Uri publisherImage = Uri.parse(model.getPublisherImage());
-
-
-                    RequestOptions options = new RequestOptions()
-                            .centerCrop()
-                            .placeholder(R.mipmap.ic_launcher_round)
-                            .error(R.drawable.ads_icon);
-
-                    Glide.with(holder.productimage.getContext())
-                            .load(model.getProductImage())
-                            .apply(options).override(400, 400).into(holder.productimage);
-
-                    Glide.with(holder.publisherImage.getContext())
-                            .load(model.getPublisherImage())
-                            .apply(options).override(400, 400).into(holder.publisherImage);
-
-
-                }
-            };
-
-
-            recyclerView.setAdapter(adapter);
-    }
 
     @Override
     protected void onStart() {
         super.onStart();
-        adapter.startListening();
+
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        adapter.stopListening();
+
     }
 
-
-
-
-
-
 }
+
+
+
+
+
 
 
 

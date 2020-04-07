@@ -88,7 +88,7 @@
                         android:layout_width="300dp"
                         android:layout_height="35dp"
                         android:layout_marginLeft="30dp"
-                        android:layout_marginTop="20dp"
+                        android:layout_marginTop="10dp"
                         android:background="@drawable/card_bg"
                         android:drawableRight="@drawable/search_icon"
                         android:fontFamily="@font/montserrat"
