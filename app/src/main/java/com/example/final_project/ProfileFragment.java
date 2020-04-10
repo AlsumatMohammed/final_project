@@ -229,6 +229,7 @@ public class ProfileFragment extends Fragment {
         Intent intent = new Intent(getActivity(), login_screen.class);
         startActivity(intent);
 
+        getActivity().finish();
 
 
     }

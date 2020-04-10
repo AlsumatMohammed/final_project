@@ -56,7 +56,11 @@ public class MainActivity extends AppCompatActivity {
 
         firebaseUser = mAuth.getCurrentUser();
 
-
+        if (firebaseUser == null){
+            Intent intent = new Intent(MainActivity.this, login_screen.class);
+            startActivity(intent);
+            finish();
+        }
 
         String email = firebaseUser.getEmail();
 

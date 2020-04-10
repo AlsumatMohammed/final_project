@@ -163,6 +163,7 @@ public class AdsFragment extends Fragment {
         linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setHasFixedSize(true);
+
         fetch();
         return view;
     }
@@ -188,14 +189,6 @@ public class AdsFragment extends Fragment {
             category = itemView.findViewById(R.id.category);
         }
 
-        public void setTxtTitle(String string) {
-            title.setText(string);
-        }
-
-
-        public void setTxtPrice(String string) {
-            price.setText(string);
-        }
 
     }
 
@@ -289,7 +282,7 @@ public class AdsFragment extends Fragment {
                         .load(publisherImage)
                         .apply(options).override(40, 40).into(holder.publisherImage);
 
-                dismissDialog();
+                    dismissDialog();
 
                 holder.rev_layout.setOnClickListener(new View.OnClickListener() {
                     @Override
