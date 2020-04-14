@@ -3,12 +3,15 @@ package com.example.final_project;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import br.com.simplepass.loadingbutton.customViews.CircularProgressButton;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
-import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,29 +19,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.Registry;
-import com.bumptech.glide.annotation.GlideModule;
-import com.bumptech.glide.module.AppGlideModule;
 import com.bumptech.glide.request.RequestOptions;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.firebase.ui.database.SnapshotParser;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
-import com.google.firebase.storage.StorageReference;
 
-import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 public class detail_activity extends AppCompatActivity {
 
@@ -55,14 +52,22 @@ public class detail_activity extends AppCompatActivity {
     private FirebaseRecyclerAdapter adapter;
 
     String publisherUserName;
+    String publisherEmail;
+    String adKey;
     RecyclerView.LayoutManager RecyclerViewLayoutManager;
 
 
     ImageView productImageView, publisherImageView;
     TextView publisherUserNameViewPrevious, descriptionView, categoryView, publishDateView, priceView, warrantyView, conditionView, publisherUserNameView, publisherPhoneView, publisherEmailView;
 
+    private RecyclerView recyclerViewRatings;
+    private LinearLayoutManager linearLayoutManager;
+    private FirebaseRecyclerAdapter adapterRatings;
 
 
+
+    Button favouriteButton, callNowButton, messageNowButton;
+    CircularProgressButton addRating;
     ArrayList<generalAds> generalAdsArrayList;
 
     @Override
@@ -71,6 +76,11 @@ public class detail_activity extends AppCompatActivity {
         setContentView(R.layout.activity_detail_activity);
 
 
+        callNowButton = findViewById(R.id.callNow_button);
+        messageNowButton = findViewById(R.id.messageNow_button);
+
+        favouriteButton = findViewById(R.id.favouriteButton);
+        addRating = findViewById(R.id.addRatingButton);
         pDialog = new SweetAlertDialog(detail_activity.this, SweetAlertDialog.PROGRESS_TYPE);
         pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
         pDialog.setTitleText("Loading ...");
@@ -90,7 +100,7 @@ public class detail_activity extends AppCompatActivity {
 
         Intent intent = this.getIntent();
 
-        String productImage = intent.getExtras().getString("PRODUCT_IMAGE");
+        final String productImage = intent.getExtras().getString("PRODUCT_IMAGE");
         String description = intent.getExtras().getString("DESCRIPTION");
         String category = intent.getExtras().getString("CATEGORY");
         String publishDate = intent.getExtras().getString("PUBLISHDATE");
@@ -102,13 +112,49 @@ public class detail_activity extends AppCompatActivity {
         //PUBLISHERINFORMATION
         String publisherImage = intent.getExtras().getString("PUBLISHERIMAGE");
         publisherUserName = intent.getExtras().getString("PUBLISHERUSERNAME");
-        String publisherEmail = intent.getExtras().getString("PUBLSIHEREMAIL");
-        String publisherPhone = intent.getExtras().getString("PUBLISHERPHONE");
+        publisherEmail = intent.getExtras().getString("PUBLSIHEREMAIL");
+        final String publisherPhone = intent.getExtras().getString("PUBLISHERPHONE");
+        adKey = intent.getExtras().getString("ADKEY");
 
         Uri productImagePath = Uri.parse(productImage);
         Uri publisherImagePath = Uri.parse(publisherImage);
 
         publisherUserNameViewPrevious.setText(publisherUserName);
+
+        addRating.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent1 = new Intent(detail_activity.this, Rating_activity.class);
+
+                intent1.putExtra("key", adKey);
+                startActivity(intent1);
+
+            }
+        });
+
+        callNowButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+               
+
+                //PHONE INTENT
+            Uri number = Uri.parse("tel:"+publisherPhone);
+            Intent callIntent = new Intent(Intent.ACTION_DIAL, number);
+
+            PackageManager packageManager = getPackageManager();
+            List<ResolveInfo> activities = packageManager.queryIntentActivities(callIntent, 0);
+            boolean isIntentSafe = activities.size() > 0;
+
+            //PHONE END
+
+                if (isIntentSafe){
+                    startActivity(callIntent);
+                }
+
+            }
+        });
 
 
 
@@ -160,6 +206,12 @@ public class detail_activity extends AppCompatActivity {
         recyclerView.setLayoutManager(HorizontalLayout);
 
         fetch();
+
+        recyclerViewRatings = findViewById(R.id.ratingsRecyclerview);
+        linearLayoutManager = new LinearLayoutManager(detail_activity.this);
+        recyclerViewRatings.setLayoutManager(linearLayoutManager);
+        fetchRatings();
+
     }
 
     public class detailViewHolder extends RecyclerView.ViewHolder {
@@ -191,7 +243,7 @@ public class detail_activity extends AppCompatActivity {
 
         Query query = FirebaseDatabase.getInstance()
                 .getReference()
-                .child("GeneralAds").orderByChild("publisherUsername").equalTo(publisherUserName);
+                .child("GeneralAds").orderByChild("publisherEmail").equalTo(publisherEmail);
 
 
         FirebaseRecyclerOptions<generalAds> options =
@@ -200,11 +252,7 @@ public class detail_activity extends AppCompatActivity {
                             @NonNull
                             @Override
                             public generalAds parseSnapshot(@NonNull DataSnapshot snapshot) {
-//                                    return new generalAds(snapshot.child("price").getValue().toString(),
-//                                            snapshot.child("productImage").getValue().toString(),
-//                                            snapshot.child("publisherImage").getValue().toString(),
-//                                            snapshot.child("title").getValue().toString());
-
+//
                                 generalAds generalAd = snapshot.getValue(generalAds.class);
 
 
@@ -270,17 +318,17 @@ public class detail_activity extends AppCompatActivity {
 
 
 
-                holder.cardView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-
-                        openDetailActivity(model.getProductImage() , model.getDescription(), model.getCategory()
-                                , model.getPublishDate() , model.getPrice() , model.getCurrency() , model.getPriceType()
-                                , model.getWarranty() , model.getCondition() , model.getPublisherImage()
-                                , model.getPublisherUsername() , model.getPublisherEmail(), model.getPublisherphoneNumber());
-
-                    }
-                });
+//                holder.cardView.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//
+//                        openDetailActivity(model.getProductImage() , model.getDescription(), model.getCategory()
+//                                , model.getPublishDate() , model.getPrice() , model.getCurrency() , model.getPriceType()
+//                                , model.getWarranty() , model.getCondition() , model.getPublisherImage()
+//                                , model.getPublisherUsername() , model.getPublisherEmail(), model.getPublisherphoneNumber(), model.getKey());
+//
+//                    }
+//                });
             }
         };
 
@@ -309,6 +357,7 @@ public class detail_activity extends AppCompatActivity {
         intent.putExtra("PUBLISHERUSERNAME" , detail[10]);
         intent.putExtra("PUBLSIHEREMAIL" , detail[11]);
         intent.putExtra("PUBLISHERPHONE" , detail[12]);
+        intent.putExtra("ADKEY" , detail[13]);
 
 
         detail_activity.this.startActivity(intent);
@@ -318,11 +367,126 @@ public class detail_activity extends AppCompatActivity {
     }
 
 
+
+
+    public class ratingsViewHolder extends RecyclerView.ViewHolder {
+
+        public TextView commenterName, comment, date;
+        public ImageView commenterImage;
+        public CardView cardView;
+        public RatingBar ratingBar;
+
+
+        public ratingsViewHolder(@NonNull View itemView) {
+            super(itemView);
+
+            commenterName = itemView.findViewById(R.id.commentername);
+            comment  = itemView.findViewById(R.id.comment_tv);
+            date = itemView.findViewById(R.id.ratingDate);
+            commenterImage = itemView.findViewById(R.id.commenterImage);
+            cardView = itemView.findViewById(R.id.constraint);
+            ratingBar = itemView.findViewById(R.id.ratignBar_comment);
+
+
+
+
+
+        }
+
+
+    }
+
+
+
+    private void fetchRatings() {
+
+
+        Query query = FirebaseDatabase.getInstance()
+                .getReference()
+                .child("comments").orderByChild("adkey").equalTo(adKey);
+
+
+        FirebaseRecyclerOptions<comment> options =
+                new FirebaseRecyclerOptions.Builder<comment>()
+                        .setQuery(query, new SnapshotParser<comment>() {
+                            @NonNull
+                            @Override
+                            public comment parseSnapshot(@NonNull DataSnapshot snapshot) {
+//
+
+
+                                comment comment = snapshot.getValue(comment.class);
+
+
+                                return comment;
+                            }
+                        }).build();
+
+
+        //adapter settings
+
+
+
+        adapterRatings = new FirebaseRecyclerAdapter<comment, ratingsViewHolder>(options) {
+
+
+            @NonNull
+            @Override
+            public ratingsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
+
+                View itemview = LayoutInflater.from(parent.getContext()).inflate(R.layout.rating_layout, parent, false);
+
+                return new ratingsViewHolder(itemview);
+
+            }
+
+            @Override
+            protected void onBindViewHolder(@NonNull final ratingsViewHolder holder, int position, @NonNull final comment model) {
+
+                holder.commenterImage.setAnimation(AnimationUtils.loadAnimation(detail_activity.this, R.anim.rv_fade_transition));
+                holder.cardView.setAnimation(AnimationUtils.loadAnimation(detail_activity.this, R.anim.rv_scale_animation));
+
+
+                holder.commenterName.setText(model.getUsername());
+                holder.comment.setText(model.getComment());
+                holder.date.setText(model.getDate());
+                holder.ratingBar.setRating(model.getRating());
+
+                Toast.makeText(detail_activity.this, model.getAdkey(), Toast.LENGTH_SHORT).show();
+                Uri commenterImage = Uri.parse(model.getCommenterImage());
+
+
+
+                RequestOptions options = new RequestOptions()
+                        .centerCrop()
+                        .placeholder(R.drawable.avatar)
+                        .error(R.drawable.ads_icon);
+
+                Glide.with(holder.commenterImage.getContext())
+                        .load(commenterImage)
+                        .apply(options).override(60, 60).into(holder.commenterImage);
+
+
+
+            }
+        };
+
+
+
+        recyclerViewRatings.setAdapter(adapterRatings);
+
+
+    }
+
+
+
     @Override
     protected void onStart() {
         super.onStart();
 
         adapter.startListening();
+        adapterRatings.startListening();
     }
 
     @Override
@@ -330,6 +494,7 @@ public class detail_activity extends AppCompatActivity {
         super.onStop();
 
         adapter.stopListening();
+        adapterRatings.stopListening();
     }
 
     public void showDialog(){

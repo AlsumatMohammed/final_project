@@ -14,16 +14,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:icon">
-        <activity android:name=".Rating_activity">
+        <activity android:name=".test">
 
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
-        <activity android:name=".detail_activity"></activity>
+        <activity android:name=".Rating_activity"></activity>
+        <activity android:name=".detail_activity" />
         <activity android:name=".publishAd"></activity>
         <activity
             android:name=".edit_profile"
@@ -33,7 +29,12 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".splashcreen"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar">
+
+
+        </activity>
+
+
         <activity
             android:name=".sign_up"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -46,6 +47,12 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
         </activity>
 

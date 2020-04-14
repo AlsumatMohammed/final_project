@@ -123,7 +123,7 @@ public class publishAd extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_publish_ad);
 
-        getPublisherInfromation();
+        getPublisherInformation();
 //        getPublisherImage();
 
         pDialog = new SweetAlertDialog(publishAd.this, SweetAlertDialog.PROGRESS_TYPE);
@@ -425,7 +425,7 @@ public class publishAd extends AppCompatActivity {
                             .show();
                     Toast.makeText(publishAd.this, "publisher information not acquired, try again", Toast.LENGTH_SHORT).show();
                     dismissDialog();
-                    getPublisherInfromation();
+                    getPublisherInformation();
                     return;
 
                 }
@@ -451,85 +451,20 @@ public class publishAd extends AppCompatActivity {
                 generalAd.setPublisherImage(" ");
 
                 DatabaseReference databaseReference = db.child("GeneralAds").push();
-                databaseReference.setValue(generalAd);
+
                 String key = databaseReference.getKey();
                 generalAd.setKey(key);
+                databaseReference.setValue(generalAd);
+                    sendPicture();
 
-                sendPicture();
 
-//                if (publisherImageConfirm && sendingImageConfirm &&productImageReferenceConfirm){
-//
-//                    Toast.makeText(publishAd.this, "done", Toast.LENGTH_SHORT).show();
-//                }
-//                else {
-//                    Toast.makeText(publishAd.this, "not done", Toast.LENGTH_SHORT).show();
-//                }
 
                 Toast.makeText(publishAd.this, title+" "+category+" "+condition+" "+warranty
                         +" "+imagepath+" "+description+" "+priceType+" "+price+" "+currency+" "
                         +publishDate, Toast.LENGTH_SHORT).show();
             }
         });
-//        Button button = findViewById(R.id.button2);
-//        Button button1 = findViewById(R.id.button3);
-//
-//
-//        getPublisherInfromation();
-//        button1.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                pickFormGallery();
-//            }
-//        });
-//
-//
-//
-//
-//
-//
-//
-//         db = FirebaseDatabase.getInstance().getReference();
-//        //final FirebaseAdsHelper firebaseAdsHelper = new FirebaseAdsHelper(db);
-//
-//        button.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//                 generalAd = new generalAds();
-//
-//                if (!addPicture()){
-//
-//                    return;
-//                }
-//
-//
-//                if (publisher_name.isEmpty() || publisher_phone.isEmpty() || publisher_email.isEmpty()){
-//
-//                    Toast.makeText(publishAd.this, "publisher information not acquired", Toast.LENGTH_SHORT).show();
-//                    getPublisherInfromation();
-//
-//                }
-//
-//                getPublisherImage();
-//
-//                generalAd.setPublisherEmail(publisher_email);
-//                generalAd.setPublisherphoneNumber(publisher_phone);
-//                generalAd.setPublisherUsername(publisher_name);
-//                generalAd.setPrice("$200");
-//                generalAd.setTitle("Brake system");
-//                generalAd.setProductImage(" ");
-//                generalAd.setPublisherImage(" ");
-//
-//                DatabaseReference databaseReference = db.child("GeneralAds").push();
-//                databaseReference.setValue(generalAd);
-//                String key = databaseReference.getKey();
-//                generalAd.setKey(key);
-//
-//                sendPicture();
-//
-//
-//            }
-//        });
+
     }
 
     public void sendPicture(){
@@ -628,7 +563,7 @@ public class publishAd extends AppCompatActivity {
 
     }
 
-    public void getPublisherInfromation(){
+    public void getPublisherInformation(){
 
         final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();

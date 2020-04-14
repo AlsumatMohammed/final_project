@@ -7,14 +7,12 @@
     tools:context=".detail_activity"
     android:background="#fff">
 
-    <ScrollView
+
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintTop_toBottomOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent">
-
+        >
 
 
         <LinearLayout
@@ -27,17 +25,15 @@
                 android:id="@+id/productImage"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:src="@color/black"/>
-
+                android:src="@color/black" />
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_margin="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="10dp"
                 android:background="@drawable/card_detail"
-                android:padding="10dp"
-                >
+                android:padding="10dp">
 
 
                 <ImageView
@@ -46,31 +42,30 @@
                     android:layout_height="wrap_content"
                     android:src="@drawable/forsale_icon"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/description"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintLeft_toLeftOf="parent"
                     android:layout_marginTop="10dp"
-                    app:layout_constraintTop_toBottomOf="@id/forsale"
-                    android:text="Description:"
-                    android:textSize="18sp"
                     android:fontFamily="@font/montserrat_bold"
-                    android:textColor="@color/title_text_color"/>
+                    android:text="Description:"
+                    android:textColor="@color/title_text_color"
+                    android:textSize="18sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/forsale" />
 
                 <TextView
                     android:id="@+id/description_detail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
                     android:fontFamily="@font/montserrat"
                     android:text="lkkaf;kjlaf;kjladfs;kjlfdsa;jklfasdadsfasdfasdf"
                     android:textColor="@color/colorPrimaryDark"
                     android:textSize="15dp"
                     app:layout_constraintLeft_toLeftOf="@id/description"
-                    android:layout_marginLeft="10dp"
                     app:layout_constraintTop_toBottomOf="@id/description"
                     tools:layout_editor_absoluteY="61dp" />
 
@@ -78,8 +73,8 @@
                     android:id="@+id/cateogryImage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/list"
                     android:layout_marginTop="10dp"
+                    android:src="@drawable/list"
                     app:layout_constraintBottom_toBottomOf="@+id/cateogryDetail"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/description_detail" />
@@ -88,10 +83,10 @@
                     android:id="@+id/cateogryDetail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
                     android:layout_marginLeft="10dp"
-                    android:text="Brake Systems"
+                    android:layout_marginTop="10dp"
                     android:fontFamily="@font/montserrat_bold"
+                    android:text="Brake Systems"
                     android:textSize="13sp"
                     app:layout_constraintLeft_toRightOf="@id/cateogryImage"
                     app:layout_constraintTop_toBottomOf="@id/description_detail" />
@@ -101,20 +96,20 @@
                     android:id="@+id/calendarImage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/calendar"
                     android:layout_marginTop="10dp"
+                    android:src="@drawable/calendar"
+                    app:layout_constraintBottom_toBottomOf="@id/date_detail"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/cateogryImage"
-                    app:layout_constraintBottom_toBottomOf="@id/date_detail"/>
+                    app:layout_constraintTop_toBottomOf="@id/cateogryImage" />
 
                 <TextView
                     android:id="@+id/date_detail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
                     android:layout_marginLeft="10dp"
-                    android:text="Wed, April 7, 2019"
+                    android:layout_marginTop="10dp"
                     android:fontFamily="@font/montserrat_bold"
+                    android:text="Wed, April 7, 2019"
                     android:textSize="13sp"
                     app:layout_constraintLeft_toRightOf="@id/cateogryImage"
                     app:layout_constraintTop_toBottomOf="@id/cateogryDetail" />
@@ -134,81 +129,79 @@
                     android:id="@+id/price_detail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
                     android:fontFamily="@font/montserrat_bold"
                     android:text="$ 700"
                     android:textColor="@color/text_color_orange"
                     android:textSize="13sp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="10dp"
-                    app:layout_constraintTop_toBottomOf="@id/date_detail"
-                    app:layout_constraintLeft_toRightOf="@id/priceImage"/>
+                    app:layout_constraintLeft_toRightOf="@id/priceImage"
+                    app:layout_constraintTop_toBottomOf="@id/date_detail" />
 
 
                 <TextView
                     android:id="@+id/warranty"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintLeft_toLeftOf="@id/priceImage"
                     android:layout_marginTop="10dp"
-                    app:layout_constraintTop_toBottomOf="@id/priceImage"
-                    app:layout_constraintBottom_toBottomOf="@id/warranty_detail"
-                    android:text="Warranty:"
-                    android:textSize="15sp"
                     android:fontFamily="@font/montserrat_bold"
-                    android:textColor="@color/title_text_color"/>
+                    android:text="Warranty:"
+                    android:textColor="@color/title_text_color"
+                    android:textSize="15sp"
+                    app:layout_constraintBottom_toBottomOf="@id/warranty_detail"
+                    app:layout_constraintLeft_toLeftOf="@id/priceImage"
+                    app:layout_constraintTop_toBottomOf="@id/priceImage" />
 
 
                 <TextView
                     android:id="@+id/warranty_detail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
                     android:layout_marginLeft="10dp"
-                    android:text="NO"
+                    android:layout_marginTop="10dp"
                     android:fontFamily="@font/montserrat_bold"
+                    android:text="NO"
                     android:textSize="13sp"
                     app:layout_constraintLeft_toRightOf="@id/warranty"
                     app:layout_constraintTop_toBottomOf="@id/price_detail" />
-
 
 
                 <TextView
                     android:id="@+id/condition"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintLeft_toLeftOf="@id/priceImage"
                     android:layout_marginTop="10dp"
-                    app:layout_constraintTop_toBottomOf="@id/warranty"
-                    app:layout_constraintBottom_toBottomOf="@id/condition_detail"
-                    android:text="Condition :"
-                    android:textSize="15sp"
                     android:fontFamily="@font/montserrat_bold"
-                    android:textColor="@color/title_text_color"/>
+                    android:text="Condition :"
+                    android:textColor="@color/title_text_color"
+                    android:textSize="15sp"
+                    app:layout_constraintBottom_toBottomOf="@id/condition_detail"
+                    app:layout_constraintLeft_toLeftOf="@id/priceImage"
+                    app:layout_constraintTop_toBottomOf="@id/warranty" />
 
 
                 <TextView
                     android:id="@+id/condition_detail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
                     android:layout_marginLeft="10dp"
-                    android:text="Used"
+                    android:layout_marginTop="10dp"
                     android:fontFamily="@font/montserrat_bold"
+                    android:text="Used"
                     android:textSize="13sp"
                     app:layout_constraintLeft_toRightOf="@id/condition"
                     app:layout_constraintTop_toBottomOf="@id/warranty_detail" />
 
                 <Button
+                    android:id="@+id/favouriteButton"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:background="@drawable/star_black"
-                    app:layout_constraintTop_toBottomOf="@id/condition_detail"
                     android:layout_margin="10dp"
+                    android:background="@drawable/star_black"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    />
-
+                    app:layout_constraintTop_toBottomOf="@id/condition_detail" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -279,10 +272,10 @@
                     android:id="@+id/publisherPhone_detail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
                     android:fontFamily="@font/montserrat"
                     android:text="716434383"
                     android:textSize="15sp"
-                    android:layout_marginTop="5dp"
                     app:layout_constraintLeft_toLeftOf="@id/mobile"
                     app:layout_constraintRight_toRightOf="@id/mobile"
                     app:layout_constraintTop_toBottomOf="@id/mobile" />
@@ -302,10 +295,10 @@
                     android:id="@+id/email"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
                     android:fontFamily="@font/montserrat_bold"
                     android:text="Email"
                     android:textSize="20sp"
-                    android:layout_marginTop="20dp"
                     app:layout_constraintEnd_toEndOf="@+id/publisherPhone_detail"
                     app:layout_constraintStart_toStartOf="@+id/publisherPhone_detail"
                     app:layout_constraintTop_toBottomOf="@+id/publisherPhone_detail" />
@@ -315,10 +308,10 @@
                     android:id="@+id/publisherEmail_detail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
                     android:fontFamily="@font/montserrat"
                     android:text="mohammedsaleh@gmail.com"
                     android:textSize="15sp"
-                    android:layout_marginTop="5dp"
                     app:layout_constraintEnd_toEndOf="@+id/email"
                     app:layout_constraintStart_toStartOf="@+id/email"
                     app:layout_constraintTop_toBottomOf="@+id/email" />
@@ -327,15 +320,14 @@
                     android:id="@+id/ratingBar_detail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintTop_toBottomOf="@id/publisherEmail_detail"
+                    android:numStars="5"
+                    android:saveEnabled="true"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    android:numStars="5"
-                    android:saveEnabled="true"/>
+                    app:layout_constraintTop_toBottomOf="@id/publisherEmail_detail" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -351,42 +343,153 @@
                     android:id="@+id/previousAds"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintLeft_toLeftOf="parent"
                     android:layout_marginTop="10dp"
-                    app:layout_constraintTop_toTopOf="parent"
-                    android:text="Previous Ads By:"
-                    android:textSize="15sp"
                     android:fontFamily="@font/montserrat_bold"
-                    android:textColor="@color/title_text_color"/>
+                    android:text="Previous Ads By:"
+                    android:textColor="@color/title_text_color"
+                    android:textSize="15sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/publisherName_previous"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:layout_constraintLeft_toRightOf="@id/previousAds"
-                    app:layout_constraintTop_toTopOf="@id/previousAds"
-                    app:layout_constraintBottom_toBottomOf="@id/previousAds"
-                    android:text="SupplierName"
-                    android:textSize="15sp"
                     android:layout_marginLeft="5dp"
                     android:fontFamily="@font/montserrat_bold"
-                    android:textColor="@color/text_color_orange"/>
+                    android:text="SupplierName"
+                    android:textColor="@color/text_color_orange"
+                    android:textSize="15sp"
+                    app:layout_constraintBottom_toBottomOf="@id/previousAds"
+                    app:layout_constraintLeft_toRightOf="@id/previousAds"
+                    app:layout_constraintTop_toTopOf="@id/previousAds" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/previousAdsRecyclerview"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:clipToPadding="false"
-                android:padding="10dp"
-                android:layout_margin="10dp"
-                android:scrollbars="horizontal"
-                app:layout_constraintTop_toBottomOf="@id/previousAds"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                />
+                    android:id="@+id/previousAdsRecyclerview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:clipToPadding="false"
+                    android:padding="10dp"
+                    android:scrollbars="horizontal"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/previousAds" />
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/card_detail"
+                android:padding="10dp">
+
+                <TextView
+                    android:id="@+id/ratings_reviews"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:text="Reviews and Ratings"
+                    android:textColor="@color/title_text_color"
+                    android:textSize="15sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <br.com.simplepass.loadingbutton.customViews.CircularProgressButton
+                    android:id="@+id/addRatingButton"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/comment_button"
+                    android:drawableBottom="@drawable/more"
+                    android:drawablePadding="5dp"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:text="Add a rating"
+                    android:textColor="@color/button"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/ratings_reviews"
+
+                    />
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/ratingsRecyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:clipToPadding="false"
+                    android:padding="10dp"
+                    android:scrollbars="vertical"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/addRatingButton" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/card_detail"
+                android:padding="10dp" />
+
 
         </LinearLayout>
 
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/text_color_orange"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="parent"
+        >
+
+        <Button
+            android:id="@+id/callNow_button"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/text_color_orange"
+            android:text="Call Now"
+            android:elevation="10dp"
+            android:layout_weight="1"
+
+            />
+
+        <view
+            android:id="@+id/view"
+            class="android.widget.TextView"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:background="@color/whiteTextColor"
+            />
+
+
+        <Button
+            android:id="@+id/messageNow_button"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/text_color_orange"
+            android:text="Message Now"
+            android:elevation="10dp"
+            android:layout_weight="1"
+            />
+
+    </LinearLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

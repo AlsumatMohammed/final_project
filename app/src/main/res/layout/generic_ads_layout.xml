@@ -49,7 +49,7 @@
             />
 
         <TextView
-            android:id="@+id/title_ad"
+            android:id="@+id/commenterName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/montserrat_bold"
@@ -68,9 +68,9 @@
             android:id="@+id/price"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/title_ad"
-            android:layout_alignStart="@id/title_ad"
-            android:layout_alignLeft="@id/title_ad"
+            android:layout_below="@id/commenterName"
+            android:layout_alignStart="@id/commenterName"
+            android:layout_alignLeft="@id/commenterName"
             android:layout_marginTop="3dp"
             android:layout_marginRight="16dp"
             android:lineSpacingExtra="8dp"
@@ -133,9 +133,9 @@
         android:src="@drawable/avatar"
         app:civ_border_width="2dp"
         app:civ_border_color="@color/text_color_orange"
-        app:layout_constraintEnd_toStartOf="@+id/relativeLayout"
-        app:layout_constraintStart_toStartOf="@+id/relativeLayout"
-        app:layout_constraintTop_toTopOf="@+id/relativeLayout"
+        app:layout_constraintEnd_toStartOf="@id/relativeLayout"
+        app:layout_constraintStart_toStartOf="@id/relativeLayout"
+        app:layout_constraintTop_toTopOf="@id/relativeLayout"
 
         >
 

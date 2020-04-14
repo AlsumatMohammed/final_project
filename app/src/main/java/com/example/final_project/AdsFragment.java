@@ -19,7 +19,6 @@ import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -35,8 +34,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-
 
 /**
  * A simple {@link Fragment} subclass.
@@ -47,9 +44,12 @@ public class AdsFragment extends Fragment {
 
     public FirebaseAuth firebaseAuth;
     public FirebaseUser firebaseUser;
+
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
     private FirebaseRecyclerAdapter adapter;
+
+
     SweetAlertDialog pDialog;
     ImageView publishButton;
     // TODO: Rename parameter arguments, choose names that match
@@ -179,7 +179,7 @@ public class AdsFragment extends Fragment {
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            title = itemView.findViewById(R.id.title_ad);
+            title = itemView.findViewById(R.id.commenterName);
             price = itemView.findViewById(R.id.price);
             //productimage = itemView.findViewById(R.id.prodcutImage);
             publisherImage = itemView.findViewById(R.id.publisherImage);
@@ -202,6 +202,7 @@ public class AdsFragment extends Fragment {
                 .child("GeneralAds");
 
 
+
         FirebaseRecyclerOptions<generalAds> options =
                 new FirebaseRecyclerOptions.Builder<generalAds>()
                         .setQuery(query, new SnapshotParser<generalAds>() {
@@ -214,6 +215,7 @@ public class AdsFragment extends Fragment {
 //                                            snapshot.child("title").getValue().toString());
 
                                 generalAds generalAd = snapshot.getValue(generalAds.class);
+
 
 
                                 return generalAd;
@@ -291,7 +293,7 @@ public class AdsFragment extends Fragment {
                         openDetailActivity(model.getProductImage() , model.getDescription(), model.getCategory()
                                 , model.getPublishDate() , model.getPrice() , model.getCurrency() , model.getPriceType()
                                 , model.getWarranty() , model.getCondition() , model.getPublisherImage()
-                                , model.getPublisherUsername() , model.getPublisherEmail(), model.getPublisherphoneNumber());
+                                , model.getPublisherUsername() , model.getPublisherEmail(), model.getPublisherphoneNumber(), model.getKey());
 
                     }
                 });
@@ -323,6 +325,7 @@ public class AdsFragment extends Fragment {
             intent.putExtra("PUBLISHERUSERNAME" , detail[10]);
             intent.putExtra("PUBLSIHEREMAIL" , detail[11]);
             intent.putExtra("PUBLISHERPHONE" , detail[12]);
+            intent.putExtra("ADKEY" , detail[13]);
 
 
         getActivity().startActivity(intent);
