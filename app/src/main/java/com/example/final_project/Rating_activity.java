@@ -43,6 +43,7 @@ public class Rating_activity extends AppCompatActivity {
     String adKey;
     String commenterImage = "";
     String commenterUserName = "";
+    String publisherEmail;
     SweetAlertDialog pDialog;
     public FirebaseAuth firebaseAuth;
 
@@ -73,7 +74,7 @@ public class Rating_activity extends AppCompatActivity {
 
 
         adKey = intent.getExtras().getString("key");
-
+        publisherEmail = intent.getExtras().getString("PUBLISHEREMAIL");
 
 
         submitRating.setOnClickListener(new View.OnClickListener() {
@@ -102,7 +103,9 @@ public class Rating_activity extends AppCompatActivity {
                 comment.setRating(rating);
                 comment.setCommenterImage(" ");
                 comment.setUsername(" ");
+                comment.setPublisherEmail(publisherEmail);
                 comment.setAdkey(adKey);
+
 
                 DatabaseReference databaseReference1 = databaseReference.child("comments").push();
 

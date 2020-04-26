@@ -322,6 +322,7 @@
                     android:layout_height="wrap_content"
                     android:numStars="5"
                     android:saveEnabled="true"
+                    android:theme="@style/RatingBar"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/publisherEmail_detail" />
@@ -372,6 +373,7 @@
                     android:clipToPadding="false"
                     android:padding="10dp"
                     android:scrollbars="horizontal"
+                    android:nestedScrollingEnabled="false"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/previousAds" />
@@ -409,9 +411,9 @@
                     android:layout_marginBottom="20dp"
                     android:background="@drawable/comment_button"
                     android:drawableBottom="@drawable/more"
-                    android:drawablePadding="5dp"
+                    android:drawablePadding="10dp"
                     android:fontFamily="@font/montserrat_bold"
-                    android:text="Add a rating"
+                        android:text="Rate the Supplier"
                     android:textColor="@color/button"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
@@ -428,6 +430,7 @@
                     android:clipToPadding="false"
                     android:padding="10dp"
                     android:scrollbars="vertical"
+                    android:nestedScrollingEnabled="false"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/addRatingButton" />

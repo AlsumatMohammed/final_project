@@ -6,18 +6,27 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import br.com.simplepass.loadingbutton.customViews.CircularProgressButton;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.firebase.ui.database.SnapshotParser;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -25,6 +34,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -50,12 +60,24 @@ public class ProfileFragment extends Fragment {
     public TextView emailAddress;
     public TextView userType;
     public CircularProgressButton logoutButton;
-    public CircularProgressButton editprofileButton;
+
 
     public ImageView profileimageView;
 
 
     SweetAlertDialog pDialog;
+    public CardView previousCardProfile;
+
+    private RecyclerView recyclerView;
+    private LinearLayoutManager linearLayoutManager;
+    private FirebaseRecyclerAdapter adapter;
+
+    String publisherEmail;
+
+    private RecyclerView previousAdsRecyclerView;
+    private LinearLayoutManager linearLayoutManagerPrevious;
+    private FirebaseRecyclerAdapter previousAdsAdapter;
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -130,10 +152,13 @@ public class ProfileFragment extends Fragment {
         emailAddress = view.findViewById(R.id.email_fragmentprofile);
         userType = view.findViewById(R.id.usertype_fragmentprofile);
         profileimageView = view.findViewById(R.id.profile_imageprofile_fragment);
-
         logoutButton = view.findViewById(R.id.logout_fragmentprofile);
-        editprofileButton = view.findViewById(R.id.edit_profile_button__fragmentprofile);
+        previousCardProfile = view.findViewById(R.id.previousCardProfile);
 
+
+
+        publisherEmail = firebaseAuth.getCurrentUser().getEmail();
+        Toast.makeText(getActivity(), publisherEmail, Toast.LENGTH_SHORT).show();
 
         DatabaseReference databaseReference = firebaseDatabase.getReference();
         StorageReference storageReference = firebaseStorage.getReference();
@@ -142,14 +167,11 @@ public class ProfileFragment extends Fragment {
 
 
 
-
         storageReference.child(firebaseAuth.getUid()).child("images").child("Profile Pic").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
-
-
                 Glide.with(getActivity()).load(uri).centerCrop().into(profileimageView);
-
+                dismissDialog();
 
 
 
@@ -173,8 +195,13 @@ public class ProfileFragment extends Fragment {
                 emailAddress.setText(firebaseUser.getEmail());
                 userType.setText(userProfile.getUserType());
 
+                if (userProfile.getUserType().equals("customer")){
 
-                dismissDialog();
+                    previousCardProfile.setVisibility(View.GONE);
+                }
+
+
+
 
 
             }
@@ -204,13 +231,345 @@ public class ProfileFragment extends Fragment {
         });
 
 
+        recyclerView = view.findViewById(R.id.favouritesAdsRecyclerview);
+        linearLayoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(linearLayoutManager);
 
+
+        fetch();
+
+        previousAdsRecyclerView = view.findViewById(R.id.previousAdsProfileRecyclerView);
+        linearLayoutManagerPrevious = new LinearLayoutManager(getActivity());
+        previousAdsRecyclerView.setLayoutManager(linearLayoutManagerPrevious);
+        fetchPreviousAds();
         return view;
 
     }
 
+    public class favouritesViewHolder extends RecyclerView.ViewHolder {
+
+        public TextView title, price, date, publisherName, category;
+        public ImageView productimage, publisherImage;
+        public RelativeLayout rev_layout;
+
+
+        public favouritesViewHolder(@NonNull View itemView) {
+            super(itemView);
+
+            title = itemView.findViewById(R.id.commenterName);
+            price = itemView.findViewById(R.id.price);
+            productimage = itemView.findViewById(R.id.productImage_adsFragment);
+            publisherImage = itemView.findViewById(R.id.publisherImage);
+            rev_layout = itemView.findViewById(R.id.relativeLayout);
+            publisherName = itemView.findViewById(R.id.publisherName);
+            date = itemView.findViewById(R.id.date);
+            category = itemView.findViewById(R.id.category);
+        }
+
+
+    }
+
+
+
+    private void fetch() {
+
+        //Toast.makeText(getActivity(), firebaseAuth.getUid(), Toast.LENGTH_SHORT).show();
+        showDialog();
+        Query query = FirebaseDatabase.getInstance()
+                .getReference()
+                .child("favouritesAds").child(firebaseAuth.getUid());
+
+
+
+        FirebaseRecyclerOptions<generalAds> options =
+                new FirebaseRecyclerOptions.Builder<generalAds>()
+                        .setQuery(query, new SnapshotParser<generalAds>() {
+                            @NonNull
+                            @Override
+                            public generalAds parseSnapshot(@NonNull DataSnapshot snapshot) {
+//
+
+                                generalAds generalAd = snapshot.getValue(generalAds.class);
+
+
+
+                                return generalAd;
+                            }
+                        }).build();
+
+
+        //adapter settings
+
+
+
+        adapter = new FirebaseRecyclerAdapter<generalAds, favouritesViewHolder>(options) {
+
+
+            @NonNull
+            @Override
+            public favouritesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
+
+                View itemview = LayoutInflater.from(parent.getContext()).inflate(R.layout.generic_ads_layout, parent, false);
+
+                return new favouritesViewHolder(itemview);
+
+            }
+
+            @Override
+            protected void onBindViewHolder(@NonNull final favouritesViewHolder holder, int position, @NonNull final generalAds model) {
+
+                holder.publisherImage.setAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.rv_fade_transition));
+                holder.rev_layout.setAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.rv_scale_animation));
+
+                String currency = model.getCurrency();
+                String price = model.getPrice();
+
+
+                if (currency.equals("YER")){
+                    holder.price.setText(model.getPrice()+" "+currency);
+                }
+                else if (currency.equals("$")){
+                    holder.price.setText(currency+" "+model.getPrice());
+                }
+
+
+                if (price.isEmpty()){
+                    holder.price.setText("FREE");
+                }
+//
+                holder.title.setText(model.getTitle());
+                holder.date.setText(model.getPublishDate());
+                holder.publisherName.setText(model.getPublisherUsername());
+                holder.category.setText(model.getCategory());
+                final Uri productImage = Uri.parse(model.getProductImage());
+                Uri publisherImage = Uri.parse(model.getPublisherImage());
+
+                Toast.makeText(getActivity(), holder.category.getText(), Toast.LENGTH_SHORT).show();
+
+                RequestOptions options = new RequestOptions()
+                        .centerCrop()
+                        .placeholder(R.drawable.avatar)
+                        .error(R.drawable.ads_icon);
+
+                Glide.with(holder.productimage.getContext())
+                        .load(productImage)
+                        .apply(options).centerCrop().override(300, 300).into(holder.productimage);
+
+                holder.productimage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        startActivity(new Intent(Intent.ACTION_VIEW,
+                                Uri.parse(model.getProductImage())));
+
+                    }
+                });
+                Glide.with(holder.publisherImage.getContext())
+                        .load(publisherImage)
+                        .apply(options).override(40, 40).into(holder.publisherImage);
+
+
+
+                holder.rev_layout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        openDetailActivity(model.getProductImage() , model.getDescription(), model.getCategory()
+                                , model.getPublishDate() , model.getPrice() , model.getCurrency() , model.getPriceType()
+                                , model.getWarranty() , model.getCondition() , model.getPublisherImage()
+                                , model.getPublisherUsername() , model.getPublisherEmail(), model.getPublisherphoneNumber(), model.getKey(), model.getTitle());
+
+                    }
+                });
+            }
+        };
+
+
+        recyclerView.setAdapter(adapter);
+
+
+    }
+
+    public class previousAdsProfileHolder extends RecyclerView.ViewHolder {
+
+        public TextView title, price, date, publisherName, category;
+        public ImageView productimage, publisherImage;
+        public RelativeLayout rev_layout;
+
+
+        public previousAdsProfileHolder(@NonNull View itemView) {
+            super(itemView);
+
+            title = itemView.findViewById(R.id.commenterName);
+            price = itemView.findViewById(R.id.price);
+            productimage = itemView.findViewById(R.id.productImage_adsFragment);
+            publisherImage = itemView.findViewById(R.id.publisherImage);
+            rev_layout = itemView.findViewById(R.id.relativeLayout);
+            publisherName = itemView.findViewById(R.id.publisherName);
+            date = itemView.findViewById(R.id.date);
+            category = itemView.findViewById(R.id.category);
+        }
+
+
+    }
+
+
+
+    private void fetchPreviousAds() {
+
+        //Toast.makeText(getActivity(), firebaseAuth.getUid(), Toast.LENGTH_SHORT).show();
+        showDialog();
+        Query query = FirebaseDatabase.getInstance()
+                .getReference()
+                .child("GeneralAds").orderByChild("publisherEmail").equalTo(publisherEmail);
+
+
+
+        FirebaseRecyclerOptions<generalAds> options =
+                new FirebaseRecyclerOptions.Builder<generalAds>()
+                        .setQuery(query, new SnapshotParser<generalAds>() {
+                            @NonNull
+                            @Override
+                            public generalAds parseSnapshot(@NonNull DataSnapshot snapshot) {
+//
+
+                                generalAds generalAd = snapshot.getValue(generalAds.class);
+
+
+
+                                return generalAd;
+                            }
+                        }).build();
+
+
+        //adapter settings
+
+
+
+        previousAdsAdapter = new FirebaseRecyclerAdapter<generalAds, previousAdsProfileHolder>(options) {
+
+
+            @NonNull
+            @Override
+            public previousAdsProfileHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
+
+                View itemview = LayoutInflater.from(parent.getContext()).inflate(R.layout.generic_ads_layout, parent, false);
+
+                return new previousAdsProfileHolder(itemview);
+
+            }
+
+            @Override
+            protected void onBindViewHolder(@NonNull final previousAdsProfileHolder holder, int position, @NonNull final generalAds model) {
+
+                holder.publisherImage.setAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.rv_fade_transition));
+                holder.rev_layout.setAnimation(AnimationUtils.loadAnimation(getActivity(), R.anim.rv_scale_animation));
+
+                String currency = model.getCurrency();
+                String price = model.getPrice();
+
+
+                if (currency.equals("YER")){
+                    holder.price.setText(model.getPrice()+" "+currency);
+                }
+                else if (currency.equals("$")){
+                    holder.price.setText(currency+" "+model.getPrice());
+                }
+
+
+                if (price.isEmpty()){
+                    holder.price.setText("FREE");
+                }
+//
+                holder.title.setText(model.getTitle());
+                holder.date.setText(model.getPublishDate());
+                holder.publisherName.setText(model.getPublisherUsername());
+                holder.category.setText(model.getCategory());
+                final Uri productImage = Uri.parse(model.getProductImage());
+                Uri publisherImage = Uri.parse(model.getPublisherImage());
+
+                Toast.makeText(getActivity(), holder.category.getText(), Toast.LENGTH_SHORT).show();
+
+                RequestOptions options = new RequestOptions()
+                        .centerCrop()
+                        .placeholder(R.drawable.avatar)
+                        .error(R.drawable.ads_icon);
+
+                Glide.with(holder.productimage.getContext())
+                        .load(productImage)
+                        .apply(options).centerCrop().override(300, 300).into(holder.productimage);
+
+                holder.productimage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        startActivity(new Intent(Intent.ACTION_VIEW,
+                                Uri.parse(model.getProductImage())));
+
+                    }
+                });
+                Glide.with(holder.publisherImage.getContext())
+                        .load(publisherImage)
+                        .apply(options).override(40, 40).into(holder.publisherImage);
+
+
+
+                holder.rev_layout.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        openDetailActivity(model.getProductImage() , model.getDescription(), model.getCategory()
+                                , model.getPublishDate() , model.getPrice() , model.getCurrency() , model.getPriceType()
+                                , model.getWarranty() , model.getCondition() , model.getPublisherImage()
+                                , model.getPublisherUsername() , model.getPublisherEmail(), model.getPublisherphoneNumber(), model.getKey(), model.getTitle());
+
+                    }
+                });
+            }
+        };
+
+
+        previousAdsRecyclerView.setAdapter(previousAdsAdapter);
+
+
+    }
+
+    public void openDetailActivity(String... detail){
+
+        Intent intent = new Intent(getActivity(), detail_activity.class);
+
+        intent.putExtra("PRODUCT_IMAGE" , detail[0]);
+        intent.putExtra("DESCRIPTION" , detail[1]);
+        intent.putExtra("CATEGORY" , detail[2]);
+        intent.putExtra("PUBLISHDATE" , detail[3]);
+        intent.putExtra("PRICE" , detail[4]);
+        intent.putExtra("CURRENCY" , detail[5]);
+        intent.putExtra("PRICETYPE" , detail[6]);
+        intent.putExtra("WARRANTY" , detail[7]);
+        intent.putExtra("CONDITION" , detail[8]);
+
+        //PUBLISHER
+        intent.putExtra("PUBLISHERIMAGE" , detail[9]);
+        intent.putExtra("PUBLISHERUSERNAME" , detail[10]);
+        intent.putExtra("PUBLSIHEREMAIL" , detail[11]);
+        intent.putExtra("PUBLISHERPHONE" , detail[12]);
+        intent.putExtra("ADKEY" , detail[13]);
+        intent.putExtra("ADTITLE", detail[14]);
+
+
+        getActivity().startActivity(intent);
+
+
+
+    }
+
+
+
     public void showDialog(){
         pDialog.show();
+
 
         //editprofileButton.startAnimation();
 
@@ -219,8 +578,24 @@ public class ProfileFragment extends Fragment {
     public void dismissDialog(){
         pDialog.dismiss();
 
+
         //editprofileButton.revertAnimation();
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        adapter.startListening();
+        previousAdsAdapter.startListening();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        adapter.stopListening();
+        previousAdsAdapter.stopListening();
+    }
+
 
     public void signout(){
 

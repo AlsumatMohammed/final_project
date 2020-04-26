@@ -1,0 +1,459 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#F0F2F2"
+    android:paddingTop="15dp">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/card_bg"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_margin="20dp">
+
+        <EditText
+            android:id="@+id/searchAll"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:background="@drawable/card_bg"
+            android:drawableRight="@drawable/search_icon"
+            android:fontFamily="@font/montserrat"
+            android:hint="Search for Category ..."
+            android:padding="10dp"
+            android:textSize="15sp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:inputType=""
+             />
+
+        <view
+
+            class="android.widget.TextView"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:background="@color/text_color_orange"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/searchAll"
+            app:layout_constraintBottom_toTopOf="@id/chassisButton" />
+
+
+        <TextView
+            android:id="@+id/chassisButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Chassis &amp; Suspension"
+            android:fontFamily="@font/montserrat_bold"
+            android:textSize="20sp"
+            android:drawableRight="@drawable/arrow_orange"
+            android:padding="20dp"
+            android:gravity="center"
+            app:layout_constraintTop_toBottomOf="@id/searchAll"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="20dp"
+
+            />
+
+        <view
+            class="android.widget.TextView"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:background="@color/text_color_orange"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/chassisButton"
+            app:layout_constraintBottom_toTopOf="@id/airFuelButton"/>
+
+
+
+        <TextView
+            android:id="@+id/airFuelButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Air &amp; Fuel "
+            android:fontFamily="@font/montserrat_bold"
+            android:textSize="20sp"
+            android:drawableRight="@drawable/arrow_orange"
+            android:padding="20dp"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@id/chassisButton"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            />
+
+        <view
+            class="android.widget.TextView"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:background="@color/text_color_orange"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/airFuelButton"
+            app:layout_constraintBottom_toTopOf="@id/brakeButton"/>
+
+
+        <TextView
+            android:id="@+id/brakeButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Brake Systems "
+            android:fontFamily="@font/montserrat_bold"
+            android:textSize="20sp"
+            android:drawableRight="@drawable/arrow_orange"
+            android:padding="20dp"
+            android:gravity="center"
+            app:layout_constraintTop_toBottomOf="@id/airFuelButton"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            />
+
+        <view
+            class="android.widget.TextView"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:background="@color/text_color_orange"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/brakeButton"
+            app:layout_constraintBottom_toTopOf="@id/engineAllButton"
+            />
+
+
+        <TextView
+            android:id="@+id/engineAllButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Engines &amp; Components "
+            android:fontFamily="@font/montserrat_bold"
+            android:textSize="20sp"
+            android:drawableRight="@drawable/arrow_orange"
+            android:padding="20dp"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@id/brakeButton"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+
+            />
+
+        <view
+            class="android.widget.TextView"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:background="@color/text_color_orange"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/engineAllButton"
+            app:layout_constraintBottom_toTopOf="@id/exteriorAllButton"
+            />
+
+        <TextView
+            android:id="@+id/exteriorAllButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Exterior &amp; Accessories "
+            android:fontFamily="@font/montserrat_bold"
+            android:textSize="20sp"
+            android:drawableRight="@drawable/arrow_orange"
+            android:padding="20dp"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@id/engineAllButton"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            />
+
+        <view
+            class="android.widget.TextView"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:background="@color/text_color_orange"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/exteriorAllButton"
+            app:layout_constraintBottom_toTopOf="@id/fastenersAllButton"
+            />
+
+        <TextView
+            android:id="@+id/fastenersAllButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Fasteners &amp; Hardware"
+            android:fontFamily="@font/montserrat_bold"
+            android:textSize="20sp"
+            android:drawableRight="@drawable/arrow_orange"
+            android:padding="20dp"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@id/exteriorAllButton"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            />
+
+        <view
+            class="android.widget.TextView"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:background="@color/text_color_orange"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fastenersAllButton"
+            app:layout_constraintBottom_toTopOf="@id/gasketAllButton"
+            />
+
+        <TextView
+            android:id="@+id/gasketAllButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Gasket &amp; Seal"
+            android:fontFamily="@font/montserrat_bold"
+            android:textSize="20sp"
+            android:drawableRight="@drawable/arrow_orange"
+            android:padding="20dp"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@id/fastenersAllButton"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            />
+
+        <view
+            class="android.widget.TextView"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:background="@color/text_color_orange"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/gasketAllButton"
+            app:layout_constraintBottom_toTopOf="@id/exhaustAllButton"
+            />
+
+        <TextView
+            android:id="@+id/exhaustAllButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Exhaust"
+            android:fontFamily="@font/montserrat_bold"
+            android:textSize="20sp"
+            android:drawableRight="@drawable/arrow_orange"
+            android:padding="20dp"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@id/gasketAllButton"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            />
+
+        <view
+            class="android.widget.TextView"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:background="@color/text_color_orange"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/exhaustAllButton"
+            app:layout_constraintBottom_toTopOf="@id/ignitionAllButton"
+            />
+
+        <TextView
+            android:id="@+id/ignitionAllButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ignition &amp; Electrical"
+            android:fontFamily="@font/montserrat_bold"
+            android:textSize="20sp"
+            android:drawableRight="@drawable/arrow_orange"
+            android:padding="20dp"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@id/exhaustAllButton"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            />
+
+
+        <view
+            class="android.widget.TextView"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:background="@color/text_color_orange"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ignitionAllButton"
+            app:layout_constraintBottom_toTopOf="@id/interiorAllButton"
+            />
+
+        <TextView
+            android:id="@+id/interiorAllButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Interior &amp; Accessories"
+            android:fontFamily="@font/montserrat_bold"
+            android:textSize="20sp"
+            android:drawableRight="@drawable/arrow_orange"
+            android:padding="20dp"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@id/ignitionAllButton"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            />
+
+        <view
+            class="android.widget.TextView"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:background="@color/text_color_orange"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/interiorAllButton"
+            app:layout_constraintBottom_toTopOf="@id/lightsAllButton"
+            />
+
+        <TextView
+            android:id="@+id/lightsAllButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Lights &amp; Lightning"
+            android:fontFamily="@font/montserrat_bold"
+            android:textSize="20sp"
+            android:drawableRight="@drawable/arrow_orange"
+            android:padding="20dp"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@id/interiorAllButton"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            />
+
+        <view
+            class="android.widget.TextView"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:background="@color/text_color_orange"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lightsAllButton"
+            app:layout_constraintBottom_toTopOf="@id/marineAllButton"
+            />
+
+        <TextView
+            android:id="@+id/marineAllButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Marine"
+            android:fontFamily="@font/montserrat_bold"
+            android:textSize="20sp"
+            android:drawableRight="@drawable/arrow_orange"
+            android:padding="20dp"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@id/lightsAllButton"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            />
+
+        <view
+            class="android.widget.TextView"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:background="@color/text_color_orange"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/marineAllButton"
+            app:layout_constraintBottom_toTopOf="@id/mobileAllButton"
+            />
+
+        <TextView
+            android:id="@+id/mobileAllButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Mobile Electronics"
+            android:fontFamily="@font/montserrat_bold"
+            android:textSize="20sp"
+            android:drawableRight="@drawable/arrow_orange"
+            android:padding="20dp"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@id/marineAllButton"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            />
+
+        <view
+            class="android.widget.TextView"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:background="@color/text_color_orange"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/mobileAllButton"
+            app:layout_constraintBottom_toTopOf="@id/oilsAllButton"
+            />
+
+        <TextView
+            android:id="@+id/oilsAllButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Oils, Fluids &amp; Sealer"
+            android:fontFamily="@font/montserrat_bold"
+            android:textSize="20sp"
+            android:drawableRight="@drawable/arrow_orange"
+            android:padding="20dp"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@id/mobileAllButton"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginBottom="50dp"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

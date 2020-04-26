@@ -25,7 +25,7 @@
 
     <string-array name="categories_array">
         <item>Select an Option</item>
-        <item>Air &amp; Fuel Delivery</item>
+        <item>Air &amp; Fuel</item>
         <item>Brake Systems</item>
         <item>Chassis &amp; Suspension</item>
         <item>Engines &amp; Components</item>

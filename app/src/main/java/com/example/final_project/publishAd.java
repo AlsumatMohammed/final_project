@@ -61,7 +61,7 @@ public class publishAd extends AppCompatActivity {
 
     // image activity for results
     String imageFilePath;
-    public Uri imagepath;
+    public Uri imagePath;
     String ProductImage;
     String publisherImage;
     DatabaseReference db;
@@ -455,12 +455,12 @@ public class publishAd extends AppCompatActivity {
                 String key = databaseReference.getKey();
                 generalAd.setKey(key);
                 databaseReference.setValue(generalAd);
-                    sendPicture();
+                sendPicture();
 
 
 
                 Toast.makeText(publishAd.this, title+" "+category+" "+condition+" "+warranty
-                        +" "+imagepath+" "+description+" "+priceType+" "+price+" "+currency+" "
+                        +" "+ imagePath +" "+description+" "+priceType+" "+price+" "+currency+" "
                         +publishDate, Toast.LENGTH_SHORT).show();
             }
         });
@@ -470,9 +470,9 @@ public class publishAd extends AppCompatActivity {
     public void sendPicture(){
 
         FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
-        final StorageReference imageRef = firebaseStorage.getReference().child("genericAds/"+imagepath.getLastPathSegment());
+        final StorageReference imageRef = firebaseStorage.getReference().child("genericAds/"+ imagePath.getLastPathSegment());
 
-        UploadTask uploadTask = imageRef.putFile(imagepath);
+        UploadTask uploadTask = imageRef.putFile(imagePath);
 
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
@@ -616,7 +616,7 @@ public class publishAd extends AppCompatActivity {
         if (requestCode == PICK_IMAGE_GALLERY && resultCode == RESULT_OK && data.getData() != null) {
 
 
-            imagepath = data.getData();
+            imagePath = data.getData();
             //Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imagePath);
 
             check_image.setVisibility(View.VISIBLE);
@@ -624,25 +624,25 @@ public class publishAd extends AppCompatActivity {
 
             RequestOptions options = new RequestOptions()
                     .centerCrop()
-                    .placeholder(R.drawable.avatar)
-                    .error(R.drawable.ads_icon);
+                    .placeholder(R.drawable.ad_placeholder)
+                    .error(R.drawable.ad_error);
 
             Glide.with(loadedImage.getContext())
-                    .load(imagepath)
+                    .load(imagePath)
                     .apply(options).override(100, 100).centerCrop().into(loadedImage);
 
         }
 
         else if (requestCode == PICK_IMAGE_CAMERA && resultCode == RESULT_OK){
-            imagepath = Uri.fromFile(f);
+            imagePath = Uri.fromFile(f);
 
             RequestOptions options = new RequestOptions()
                     .centerCrop()
-                    .placeholder(R.drawable.avatar)
-                    .error(R.drawable.ads_icon);
+                    .placeholder(R.drawable.ad_placeholder)
+                    .error(R.drawable.ad_error);
 
             Glide.with(loadedImage.getContext())
-                    .load(imagepath)
+                    .load(imagePath)
                     .apply(options).override(100, 100).centerCrop().into(loadedImage);
 
         }
@@ -650,7 +650,7 @@ public class publishAd extends AppCompatActivity {
 
         public boolean addPicture () {
 
-            if (imagepath == null) {
+            if (imagePath == null) {
 
                 Alerter.create(publishAd.this)
                         .setTitle("Y-parts")
@@ -755,10 +755,11 @@ public class publishAd extends AppCompatActivity {
         });
 
     }
-    
-    public void confirm(boolean publiserInformationConfirm, boolean publisherImageConfirm, boolean sendingImageConfirm, boolean productImageReferenceConfirm ){
+
+
+    public void confirm(boolean publisherInformationConfirm, boolean publisherImageConfirm, boolean sendingImageConfirm, boolean productImageReferenceConfirm ){
         
-        if (publiserInformationConfirm && publisherImageConfirm  && sendingImageConfirm && productImageReferenceConfirm ){
+        if (publisherInformationConfirm && publisherImageConfirm  && sendingImageConfirm && productImageReferenceConfirm ){
 
             Toast.makeText(this, "done", Toast.LENGTH_SHORT).show();
             dismissDialog();

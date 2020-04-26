@@ -52,6 +52,7 @@
                     android:textColor="@color/black"
                     android:textSize="15sp"
                     android:layout_margin="20dp"
+
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintLeft_toRightOf="parent"

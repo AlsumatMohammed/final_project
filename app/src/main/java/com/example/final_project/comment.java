@@ -7,10 +7,18 @@ public class comment {
     String comment;
     String username;
     String date;
-
     String key;
     String adkey;
     float rating;
+    String publisherEmail;
+
+    public String getPublisherEmail() {
+        return publisherEmail;
+    }
+
+    public void setPublisherEmail(String publisherEmail) {
+        this.publisherEmail = publisherEmail;
+    }
 
     public String getUsername() {
         return username;

@@ -3,7 +3,6 @@ package com.example.final_project;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import br.com.simplepass.loadingbutton.customViews.CircularProgressButton;
@@ -30,9 +29,15 @@ import com.bumptech.glide.request.RequestOptions;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.firebase.ui.database.SnapshotParser;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+import com.tapadoo.alerter.Alerter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,9 +56,7 @@ public class detail_activity extends AppCompatActivity {
     private LinearLayoutManager HorizontalLayout;
     private FirebaseRecyclerAdapter adapter;
 
-    String publisherUserName;
-    String publisherEmail;
-    String adKey;
+
     RecyclerView.LayoutManager RecyclerViewLayoutManager;
 
 
@@ -68,14 +71,44 @@ public class detail_activity extends AppCompatActivity {
 
     Button favouriteButton, callNowButton, messageNowButton;
     CircularProgressButton addRating;
-    ArrayList<generalAds> generalAdsArrayList;
+
+    public RatingBar supplierRatingBar;
+
+    private FirebaseAuth firebaseAuth;
+
+
+    String publisherUserName;
+    String publisherEmail;
+    String adKey;
+    String adtitle;
+    String productImage;
+    String description ;
+    String category;
+    String publishDate;
+    String price;
+    String currency;
+    String priceType;
+    String warranty;
+    String condition;
+    //PUBLISHERINFORMATION
+    String publisherImage;
+    String publisherPhone;
+
+    boolean checkAd = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_activity);
 
+        firebaseAuth = FirebaseAuth.getInstance();
 
+
+
+
+
+        supplierRatingBar = findViewById(R.id.ratingBar_detail);
         callNowButton = findViewById(R.id.callNow_button);
         messageNowButton = findViewById(R.id.messageNow_button);
 
@@ -83,7 +116,6 @@ public class detail_activity extends AppCompatActivity {
         addRating = findViewById(R.id.addRatingButton);
         pDialog = new SweetAlertDialog(detail_activity.this, SweetAlertDialog.PROGRESS_TYPE);
         pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
-        pDialog.setTitleText("Loading ...");
         pDialog.setCancelable(false);
         publisherUserNameViewPrevious = findViewById(R.id.publisherName_previous);
         productImageView = findViewById(R.id.productImage);
@@ -100,21 +132,22 @@ public class detail_activity extends AppCompatActivity {
 
         Intent intent = this.getIntent();
 
-        final String productImage = intent.getExtras().getString("PRODUCT_IMAGE");
-        String description = intent.getExtras().getString("DESCRIPTION");
-        String category = intent.getExtras().getString("CATEGORY");
-        String publishDate = intent.getExtras().getString("PUBLISHDATE");
-        String price = intent.getExtras().getString("PRICE");
-        String currency = intent.getExtras().getString("CURRENCY");
-        String priceType = intent.getExtras().getString("PRICETYPE");
-        String warranty = intent.getExtras().getString("WARRANTY");
-        String condition = intent.getExtras().getString("CONDITION");
+        productImage = intent.getExtras().getString("PRODUCT_IMAGE");
+        description = intent.getExtras().getString("DESCRIPTION");
+        category = intent.getExtras().getString("CATEGORY");
+        publishDate = intent.getExtras().getString("PUBLISHDATE");
+        price = intent.getExtras().getString("PRICE");
+        currency = intent.getExtras().getString("CURRENCY");
+        priceType = intent.getExtras().getString("PRICETYPE");
+        warranty = intent.getExtras().getString("WARRANTY");
+        condition = intent.getExtras().getString("CONDITION");
         //PUBLISHERINFORMATION
-        String publisherImage = intent.getExtras().getString("PUBLISHERIMAGE");
+        publisherImage = intent.getExtras().getString("PUBLISHERIMAGE");
         publisherUserName = intent.getExtras().getString("PUBLISHERUSERNAME");
         publisherEmail = intent.getExtras().getString("PUBLSIHEREMAIL");
-        final String publisherPhone = intent.getExtras().getString("PUBLISHERPHONE");
+        publisherPhone = intent.getExtras().getString("PUBLISHERPHONE");
         adKey = intent.getExtras().getString("ADKEY");
+        adtitle = intent.getExtras().getString("ADTITLE");
 
         Uri productImagePath = Uri.parse(productImage);
         Uri publisherImagePath = Uri.parse(publisherImage);
@@ -125,9 +158,11 @@ public class detail_activity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+
                 Intent intent1 = new Intent(detail_activity.this, Rating_activity.class);
 
                 intent1.putExtra("key", adKey);
+                intent1.putExtra("PUBLISHEREMAIL", publisherEmail);
                 startActivity(intent1);
 
             }
@@ -137,17 +172,17 @@ public class detail_activity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-               
+
 
                 //PHONE INTENT
-            Uri number = Uri.parse("tel:"+publisherPhone);
-            Intent callIntent = new Intent(Intent.ACTION_DIAL, number);
+                Uri number = Uri.parse("tel:"+publisherPhone);
+                Intent callIntent = new Intent(Intent.ACTION_DIAL, number);
 
-            PackageManager packageManager = getPackageManager();
-            List<ResolveInfo> activities = packageManager.queryIntentActivities(callIntent, 0);
-            boolean isIntentSafe = activities.size() > 0;
+                PackageManager packageManager = getPackageManager();
+                List<ResolveInfo> activities = packageManager.queryIntentActivities(callIntent, 0);
+                boolean isIntentSafe = activities.size() > 0;
 
-            //PHONE END
+                //PHONE END
 
                 if (isIntentSafe){
                     startActivity(callIntent);
@@ -160,8 +195,8 @@ public class detail_activity extends AppCompatActivity {
 
         RequestOptions options = new RequestOptions()
                 .centerCrop()
-                .placeholder(R.mipmap.ic_launcher_round)
-                .error(R.drawable.ads_icon);
+                .placeholder(R.drawable.ad_placeholder)
+                .error(R.drawable.ad_error);
 
 
         Glide.with(getApplicationContext())
@@ -185,6 +220,8 @@ public class detail_activity extends AppCompatActivity {
             priceView.setText("FREE");
         }
 
+        getSupplierRating();
+
         descriptionView.setText(description);
         categoryView.setText(category);
         publishDateView.setText(publishDate);
@@ -196,6 +233,7 @@ public class detail_activity extends AppCompatActivity {
         publisherUserNameView.setText(publisherUserName);
         publisherEmailView.setText(publisherEmail);
         publisherPhoneView.setText(publisherPhone);
+
 
 
         recyclerView = findViewById(R.id.previousAdsRecyclerview);
@@ -211,6 +249,64 @@ public class detail_activity extends AppCompatActivity {
         linearLayoutManager = new LinearLayoutManager(detail_activity.this);
         recyclerViewRatings.setLayoutManager(linearLayoutManager);
         fetchRatings();
+
+        addedAd();
+
+        favouriteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (checkAd){
+                    Alerter.create(detail_activity.this)
+                            .setTitle("Y-parts")
+                            .setText("This is already in favourites!")
+                            .enableSwipeToDismiss()
+                            .setDuration(3000)
+                            .setBackgroundColorRes(R.color.text_color_orange)
+                            .show();
+                    return;
+
+                }
+
+
+
+                showDialog("Adding to favourites");
+
+                FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+                DatabaseReference databaseReference = firebaseDatabase.getReference();
+
+                DatabaseReference favouriteAdsReference = databaseReference.child("favouritesAds").child(firebaseAuth.getUid()).push();
+
+                generalAds generalAd = new generalAds();
+
+                generalAd.setPublisherEmail(publisherEmail);
+                generalAd.setPublisherphoneNumber(publisherPhone);
+                generalAd.setPublisherUsername(publisherUserName);
+                generalAd.setTitle(adtitle);
+                generalAd.setCategory(category);
+                generalAd.setCondition(condition);
+                generalAd.setWarranty(warranty);
+                generalAd.setDescription(description);
+                generalAd.setPriceType(priceType);
+                generalAd.setPrice(price);
+                generalAd.setCurrency(currency);
+                generalAd.setPublishDate(publishDate);
+                generalAd.setProductImage(productImage);
+                generalAd.setPublisherImage(publisherImage);
+                generalAd.setKey(adKey);
+                favouriteAdsReference.setValue(generalAd);
+
+
+                dismissDialog();
+                Toast.makeText(detail_activity.this, "added ", Toast.LENGTH_SHORT).show();
+                new SweetAlertDialog(detail_activity.this, SweetAlertDialog.SUCCESS_TYPE)
+                        .setTitleText("Awesome!")
+                        .setContentText("Added to favourites!")
+                        .show();
+                favouriteButton.setBackground(getResources().getDrawable(R.drawable.star));
+
+            }
+        });
 
     }
 
@@ -308,8 +404,8 @@ public class detail_activity extends AppCompatActivity {
 
                 RequestOptions options = new RequestOptions()
                         .centerCrop()
-                        .placeholder(R.drawable.avatar)
-                        .error(R.drawable.ads_icon);
+                        .placeholder(R.drawable.ad_placeholder)
+                        .error(R.drawable.ad_error);
 
                 Glide.with(holder.productimage.getContext())
                         .load(productImage)
@@ -318,17 +414,17 @@ public class detail_activity extends AppCompatActivity {
 
 
 
-//                holder.cardView.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//
-//                        openDetailActivity(model.getProductImage() , model.getDescription(), model.getCategory()
-//                                , model.getPublishDate() , model.getPrice() , model.getCurrency() , model.getPriceType()
-//                                , model.getWarranty() , model.getCondition() , model.getPublisherImage()
-//                                , model.getPublisherUsername() , model.getPublisherEmail(), model.getPublisherphoneNumber(), model.getKey());
-//
-//                    }
-//                });
+                holder.cardView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        openDetailActivity(model.getProductImage() , model.getDescription(), model.getCategory()
+                                , model.getPublishDate() , model.getPrice() , model.getCurrency() , model.getPriceType()
+                                , model.getWarranty() , model.getCondition() , model.getPublisherImage()
+                                , model.getPublisherUsername() , model.getPublisherEmail(), model.getPublisherphoneNumber(), model.getKey(), model.getTitle());
+
+                    }
+                });
             }
         };
 
@@ -358,6 +454,7 @@ public class detail_activity extends AppCompatActivity {
         intent.putExtra("PUBLSIHEREMAIL" , detail[11]);
         intent.putExtra("PUBLISHERPHONE" , detail[12]);
         intent.putExtra("ADKEY" , detail[13]);
+        intent.putExtra("ADTITLE", detail[14]);
 
 
         detail_activity.this.startActivity(intent);
@@ -374,7 +471,7 @@ public class detail_activity extends AppCompatActivity {
         public TextView commenterName, comment, date;
         public ImageView commenterImage;
         public CardView cardView;
-        public RatingBar ratingBar;
+        public RatingBar commentRatingBar;
 
 
         public ratingsViewHolder(@NonNull View itemView) {
@@ -385,7 +482,7 @@ public class detail_activity extends AppCompatActivity {
             date = itemView.findViewById(R.id.ratingDate);
             commenterImage = itemView.findViewById(R.id.commenterImage);
             cardView = itemView.findViewById(R.id.constraint);
-            ratingBar = itemView.findViewById(R.id.ratignBar_comment);
+            commentRatingBar = itemView.findViewById(R.id.ratignBar_comment);
 
 
 
@@ -451,7 +548,7 @@ public class detail_activity extends AppCompatActivity {
                 holder.commenterName.setText(model.getUsername());
                 holder.comment.setText(model.getComment());
                 holder.date.setText(model.getDate());
-                holder.ratingBar.setRating(model.getRating());
+                holder.commentRatingBar.setRating(model.getRating());
 
                 Toast.makeText(detail_activity.this, model.getAdkey(), Toast.LENGTH_SHORT).show();
                 Uri commenterImage = Uri.parse(model.getCommenterImage());
@@ -460,8 +557,8 @@ public class detail_activity extends AppCompatActivity {
 
                 RequestOptions options = new RequestOptions()
                         .centerCrop()
-                        .placeholder(R.drawable.avatar)
-                        .error(R.drawable.ads_icon);
+                        .placeholder(R.drawable.ad_placeholder)
+                        .error(R.drawable.ad_error);
 
                 Glide.with(holder.commenterImage.getContext())
                         .load(commenterImage)
@@ -478,6 +575,83 @@ public class detail_activity extends AppCompatActivity {
 
 
     }
+
+    private void getSupplierRating(){
+
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference databaseReference = firebaseDatabase.getReference();
+
+        databaseReference.child("comments").orderByChild("publisherEmail").equalTo(publisherEmail).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+
+                float total = 0;
+                float count = 0;
+
+                for (DataSnapshot child: dataSnapshot.getChildren() ){
+
+                    comment comment = child.getValue(comment.class);
+
+                    total = total+comment.getRating();
+                    count = count+1;
+
+
+                }
+
+
+                float finalRating = total/count;
+                supplierRatingBar.setRating(finalRating);
+
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void addedAd(){
+
+        showDialog("Loading");
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference databaseReference = firebaseDatabase.getReference();
+
+        DatabaseReference favouriteAdsReference = databaseReference.child("favouritesAds").child(firebaseAuth.getUid());
+
+        favouriteAdsReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot data: dataSnapshot.getChildren()){
+
+                    generalAds generalAd = data.getValue(generalAds.class);
+
+                    if (generalAd.getKey().equals(adKey)){
+
+                        checkAd = true;
+                        favouriteButton.setBackground(getResources().getDrawable(R.drawable.star));
+                        break;
+                    }
+
+                }
+
+                dismissDialog();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+    }
+
+
 
 
 
@@ -497,7 +671,9 @@ public class detail_activity extends AppCompatActivity {
         adapterRatings.stopListening();
     }
 
-    public void showDialog(){
+    public void showDialog(String message){
+
+        pDialog.setTitleText(message);
         pDialog.show();
 
         //editprofileButton.startAnimation();
