@@ -31,6 +31,7 @@
             />
 
         <ImageView
+            android:id="@+id/tireImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/ypartsTv"
@@ -48,6 +49,15 @@
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_marginLeft="10dp"/>
 
+        <ImageView
+            android:id="@+id/logout_fragmentprofile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/logout"
+            android:fontFamily="@font/montserrat_bold"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/ypartsTv"
+            app:layout_constraintBottom_toBottomOf="@id/tireImage"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

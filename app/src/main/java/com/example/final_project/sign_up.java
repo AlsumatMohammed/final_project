@@ -48,7 +48,7 @@ import com.tapadoo.alerter.Alerter;
 
 public class sign_up extends AppCompatActivity {
 
-
+    SweetAlertDialog pDialog;
     public TextInputLayout email_layout, password_layout;
     public TextView back_arrow;
     public CircularProgressButton sign_up_button;
@@ -56,7 +56,7 @@ public class sign_up extends AppCompatActivity {
     public FirebaseAuth mAuth;
     //private ProgressDialog progressDialog;
 
-    public SweetAlertDialog progressDialog;
+
     //facebook variables
     private CallbackManager callbackManager;
     private LoginButton facebook_signup_button;
@@ -76,14 +76,12 @@ public class sign_up extends AppCompatActivity {
 //        progressDialog = new ProgressDialog(sign_up.this);
 //        progressDialog.setMessage("please wait!");
 //        progressDialog.setCancelable(false);
+        pDialog = new SweetAlertDialog(sign_up.this, SweetAlertDialog.PROGRESS_TYPE);
+        pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+        pDialog.setCancelable(false);
 
-        progressDialog = new SweetAlertDialog(sign_up.this, SweetAlertDialog.PROGRESS_TYPE);
-        progressDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
-        progressDialog.setTitleText("Loading");
-        progressDialog.setCancelable(false);
-        progressDialog.setCustomImage(R.drawable.blue_button_background);
-       // progressDialog.show();
-        //progressDialog.setProgressStyle(android.R.style.Widget_Material_Light_ProgressBar);
+
+
 
         email_layout = findViewById(R.id.textInputLayoutEmail_signup);
         password_layout = findViewById(R.id.textInputLayoutPassword_signup);
@@ -207,7 +205,7 @@ public class sign_up extends AppCompatActivity {
 //                String email_signup_string = email_sign_up_et.getText().toString().trim();
 //                String password_singup_string = password_sign_up_et.getText().toString().trim();
 
-                //showProgress();
+                showDialog("Signing Up!, Just a Moment");
                 spinButton();
 
 
@@ -217,30 +215,27 @@ public class sign_up extends AppCompatActivity {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if (task.isSuccessful()) {
-                                    // Sign in success, update UI with the signed-in user's information
-                                    //Log.d(TAG, "createUserWithEmail:success");
-                                    //FirebaseUser user = mAuth.getCurrentUser();
-                                    //updateUI(user);
-//                                    Toast.makeText(sign_up.this, "done",
-//                                            Toast.LENGTH_SHORT).show();
-                                    //hideProgress();
 
                                     stopButton();
+                                    dismissDialog();
 
-                                    Alerter.create(sign_up.this)
-                                            .setTitle("Y-parts")
-                                            .setText("Registered successfully. Try again !")
-                                            .enableSwipeToDismiss()
-                                            .setDuration(3000)
-                                            .setBackgroundColorRes(R.color.text_color_orange)
+                                    new SweetAlertDialog(sign_up.this, SweetAlertDialog.SUCCESS_TYPE)
+                                            .setTitleText("Awesome!")
+                                            .setContentText("Registered successfully!")
+                                            .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                                @Override
+                                                public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                                    Intent intent = new Intent(sign_up.this, getting_you.class);
+                                                    startActivity(intent);
+                                                    finish();
+                                                }
+                                            })
                                             .show();
 
-//                                    Snackbar.make(view, "Registered successfully!", Snackbar.LENGTH_LONG)
-//                                            .setAction("Action", null).show();
 
-                                    Intent intent = new Intent(sign_up.this, getting_you.class);
-                                    startActivity(intent);
-                                    finish();
+//
+
+
 
                                 }
 
@@ -248,7 +243,7 @@ public class sign_up extends AppCompatActivity {
                                     // If sign in fails, display a message to the user.
                                     //Log.w(TAG, "createUserWithEmail:failure", task.getException());
 
-                                    //hideProgress();
+                                    dismissDialog();
 
                                     stopButton();
 
@@ -261,12 +256,10 @@ public class sign_up extends AppCompatActivity {
                                             .show();
 
 
-//                                    Snackbar.make(view, "Registration failed or Account is already registered ", Snackbar.LENGTH_LONG)
-//                                            .setAction("Action", null).show();
-                                    //updateUI(null);
+
                                 }
 
-                                // ...
+
                             }
                         });
 
@@ -279,7 +272,7 @@ public class sign_up extends AppCompatActivity {
     }
     public void handleFacebookToken(AccessToken token){
 
-        showProgress();
+        showDialog("Just a second");
 
         AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
         mAuth.signInWithCredential(credential).addOnCompleteListener(sign_up.this, new OnCompleteListener<AuthResult>() {
@@ -288,7 +281,7 @@ public class sign_up extends AppCompatActivity {
 
                 if(task.isSuccessful()){
 
-                    hideProgress();
+                dismissDialog();
 
                     Intent intent = new Intent(sign_up.this, getting_you.class);
                     startActivity(intent);
@@ -299,7 +292,7 @@ public class sign_up extends AppCompatActivity {
                 }
 
                 else{
-                    hideProgress();
+                    dismissDialog();
                     Toast.makeText(sign_up.this, "Authentication failed", Toast.LENGTH_SHORT).show();
 
                 }
@@ -340,7 +333,7 @@ public class sign_up extends AppCompatActivity {
 
     private void firebaseAuthWithgoogle(GoogleSignInAccount acct){
 
-        showProgress();
+        showDialog("Just A Second");
 
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         mAuth.signInWithCredential(credential).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -349,7 +342,7 @@ public class sign_up extends AppCompatActivity {
 
                 if (task.isSuccessful()){
 
-                    hideProgress();
+                   dismissDialog();
 
                         Intent intent = new Intent(sign_up.this, getting_you.class);
                         startActivity(intent);
@@ -362,7 +355,7 @@ public class sign_up extends AppCompatActivity {
 
                 }
 
-                hideProgress();
+               dismissDialog();
             }
         });
 
@@ -416,20 +409,7 @@ public class sign_up extends AppCompatActivity {
         return true;
     }
 
-    public void showProgress(){
 
-        if (!progressDialog.isShowing()){
-            progressDialog.show();
-        }
-
-    }
-
-    public void hideProgress(){
-
-        if (progressDialog.isShowing()){
-            progressDialog.dismiss();
-        }
-    }
 
     public void spinButton(){
 
@@ -440,6 +420,20 @@ public class sign_up extends AppCompatActivity {
     public void stopButton(){
 
         sign_up_button.revertAnimation();
+    }
+
+    public void showDialog(String message){
+        pDialog.setTitleText(message);
+        pDialog.show();
+
+        //editprofileButton.startAnimation();
+
+    }
+
+    public void dismissDialog(){
+        pDialog.dismiss();
+
+        //editprofileButton.revertAnimation();
     }
 
 
