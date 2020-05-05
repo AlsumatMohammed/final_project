@@ -7,26 +7,49 @@
     android:orientation="vertical"
     tools:context=".edit_profile">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraint1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="@color/whiteTextColor">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:background="@color/text_color_orange"
+        android:padding="10dp">
 
         <TextView
-            android:id="@+id/back_arrow"
+            android:id="@+id/ypartsTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:text=" Create Account  "
-            android:textSize="20sp"
-            android:textColor="@color/button"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:text="Y-parts"
             android:fontFamily="@font/montserrat_bold"
-            android:drawableLeft="@drawable/back_arrow_orange"
-            android:drawablePadding="5dp"/>
+            android:textColor="@color/whiteTextColor"
+            android:textSize="20sp"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/ypartsTv"
+            app:layout_constraintLeft_toLeftOf="@id/ypartsTv"
+            app:layout_constraintRight_toRightOf="@id/ypartsTv"
+            android:src="@drawable/tire"/>
 
 
-    </LinearLayout>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/back_arrow"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginLeft="10dp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 
 

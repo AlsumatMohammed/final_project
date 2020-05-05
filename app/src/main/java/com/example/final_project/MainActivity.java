@@ -36,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
 //        final ProgressDialog progressDialog = new ProgressDialog(MainActivity.this);
@@ -133,19 +132,19 @@ public class MainActivity extends AppCompatActivity {
 
                     switch (menuItem.getItemId()) {
                         case R.id.request_offers:
-                            toolbar.setTitle("Request_offers");
+
                             fragment = new RequestsOffersFragment();
                             loadFragment(fragment);
                             return true;
 
                         case R.id.ads:
-                            toolbar.setTitle("Ads");
+
                             fragment = new AdsFragment();
                             loadFragment(fragment);
                             return true;
 
                         case R.id.profile:
-                            toolbar.setTitle("Profile");
+
                             fragment = new ProfileFragment();
                             loadFragment(fragment);
                             return true;

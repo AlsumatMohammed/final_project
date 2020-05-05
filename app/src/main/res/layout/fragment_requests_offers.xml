@@ -1,130 +1,181 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".RequestsOffersFragment">
-
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-    <br.com.simplepass.loadingbutton.customViews.CircularProgressButton
-        android:id="@+id/addRequestButton"
+        android:id="@+id/constraint1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_margin="10dp"
-        android:background="@drawable/comment_button"
-        android:fontFamily="@font/montserrat_bold"
-        android:text="Put a request "
-        android:textSize="15sp"
-        android:textColor="@color/button"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        android:background="@color/text_color_orange"
+        android:padding="10dp">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/myRequestsCard"
+        <TextView
+            android:id="@+id/ypartsTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:text="Y-parts"
+            android:fontFamily="@font/montserrat_bold"
+            android:textColor="@color/whiteTextColor"
+            android:textSize="20sp"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/ypartsTv"
+            app:layout_constraintLeft_toLeftOf="@id/ypartsTv"
+            app:layout_constraintRight_toRightOf="@id/ypartsTv"
+            android:src="@drawable/tire"/>
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/back_arrow"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginLeft="10dp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/loginCard"
-        android:elevation="10dp"
-        app:cardCornerRadius="20dp"
-        android:layout_gravity="center"
-        app:cardBackgroundColor="#F0F2F2"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        app:layout_constraintTop_toBottomOf="@id/addRequestButton">
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/constraint1"
+        android:paddingBottom="70dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="10dp"
-            android:padding="10dp">
+            android:layout_height="match_parent">
 
-            <TextView
-                android:id="@+id/myRequestsTv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/montserrat_bold"
-                android:text="My Requests:"
-                android:textColor="@color/title_text_color"
-                android:textSize="15sp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/myRequestsRecyclerView"
+            <br.com.simplepass.loadingbutton.customViews.CircularProgressButton
+                android:id="@+id/addRequestButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_margin="10dp"
-                android:clipToPadding="false"
-                android:scrollbars="horizontal"
-                android:nestedScrollingEnabled="false"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/myRequestsTv" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/latestRequestsCard"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/loginCard"
-        android:elevation="10dp"
-        app:cardCornerRadius="20dp"
-        android:layout_gravity="center"
-        app:cardBackgroundColor="#F0F2F2"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        app:layout_constraintTop_toBottomOf="@id/myRequestsCard">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginBottom="10dp"
-            android:padding="10dp">
-
-            <TextView
-                android:id="@+id/latestRequestsTv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:background="@drawable/comment_button"
                 android:fontFamily="@font/montserrat_bold"
-                android:text="Latest Requests:"
-                android:textColor="@color/title_text_color"
+                android:text="Put a request "
+                android:textColor="@color/button"
                 android:textSize="15sp"
                 app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/latestRequestsRecyclerView"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/myRequestsCard"
+                style="@style/loginCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:clipToPadding="false"
-                android:scrollbars="horizontal"
-                android:nestedScrollingEnabled="false"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/latestRequestsTv" />
+                android:layout_gravity="center"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:elevation="10dp"
+                app:cardBackgroundColor="#F0F2F2"
+                app:cardCornerRadius="20dp"
+                app:layout_constraintTop_toBottomOf="@id/addRequestButton">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:id="@+id/myRequestsTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:text="My Requests:"
+                        android:textColor="@color/title_text_color"
+                        android:textSize="15sp"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/myRequestsRecyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:clipToPadding="false"
+                        android:nestedScrollingEnabled="false"
+                        android:scrollbars="horizontal"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/myRequestsTv" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/latestRequestsCard"
+                style="@style/loginCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:elevation="10dp"
+                app:cardBackgroundColor="#F0F2F2"
+                app:cardCornerRadius="20dp"
+                app:layout_constraintTop_toBottomOf="@id/myRequestsCard"
+                >
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:id="@+id/latestRequestsTv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:text="Latest Requests:"
+                        android:textColor="@color/title_text_color"
+                        android:textSize="15sp"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/latestRequestsRecyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:clipToPadding="false"
+                        android:nestedScrollingEnabled="false"
+                        android:scrollbars="horizontal"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/latestRequestsTv" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
+
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
-</androidx.core.widget.NestedScrollView>

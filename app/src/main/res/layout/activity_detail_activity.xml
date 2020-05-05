@@ -7,11 +7,58 @@
     tools:context=".detail_activity"
     android:background="#fff">
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraint1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:background="@color/text_color_orange"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/ypartsTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:text="Y-parts"
+            android:fontFamily="@font/montserrat_bold"
+            android:textColor="@color/whiteTextColor"
+            android:textSize="20sp"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/ypartsTv"
+            app:layout_constraintLeft_toLeftOf="@id/ypartsTv"
+            app:layout_constraintRight_toRightOf="@id/ypartsTv"
+            android:src="@drawable/tire"/>
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/back_arrow"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginLeft="10dp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/constraint1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:paddingBottom="70dp"
+
         >
 
 
@@ -341,7 +388,7 @@
                 android:padding="10dp">
 
                 <TextView
-                    android:id="@+id/previousAds"
+                    android:id="@+id/favoriteAds"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
@@ -361,9 +408,9 @@
                     android:text="SupplierName"
                     android:textColor="@color/text_color_orange"
                     android:textSize="15sp"
-                    app:layout_constraintBottom_toBottomOf="@id/previousAds"
-                    app:layout_constraintLeft_toRightOf="@id/previousAds"
-                    app:layout_constraintTop_toTopOf="@id/previousAds" />
+                    app:layout_constraintBottom_toBottomOf="@id/favoriteAds"
+                    app:layout_constraintLeft_toRightOf="@id/favoriteAds"
+                    app:layout_constraintTop_toTopOf="@id/favoriteAds" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/previousAdsRecyclerview"
@@ -376,7 +423,7 @@
                     android:nestedScrollingEnabled="false"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/previousAds" />
+                    app:layout_constraintTop_toBottomOf="@id/favoriteAds" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 

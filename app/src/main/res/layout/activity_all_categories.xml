@@ -6,23 +6,67 @@
     android:layout_height="match_parent"
     tools:context=".allCategories"
     android:background="#F0F2F2"
-    android:padding="10dp">
+    >
 
-    <ScrollView
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraint1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent">
+        app:layout_constraintRight_toRightOf="parent"
+        android:background="@color/text_color_orange"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/ypartsTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:text="Y-parts"
+            android:fontFamily="@font/montserrat_bold"
+            android:textColor="@color/whiteTextColor"
+            android:textSize="20sp"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/ypartsTv"
+            app:layout_constraintLeft_toLeftOf="@id/ypartsTv"
+            app:layout_constraintRight_toRightOf="@id/ypartsTv"
+            android:src="@drawable/tire"/>
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/back_arrow"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginLeft="10dp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/constraint1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="70dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/card_bg"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent">
+            >
 
             <EditText
                 android:id="@+id/searchAll"
@@ -52,11 +96,11 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/searchAll"
-                app:layout_constraintBottom_toTopOf="@id/chassisButton" />
+                app:layout_constraintBottom_toTopOf="@id/chassisAllButton" />
 
 
             <TextView
-                android:id="@+id/chassisButton"
+                android:id="@+id/chassisAllButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Chassis &amp; Suspension"
@@ -81,7 +125,7 @@
                 android:background="@color/text_color_orange"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/chassisButton"
+                app:layout_constraintTop_toBottomOf="@id/chassisAllButton"
                 app:layout_constraintBottom_toTopOf="@id/airFuelButton"/>
 
 
@@ -97,7 +141,7 @@
                 android:padding="15dp"
                 android:gravity="center"
                 android:layout_marginTop="10dp"
-                app:layout_constraintTop_toBottomOf="@id/chassisButton"
+                app:layout_constraintTop_toBottomOf="@id/chassisAllButton"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 />
@@ -455,6 +499,6 @@
                 />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

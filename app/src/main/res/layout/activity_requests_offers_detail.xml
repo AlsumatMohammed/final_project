@@ -6,12 +6,61 @@
     android:layout_height="match_parent"
     tools:context=".requestsOffersDetail"
     android:background="#fff">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraint1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:background="@color/text_color_orange"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/ypartsTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:text="Y-parts"
+            android:fontFamily="@font/montserrat_bold"
+            android:textColor="@color/whiteTextColor"
+            android:textSize="20sp"
+            />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/ypartsTv"
+            app:layout_constraintLeft_toLeftOf="@id/ypartsTv"
+            app:layout_constraintRight_toRightOf="@id/ypartsTv"
+            android:src="@drawable/tire"/>
+
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/back_arrow"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginLeft="10dp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/constraint1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:paddingBottom="70dp">
 
-        <LinearLayout
+
+    <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -311,16 +360,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/latestOffersDetailCardView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/loginCard"
-                android:elevation="10dp"
-                app:cardCornerRadius="20dp"
-                android:layout_gravity="center"
-                app:cardBackgroundColor="#F0F2F2"
-                android:layout_margin="10dp">
+
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -328,7 +368,8 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="10dp"
-                android:padding="10dp">
+                android:padding="10dp"
+                android:background="@drawable/card_detail">
 
                 <TextView
                     android:id="@+id/latestOffersDetailTv"
@@ -371,24 +412,16 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </androidx.cardview.widget.CardView>
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/latestOffersCommentsDetailCardView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/loginCard"
-                android:elevation="10dp"
-                app:cardCornerRadius="20dp"
-                android:layout_gravity="center"
-                app:cardBackgroundColor="#F0F2F2"
-                android:layout_margin="10dp">
+
+
         <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="10dp"
+                android:background="@drawable/card_detail"
                 android:padding="10dp">
 
                 <TextView
@@ -443,7 +476,7 @@
                     android:id="@+id/commentsRecyclerviewOffersDetail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
+                    android:layout_marginBottom="10dp"
                     android:clipToPadding="false"
                     android:scrollbars="vertical"
                     android:nestedScrollingEnabled="false"
@@ -452,7 +485,15 @@
                     app:layout_constraintTop_toBottomOf="@id/addCommentButton" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            </androidx.cardview.widget.CardView>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/card_detail"
+            android:padding="10dp" />
+
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

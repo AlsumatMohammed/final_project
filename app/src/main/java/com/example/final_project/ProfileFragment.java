@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -59,7 +60,7 @@ public class ProfileFragment extends Fragment {
     public TextView phoneNumber;
     public TextView emailAddress;
     public TextView userType;
-    public CircularProgressButton logoutButton;
+    public ImageView logoutButton;
 
 
     public ImageView profileimageView;

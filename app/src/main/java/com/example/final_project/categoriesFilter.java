@@ -59,6 +59,7 @@ public class categoriesFilter extends AppCompatActivity {
 
         category = intent.getExtras().getString("CATEGORY");
 
+        categoryTv.setText(category);
         recyclerViewCategoriesFilter = findViewById(R.id.categoriesFilterRecyclerView);
         linearLayoutManagerCategoriesFilter = new LinearLayoutManager(categoriesFilter.this);
         recyclerViewCategoriesFilter.setLayoutManager(linearLayoutManagerCategoriesFilter);
@@ -106,6 +107,7 @@ public class categoriesFilter extends AppCompatActivity {
         Query query = FirebaseDatabase.getInstance()
                 .getReference()
                 .child("GeneralAds").orderByChild("category").equalTo(category);
+
 
 
 
