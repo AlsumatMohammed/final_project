@@ -9,12 +9,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.SigningInfo;
 import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -91,6 +95,10 @@ public class login_screen extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (Build.VERSION.SDK_INT >= 21) {
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+        }
         setContentView(R.layout.activity_login_screen);
 
         mAuth = FirebaseAuth.getInstance();
@@ -98,6 +106,7 @@ public class login_screen extends AppCompatActivity implements View.OnClickListe
         progressDialog.setMessage("please wait!");
         progressDialog.setCancelable(false);
 
+        changeStatusBarColor();
 //        FacebookSdk.sdkInitialize(login_screen.this);
 //        AppEventsLogger.activateApp(login_screen.this);
 
@@ -276,6 +285,14 @@ public class login_screen extends AppCompatActivity implements View.OnClickListe
 
 
 
+    }
+
+    private void changeStatusBarColor() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(Color.TRANSPARENT);
+        }
     }
 
     @Override

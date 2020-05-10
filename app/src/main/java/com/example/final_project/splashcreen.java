@@ -82,15 +82,15 @@ public class splashcreen extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                final Intent intent_login = new Intent(splashcreen.this, login_screen.class);
+                final Intent intent_welcome = new Intent(splashcreen.this, activity_welcome.class);
                 final Intent intent_home = new Intent (splashcreen.this, MainActivity.class);
 
-                Pair[] pairs = new Pair[2];
-                pairs [0] = new Pair<View, String>(logo, "logo_image");
-                pairs [1] = new Pair<View, String>(tv1, "logo_text");
-                //pairs [1] = new Pair<View, String>(shape, "shape_image");
-
-                final ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(splashcreen.this, pairs);
+//                Pair[] pairs = new Pair[2];
+//                pairs [0] = new Pair<View, String>(logo, "logo_image");
+//                pairs [1] = new Pair<View, String>(tv1, "logo_text");
+//                //pairs [1] = new Pair<View, String>(shape, "shape_image");
+//
+//                final ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(splashcreen.this, pairs);
 
 
                  firebaseUser = mAuth.getCurrentUser();
@@ -98,7 +98,7 @@ public class splashcreen extends AppCompatActivity {
                 if (firebaseUser == null){
 
                     Toast.makeText(splashcreen.this, "null", Toast.LENGTH_SHORT).show();
-                    startActivity(intent_login, options.toBundle());
+                    startActivity(intent_welcome);
                     finish();
                 }
 

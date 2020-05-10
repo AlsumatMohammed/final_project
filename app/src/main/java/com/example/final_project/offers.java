@@ -18,6 +18,25 @@ public class offers {
     String publisherUsername;
     String publisherEmail;
     String publisherPhoneNumber;
+    String publisherLatitude;
+
+    public String getPublisherLatitude() {
+        return publisherLatitude;
+    }
+
+    public void setPublisherLatitude(String publisherLatitude) {
+        this.publisherLatitude = publisherLatitude;
+    }
+
+    public String getPublisherLongitude() {
+        return publisherLongitude;
+    }
+
+    public void setPublisherLongitude(String publisherLongitude) {
+        this.publisherLongitude = publisherLongitude;
+    }
+
+    String publisherLongitude;
 
     public String getRequestKey() {
         return requestKey;

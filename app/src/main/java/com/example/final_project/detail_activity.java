@@ -30,7 +30,6 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.firebase.ui.database.SnapshotParser;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -39,7 +38,6 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.tapadoo.alerter.Alerter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class detail_activity extends AppCompatActivity {
@@ -79,6 +77,8 @@ public class detail_activity extends AppCompatActivity {
 
     String publisherUserName;
     String publisherEmail;
+    String publisherLatitude;
+    String publisherLongitude;
     String adKey;
     String adtitle;
     String productImage;
@@ -97,6 +97,7 @@ public class detail_activity extends AppCompatActivity {
     boolean checkAd = false;
 
 
+    ImageView getDirectionButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,6 +108,7 @@ public class detail_activity extends AppCompatActivity {
 
 
 
+        getDirectionButton = findViewById(R.id.getDirectionButton);
 
         supplierRatingBar = findViewById(R.id.ratingBar_detail);
         callNowButton = findViewById(R.id.callNow_button);
@@ -148,6 +150,8 @@ public class detail_activity extends AppCompatActivity {
         publisherPhone = intent.getExtras().getString("PUBLISHERPHONE");
         adKey = intent.getExtras().getString("ADKEY");
         adtitle = intent.getExtras().getString("ADTITLE");
+        publisherLatitude = intent.getExtras().getString("PUBLISHERLATITUDE");
+        publisherLongitude = intent.getExtras().getString("PUBLISHERLONGITUDE");
 
         Uri productImagePath = Uri.parse(productImage);
         Uri publisherImagePath = Uri.parse(publisherImage);
@@ -191,6 +195,24 @@ public class detail_activity extends AppCompatActivity {
             }
         });
 
+        //location
+
+        getDirectionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Uri uri = Uri.parse("geo:"+publisherLatitude+","+publisherLongitude);
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW, (uri));
+                mapIntent.setPackage("com.google.android.apps.maps");
+
+
+                if (mapIntent.resolveActivity(getPackageManager()) != null){
+
+                    startActivity(mapIntent);
+                }
+            }
+        });
+
 
 
         RequestOptions options = new RequestOptions()
@@ -202,6 +224,16 @@ public class detail_activity extends AppCompatActivity {
         Glide.with(getApplicationContext())
                 .load(productImage)
                 .apply(options).into(productImageView);
+
+        productImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                startActivity(new Intent(Intent.ACTION_VIEW,
+                        Uri.parse(productImage)));
+
+            }
+        });
 
         Glide.with(getApplicationContext())
                 .load(publisherImage)
@@ -280,7 +312,7 @@ public class detail_activity extends AppCompatActivity {
                 generalAds generalAd = new generalAds();
 
                 generalAd.setPublisherEmail(publisherEmail);
-                generalAd.setPublisherphoneNumber(publisherPhone);
+                generalAd.setPublisherPhoneNumber(publisherPhone);
                 generalAd.setPublisherUsername(publisherUserName);
                 generalAd.setTitle(adtitle);
                 generalAd.setCategory(category);
@@ -421,7 +453,7 @@ public class detail_activity extends AppCompatActivity {
                         openDetailActivity(model.getProductImage() , model.getDescription(), model.getCategory()
                                 , model.getPublishDate() , model.getPrice() , model.getCurrency() , model.getPriceType()
                                 , model.getWarranty() , model.getCondition() , model.getPublisherImage()
-                                , model.getPublisherUsername() , model.getPublisherEmail(), model.getPublisherphoneNumber(), model.getKey(), model.getTitle());
+                                , model.getPublisherUsername() , model.getPublisherEmail(), model.getPublisherPhoneNumber(), model.getKey(), model.getTitle());
 
                     }
                 });

@@ -186,7 +186,7 @@ public class RequestsOffersFragment extends Fragment {
 
     private void fetchLatestRequest() {
 
-        showDialog("Fetching Request and Offers, just a second");
+
         Query query = FirebaseDatabase.getInstance()
                 .getReference()
                 .child("Requests");
@@ -200,7 +200,7 @@ public class RequestsOffersFragment extends Fragment {
                             @Override
                             public requests parseSnapshot(@NonNull DataSnapshot snapshot) {
 //
-
+                                showDialog("Fetching Request and Offers, just a second");
                                 requests request = snapshot.getValue(requests.class);
 
 
@@ -273,7 +273,7 @@ public class RequestsOffersFragment extends Fragment {
 
                         openDetailActivity(model.getProductImage() , model.getDescription(), model.getCategory()
                                 , model.getPublishDate(), model.getWarranty() , model.getCondition() , model.getPublisherImage()
-                                , model.getPublisherUsername() , model.getPublisherEmail(), model.getPublisherPhoneNumber(), model.getKey());
+                                , model.getPublisherUsername() , model.getPublisherEmail(), model.getPublisherPhoneNumber(), model.getKey(), model.getPublisherLatitude(), model.getPublisherLongitude());
 
                     }
                 });
@@ -315,7 +315,7 @@ public class RequestsOffersFragment extends Fragment {
     private void fetchMyRequests() {
 
 
-        showDialog("Fetching Request and Offers, just a second");
+
         Query query = FirebaseDatabase.getInstance()
                 .getReference()
                 .child("Requests").orderByChild("publisherEmail").equalTo(firebaseUser.getEmail());
@@ -329,7 +329,7 @@ public class RequestsOffersFragment extends Fragment {
                             @Override
                             public requests parseSnapshot(@NonNull DataSnapshot snapshot) {
 //
-
+                                showDialog("Fetching Request and Offers, just a second");
                                 requests request = snapshot.getValue(requests.class);
 
 
@@ -402,7 +402,7 @@ public class RequestsOffersFragment extends Fragment {
 
                         openDetailActivity(model.getProductImage() , model.getDescription(), model.getCategory()
                                 , model.getPublishDate(), model.getWarranty() , model.getCondition() , model.getPublisherImage()
-                                , model.getPublisherUsername() , model.getPublisherEmail(), model.getPublisherPhoneNumber(), model.getKey());
+                                , model.getPublisherUsername() , model.getPublisherEmail(), model.getPublisherPhoneNumber(), model.getKey(), model.getPublisherLatitude(), model.getPublisherLongitude());
 
                     }
                 });
@@ -431,6 +431,8 @@ public class RequestsOffersFragment extends Fragment {
         intent.putExtra("PUBLSIHEREMAIL" , detail[8]);
         intent.putExtra("PUBLISHERPHONE" , detail[9]);
         intent.putExtra("REQUESTKEY" , detail[10]);
+        intent.putExtra("PUBLISHERLATITUDE" , detail[11]);
+        intent.putExtra("PUBLISHERLONGITUDE" , detail[12]);
 
 
         getActivity().startActivity(intent);

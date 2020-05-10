@@ -61,17 +61,30 @@
         android:paddingBottom="70dp">
 
 
+
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
 
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
             <ImageView
                 android:id="@+id/productImageRequestOffers"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:src="@color/black" />
+
+            <ImageView
+                android:id="@+id/getDirectionButtonDetailRequests"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/getdirection"
+                android:layout_gravity="bottom|end" />
+        </FrameLayout>
 
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -405,7 +418,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:clipToPadding="false"
-                    android:scrollbars="horizontal"
+                    android:scrollbars="vertical"
                     android:nestedScrollingEnabled="false"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"

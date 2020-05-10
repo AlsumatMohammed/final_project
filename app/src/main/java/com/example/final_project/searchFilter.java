@@ -4,21 +4,23 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import br.com.simplepass.loadingbutton.customViews.CircularProgressButton;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -28,62 +30,83 @@ import com.firebase.ui.database.SnapshotParser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.tapadoo.alerter.Alerter;
 
-public class categoriesFilter extends AppCompatActivity {
+public class searchFilter extends AppCompatActivity {
 
+    private RecyclerView recyclerView;
+    private LinearLayoutManager linearLayoutManager;
+    private FirebaseRecyclerAdapter searchAdapter;
 
-    private RecyclerView recyclerViewCategoriesFilter;
-    private LinearLayoutManager linearLayoutManagerCategoriesFilter;
-    private FirebaseRecyclerAdapter adapterCategoriesFilter;
-
-
-    TextView categoryTv;
-
+    String searchText;
     SweetAlertDialog pDialog;
-    CircularProgressButton addRequestsOffersButton;
-    String category;
+    public EditText searchBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_categories_filter);
+        setContentView(R.layout.activity_search_filter);
 
 
-        pDialog = new SweetAlertDialog(categoriesFilter.this, SweetAlertDialog.PROGRESS_TYPE);
+        pDialog = new SweetAlertDialog(this, SweetAlertDialog.PROGRESS_TYPE);
         pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
-        pDialog.setCancelable(false);
+        pDialog.setTitleText("Fetching ...");
+        pDialog.setCancelable(true);
+        searchBar = findViewById(R.id.searchAdEt);
 
-        categoryTv = findViewById(R.id.categoryFilterTv);
+        Intent i  = this.getIntent();
 
+        searchText = i.getExtras().getString("SEARCHTEXT");
 
-        Intent intent = this.getIntent();
+        searchBar.setText(searchText);
 
-        category = intent.getExtras().getString("CATEGORY");
-
-        categoryTv.setText(category);
-        recyclerViewCategoriesFilter = findViewById(R.id.categoriesFilterRecyclerView);
-        linearLayoutManagerCategoriesFilter = new LinearLayoutManager(categoriesFilter.this);
-        recyclerViewCategoriesFilter.setLayoutManager(linearLayoutManagerCategoriesFilter);
-
-        Toast.makeText(this, category, Toast.LENGTH_SHORT).show();
+        recyclerView = findViewById(R.id.resultsRecyclerView);
+        linearLayoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(linearLayoutManager);
 
 
-        fetchCategories();
 
 
+
+        searchBar.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+                    String s  = searchBar.getText().toString().trim();
+                    search(s);
+                    searchAdapter.startListening();
+
+            }
+
+
+        });
+
+        search(searchText);
 
 
 
 
 
     }
-    public class CategoriesFilterViewHolder extends RecyclerView.ViewHolder {
+
+    public class resultsViewHolder extends RecyclerView.ViewHolder {
 
         public TextView title, price, date, publisherName, category;
         public ImageView productimage, publisherImage;
         public RelativeLayout rev_layout;
 
 
-        public CategoriesFilterViewHolder(@NonNull View itemView) {
+        public resultsViewHolder(@NonNull View itemView) {
             super(itemView);
 
             title = itemView.findViewById(R.id.commenterName);
@@ -98,16 +121,13 @@ public class categoriesFilter extends AppCompatActivity {
 
 
     }
-
-
-
-    private void fetchCategories() {
+    private void search(String searchText) {
 
 
         Query query = FirebaseDatabase.getInstance()
                 .getReference()
-                .child("GeneralAds").orderByChild("category").equalTo(category);
-
+                .child("GeneralAds").orderByChild("description")
+                .startAt(searchText).endAt(searchText +"\uf8ff");
 
 
 
@@ -117,7 +137,8 @@ public class categoriesFilter extends AppCompatActivity {
                             @NonNull
                             @Override
                             public generalAds parseSnapshot(@NonNull DataSnapshot snapshot) {
-                                   showDialog("Loading");
+//
+
                                 generalAds generalAd = snapshot.getValue(generalAds.class);
 
 
@@ -131,25 +152,25 @@ public class categoriesFilter extends AppCompatActivity {
 
 
 
-        adapterCategoriesFilter = new FirebaseRecyclerAdapter<generalAds, CategoriesFilterViewHolder>(options) {
+        searchAdapter = new FirebaseRecyclerAdapter<generalAds, resultsViewHolder>(options) {
 
 
             @NonNull
             @Override
-            public CategoriesFilterViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            public resultsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
 
                 View itemview = LayoutInflater.from(parent.getContext()).inflate(R.layout.generic_ads_layout, parent, false);
 
-                return new CategoriesFilterViewHolder(itemview);
+                return new resultsViewHolder(itemview);
 
             }
 
             @Override
-            protected void onBindViewHolder(@NonNull final CategoriesFilterViewHolder holder, int position, @NonNull final generalAds model) {
+            protected void onBindViewHolder(@NonNull final resultsViewHolder holder, int position, @NonNull final generalAds model) {
 
-                holder.publisherImage.setAnimation(AnimationUtils.loadAnimation(categoriesFilter.this, R.anim.rv_fade_transition));
-                holder.rev_layout.setAnimation(AnimationUtils.loadAnimation(categoriesFilter.this, R.anim.rv_scale_animation));
+                holder.publisherImage.setAnimation(AnimationUtils.loadAnimation(searchFilter.this, R.anim.rv_fade_transition));
+                holder.rev_layout.setAnimation(AnimationUtils.loadAnimation(searchFilter.this, R.anim.rv_scale_animation));
 
                 String currency = model.getCurrency();
                 String price = model.getPrice();
@@ -197,7 +218,7 @@ public class categoriesFilter extends AppCompatActivity {
                         .load(publisherImage)
                         .apply(options).override(40, 40).into(holder.publisherImage);
 
-                dismissDialog();
+
 
                 holder.rev_layout.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -206,7 +227,7 @@ public class categoriesFilter extends AppCompatActivity {
                         openDetailActivity(model.getProductImage() , model.getDescription(), model.getCategory()
                                 , model.getPublishDate() , model.getPrice() , model.getCurrency() , model.getPriceType()
                                 , model.getWarranty() , model.getCondition() , model.getPublisherImage()
-                                , model.getPublisherUsername() , model.getPublisherEmail(), model.getPublisherPhoneNumber(), model.getKey(), model.getTitle());
+                                , model.getPublisherUsername() , model.getPublisherEmail(), model.getPublisherPhoneNumber(), model.getKey(), model.getTitle(), model.getPublisherLatitude(), model.getPublisherLongitude());
 
                     }
                 });
@@ -214,7 +235,8 @@ public class categoriesFilter extends AppCompatActivity {
         };
 
 
-        recyclerViewCategoriesFilter.setAdapter(adapterCategoriesFilter);
+
+        recyclerView.setAdapter(searchAdapter);
 
 
     }
@@ -240,6 +262,8 @@ public class categoriesFilter extends AppCompatActivity {
         intent.putExtra("PUBLISHERPHONE" , detail[12]);
         intent.putExtra("ADKEY" , detail[13]);
         intent.putExtra("ADTITLE", detail[14]);
+        intent.putExtra("PUBLISHERLATITUDE", detail[15]);
+        intent.putExtra("PUBLISHERLONGITUDE", detail[16]);
 
 
         startActivity(intent);
@@ -251,21 +275,21 @@ public class categoriesFilter extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        adapterCategoriesFilter.startListening();
+        searchAdapter.startListening();
+
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        adapterCategoriesFilter.stopListening();
+        searchAdapter.stopListening();
+
     }
 
 
 
 
-    public void showDialog(String s ){
-        pDialog.setTitleText(s);
-
+    public void showDialog(){
         pDialog.show();
 
         //editprofileButton.startAnimation();

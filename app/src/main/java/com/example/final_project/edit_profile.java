@@ -2,24 +2,30 @@ package com.example.final_project;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 import br.com.simplepass.loadingbutton.customViews.CircularProgressButton;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 
-import android.app.Activity;
+import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
+import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -31,7 +37,6 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.common.collect.BiMap;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -41,7 +46,6 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.tapadoo.alerter.Alerter;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -50,6 +54,8 @@ import java.util.Locale;
 
 public class edit_profile extends AppCompatActivity {
 
+    private static  final int REQUEST_LOCATION=2;
+    SweetAlertDialog pDialog;
     private static int PICK_IMAGE_GALLERY = 123;
     private static int PICK_IMAGE_CAMERA = 1;
     public ImageView profileImageView;
@@ -78,21 +84,32 @@ public class edit_profile extends AppCompatActivity {
     // image activity for results
     String imageFilePath;
 
-
+    boolean imageCheck= false, informationCheck = false;
+    String latitude = "", longitude = "";
+    LocationManager locationManager;
+    ImageView getLocationButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
 
 
+        ActivityCompat.requestPermissions(this,new String[]
+                {Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
+
+        pDialog = new SweetAlertDialog(edit_profile.this, SweetAlertDialog.PROGRESS_TYPE);
+        pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+        pDialog.setCancelable(false);
+
         firebaseAuth = FirebaseAuth.getInstance();
         databaseReference = FirebaseDatabase.getInstance().getReference();
         firebaseStorage = FirebaseStorage.getInstance();
         storageReference = firebaseStorage.getReference();
 
+        getLocationButton = findViewById(R.id.locationButton);
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
 
-        userInformationnull();
+        userInformationNull();
 
         profileImageView = findViewById(R.id.profile_image_editprofile);
         profileImageView.setOnClickListener(new View.OnClickListener() {
@@ -164,6 +181,28 @@ public class edit_profile extends AppCompatActivity {
 
         //end firebase
 
+        getLocationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                locationManager=(LocationManager) getSystemService(Context.LOCATION_SERVICE);
+
+                //Check gps is enable or not
+
+                if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER))
+                {
+                    //Write Function To enable gps
+
+                    OnGPS();
+                }
+                else
+                {
+                    //GPS is already On then
+
+                    getLocation();
+                }
+            }
+        });
 
         edit_butt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -181,7 +220,19 @@ public class edit_profile extends AppCompatActivity {
                     return;
                 }
 
+                if (latitude.isEmpty() || longitude.isEmpty()){
+                    Alerter.create(edit_profile.this)
+                            .setTitle("Y-parts")
+                            .setText("Couldn't Get Location, click on location icon!")
+                            .enableSwipeToDismiss()
+                            .setDuration(3000)
+                            .setBackgroundColorRes(R.color.text_color_orange)
+                            .show();
+                    return;
+                }
+
                 spinButton();
+                showDialog("Creating Profile, Just a Moment!");
                 userInformation();
                 sendUserData();
                 Toast.makeText(edit_profile.this, "all done", Toast.LENGTH_SHORT).show();
@@ -405,19 +456,21 @@ public class edit_profile extends AppCompatActivity {
             user_type = "supplier";
         }
 
-        Userinformation userinformation = new Userinformation(userName, user_type, phone);
+        Userinformation userinformation = new Userinformation(userName, user_type, phone, latitude, longitude);
 
 
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
         databaseReference.child("userInfromation").child(firebaseUser.getUid()).setValue(userinformation);
+        informationCheck = true;
         Toast.makeText(this, "user information updated", Toast.LENGTH_SHORT).show();
+        confirm(imageCheck, informationCheck);
 
     }
 
-    private void userInformationnull() {
+    private void userInformationNull() {
 
 
-        Userinformation userinformation = new Userinformation("null", "null", "null");
+        Userinformation userinformation = new Userinformation("null", "null", "null", "null", "null");
 
 
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
@@ -428,7 +481,7 @@ public class edit_profile extends AppCompatActivity {
 
     private void sendUserData() {
 
-        spinButton();
+
 
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference databaseReference = firebaseDatabase.getReference(firebaseAuth.getUid());
@@ -437,9 +490,9 @@ public class edit_profile extends AppCompatActivity {
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                //Toast.makeText(edit_profile.this, "could not upload image", Toast.LENGTH_SHORT).show();
 
-                stopButton();
+
+
                 Alerter.create(edit_profile.this)
                         .setTitle("Y-parts")
                         .setText(" Something went wrong, Could not upload image, Try again !")
@@ -451,28 +504,132 @@ public class edit_profile extends AppCompatActivity {
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-//                Toast.makeText(edit_profile.this, "uploaded image", Toast.LENGTH_SHORT).show();
 
-                stopButton();
-//                Alerter.create(edit_profile.this)
-//                        .setTitle("Y-parts")
-//                        .setText("Image uploaded successfully. ")
-//                        .enableSwipeToDismiss()
-//                        .setDuration(3000)
-//                        .setBackgroundColorRes(R.color.text_color_orange)
-//                        .show();
 
-                new SweetAlertDialog(edit_profile.this, SweetAlertDialog.SUCCESS_TYPE)
-                        .setTitleText("Awesome!")
-                        .setContentText("Profile Created!")
-                        .show();
 
-                Intent intent = new Intent(edit_profile.this, MainActivity.class);
-                startActivity(intent);
-                finish();
-
+                imageCheck = true;
+                Toast.makeText(edit_profile.this, "Image uploaded successfully", Toast.LENGTH_SHORT).show();
+                confirm(imageCheck, informationCheck);
             }
         });
+    }
+
+    public void confirm(boolean publisherInformationConfirm, boolean publisherImageConfirm ){
+
+        if (publisherInformationConfirm && publisherImageConfirm ){
+
+            Toast.makeText(this, "done", Toast.LENGTH_SHORT).show();
+            dismissDialog();
+            new SweetAlertDialog(edit_profile.this, SweetAlertDialog.SUCCESS_TYPE)
+                    .setTitleText("Awesome!")
+                    .setContentText("Profile Created, Enjoy!")
+                    .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                        @Override
+                        public void onClick(SweetAlertDialog sweetAlertDialog) {
+                            Intent intent = new Intent(edit_profile.this, MainActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }
+                    })
+                    .show();
+        }
+        else{
+            Toast.makeText(this, "not yet", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void getLocation() {
+
+        //Check Permissions again
+
+        showDialog("Getting location...");
+        if (ActivityCompat.checkSelfPermission(edit_profile.this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(edit_profile.this,
+
+                Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)
+        {
+            ActivityCompat.requestPermissions(this,new String[]
+                    {Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
+        }
+        else
+        {
+            Location LocationGps= locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            Location LocationNetwork=locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+            Location LocationPassive=locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
+
+            if (LocationGps !=null)
+            {
+                double lat=LocationGps.getLatitude();
+                double longi=LocationGps.getLongitude();
+
+                latitude=String.valueOf(lat);
+                longitude=String.valueOf(longi);
+                dismissDialog();
+                Toast.makeText(this, "Location acquired", Toast.LENGTH_SHORT).show();
+
+            }
+            else if (LocationNetwork !=null)
+            {
+                double lat=LocationNetwork.getLatitude();
+                double longi=LocationNetwork.getLongitude();
+
+                latitude=String.valueOf(lat);
+                longitude=String.valueOf(longi);
+                dismissDialog();
+                Toast.makeText(this, "Location acquired", Toast.LENGTH_SHORT).show();
+
+
+            }
+            else if (LocationPassive !=null)
+            {
+                double lat=LocationPassive.getLatitude();
+                double longi=LocationPassive.getLongitude();
+
+                latitude=String.valueOf(lat);
+                longitude=String.valueOf(longi);
+                dismissDialog();
+                Toast.makeText(this, "Location acquired", Toast.LENGTH_SHORT).show();
+
+
+            }
+            else
+            {
+                dismissDialog();
+                Alerter.create(edit_profile.this)
+                        .setTitle("Y-parts")
+                        .setText("Can't get your location, try again !")
+                        .enableSwipeToDismiss()
+                        .setDuration(3000)
+                        .setBackgroundColorRes(R.color.text_color_orange)
+                        .show();
+            }
+
+
+
+            //That's All Run Your App
+        }
+
+
+
+    }
+
+    private void OnGPS() {
+
+        final AlertDialog.Builder builder= new AlertDialog.Builder(this);
+
+        builder.setMessage("Enable GPS").setCancelable(false).setPositiveButton("YES", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+            }
+        }).setNegativeButton("NO", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                dialog.cancel();
+            }
+        });
+        final AlertDialog alertDialog=builder.create();
+        alertDialog.show();
     }
 
 
@@ -485,6 +642,20 @@ public class edit_profile extends AppCompatActivity {
     public void stopButton() {
 
         edit_butt.revertAnimation();
+    }
+
+    public void showDialog(String message){
+        pDialog.setTitleText(message);
+        pDialog.show();
+
+        //editprofileButton.startAnimation();
+
+    }
+
+    public void dismissDialog(){
+        pDialog.dismiss();
+
+        //editprofileButton.revertAnimation();
     }
 
 

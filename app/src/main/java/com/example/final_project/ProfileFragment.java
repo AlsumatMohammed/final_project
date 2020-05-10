@@ -10,14 +10,12 @@ import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import br.com.simplepass.loadingbutton.customViews.CircularProgressButton;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -275,7 +273,6 @@ public class ProfileFragment extends Fragment {
     private void fetch() {
 
         //Toast.makeText(getActivity(), firebaseAuth.getUid(), Toast.LENGTH_SHORT).show();
-        showDialog();
         Query query = FirebaseDatabase.getInstance()
                 .getReference()
                 .child("favouritesAds").child(firebaseAuth.getUid());
@@ -289,6 +286,7 @@ public class ProfileFragment extends Fragment {
                             @Override
                             public generalAds parseSnapshot(@NonNull DataSnapshot snapshot) {
 //
+                                showDialog();
 
                                 generalAds generalAd = snapshot.getValue(generalAds.class);
 
@@ -379,7 +377,7 @@ public class ProfileFragment extends Fragment {
                         openDetailActivity(model.getProductImage() , model.getDescription(), model.getCategory()
                                 , model.getPublishDate() , model.getPrice() , model.getCurrency() , model.getPriceType()
                                 , model.getWarranty() , model.getCondition() , model.getPublisherImage()
-                                , model.getPublisherUsername() , model.getPublisherEmail(), model.getPublisherphoneNumber(), model.getKey(), model.getTitle());
+                                , model.getPublisherUsername() , model.getPublisherEmail(), model.getPublisherPhoneNumber(), model.getKey(), model.getTitle());
 
                     }
                 });
@@ -420,7 +418,7 @@ public class ProfileFragment extends Fragment {
     private void fetchPreviousAds() {
 
         //Toast.makeText(getActivity(), firebaseAuth.getUid(), Toast.LENGTH_SHORT).show();
-        showDialog();
+
         Query query = FirebaseDatabase.getInstance()
                 .getReference()
                 .child("GeneralAds").orderByChild("publisherEmail").equalTo(publisherEmail);
@@ -434,7 +432,7 @@ public class ProfileFragment extends Fragment {
                             @Override
                             public generalAds parseSnapshot(@NonNull DataSnapshot snapshot) {
 //
-
+                                showDialog();
                                 generalAds generalAd = snapshot.getValue(generalAds.class);
 
 
@@ -524,7 +522,7 @@ public class ProfileFragment extends Fragment {
                         openDetailActivity(model.getProductImage() , model.getDescription(), model.getCategory()
                                 , model.getPublishDate() , model.getPrice() , model.getCurrency() , model.getPriceType()
                                 , model.getWarranty() , model.getCondition() , model.getPublisherImage()
-                                , model.getPublisherUsername() , model.getPublisherEmail(), model.getPublisherphoneNumber(), model.getKey(), model.getTitle());
+                                , model.getPublisherUsername() , model.getPublisherEmail(), model.getPublisherPhoneNumber(), model.getKey(), model.getTitle());
 
                     }
                 });

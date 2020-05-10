@@ -75,7 +75,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraint3"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="200dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -121,27 +121,35 @@
 
 
             <EditText
-                android:id="@+id/editText"
-                android:layout_width="300dp"
-                android:layout_height="35dp"
-                android:layout_marginLeft="30dp"
+                android:id="@+id/searchBar"
+                android:layout_width="270dp"
+                android:layout_height="40dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/card_bg"
-                android:drawableRight="@drawable/search_icon"
                 android:fontFamily="@font/montserrat"
                 android:hint="Search for key words..."
                 android:padding="10dp"
                 android:textSize="10sp"
-                app:layout_constraintLeft_toLeftOf="@id/textView3"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/textView3" />
 
+            <ImageView
+                android:id="@+id/searchIcon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/search_icon"
+                app:layout_constraintTop_toTopOf="@id/searchBar"
+                app:layout_constraintBottom_toBottomOf="@id/searchBar"
+                app:layout_constraintLeft_toRightOf="@id/searchBar"
+                android:layout_marginLeft="10dp"/>
             <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/add_ad"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
-                app:layout_constraintLeft_toLeftOf="@id/editText"
-                app:layout_constraintRight_toRightOf="@id/editText"
-                app:layout_constraintTop_toBottomOf="@id/editText"
+                app:layout_constraintLeft_toLeftOf="@id/searchBar"
+                app:layout_constraintRight_toRightOf="@id/searchBar"
+                app:layout_constraintTop_toBottomOf="@id/searchBar"
                 app:lottie_autoPlay="true"
                 app:lottie_fileName="adding_button .json"
                 app:lottie_loop="true" />

@@ -71,6 +71,8 @@ public class publishOffer extends AppCompatActivity {
     public String publisher_name = "";
     public String publisher_phone = "";
     public String publisher_email = "";
+    public String publisherLatitude = "";
+    public String publisherLongitude = "";
 
     //categories
     public Spinner categories_spinner;
@@ -378,7 +380,7 @@ public class publishOffer extends AppCompatActivity {
                 }
 
                 showDialog("Putting Offer, JUST A SECOND");
-
+                spinButton();
                 if (currencyReal.isChecked()){
                     currency = "YER";
                 }
@@ -412,6 +414,7 @@ public class publishOffer extends AppCompatActivity {
                             .show();
                     Toast.makeText(publishOffer.this, "publisher information not acquired, try again", Toast.LENGTH_SHORT).show();
                     dismissDialog();
+                    stopButton();
                     getPublisherInformation();
                     return;
 
@@ -425,6 +428,8 @@ public class publishOffer extends AppCompatActivity {
                 offer.setPublisherEmail(publisher_email);
                 offer.setPublisherPhoneNumber(publisher_phone);
                 offer.setPublisherUsername(publisher_name);
+                offer.setPublisherLatitude(publisherLatitude);
+                offer.setPublisherLongitude(publisherLongitude);
                 offer.setTitle(title);
                 offer.setCategory(category);
                 offer.setCondition(condition);
@@ -567,6 +572,8 @@ public class publishOffer extends AppCompatActivity {
                 publisher_name = userProfile.getUserName();
                 publisher_email = firebaseUser.getEmail();
                 publisher_phone = userProfile.getPhoneNumber();
+                publisherLatitude = userProfile.getLatitude();
+                publisherLongitude = userProfile.getLongitude();
                 publiserInformationConfirm = true;
                 Toast.makeText(publishOffer.this, "publisher Information acquired", Toast.LENGTH_SHORT).show();
                 confirm(publiserInformationConfirm, publisherImageConfirm, sendingImageConfirm, productImageReferenceConfirm);
@@ -751,6 +758,7 @@ public class publishOffer extends AppCompatActivity {
 
             Toast.makeText(this, "done", Toast.LENGTH_SHORT).show();
             dismissDialog();
+            stopButton();
             new SweetAlertDialog(publishOffer.this, SweetAlertDialog.SUCCESS_TYPE)
                     .setTitleText("Awesome!")
                     .setContentText("Offer published!")
@@ -771,8 +779,7 @@ public class publishOffer extends AppCompatActivity {
 
     public void pickFormCamera() {
 
-//        Intent takePicture = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-//        startActivityForResult(takePicture, PICK_IMAGE_CAMERA);
+
 
         Intent pictureIntent = new Intent(
                 MediaStore.ACTION_IMAGE_CAPTURE);
@@ -827,13 +834,22 @@ public class publishOffer extends AppCompatActivity {
     public void showDialog(String s ){
         pDialog.show();
         pDialog.setTitleText(s);
-        //editprofileButton.startAnimation();
 
     }
 
     public void dismissDialog(){
         pDialog.dismiss();
 
-        //editprofileButton.revertAnimation();
+    }
+
+    public void spinButton() {
+
+        publishOfferButton.startAnimation();
+
+    }
+
+    public void stopButton() {
+
+        publishOfferButton.revertAnimation();
     }
 }

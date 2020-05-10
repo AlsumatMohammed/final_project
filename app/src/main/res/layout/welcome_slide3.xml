@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#C5EAF3">
+
+
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/userAnimation"
+        android:layout_width="268dp"
+        android:layout_height="274dp"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="9254-send.json"
+        app:lottie_loop="true"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="50dp"/>
+
+    <TextView
+        android:id="@+id/tv1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Requests!"
+        android:fontFamily="@font/montserrat_bold"
+        android:textSize="30sp"
+        android:textColor="@color/whiteTextColor"
+        app:layout_constraintTop_toBottomOf="@id/userAnimation"
+        app:layout_constraintLeft_toLeftOf="@id/userAnimation"
+        app:layout_constraintRight_toRightOf="@id/userAnimation"
+        android:layout_marginTop="20dp"/>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/slide3_desc"
+        app:layout_constraintLeft_toLeftOf="@id/tv1"
+        app:layout_constraintRight_toRightOf="@id/tv1"
+        app:layout_constraintTop_toBottomOf="@id/tv1"
+        android:layout_marginTop="20dp"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        android:textColor="@color/whiteTextColor"
+        android:fontFamily="@font/montserrat"
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>

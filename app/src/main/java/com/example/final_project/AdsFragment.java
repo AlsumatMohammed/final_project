@@ -3,22 +3,22 @@ package com.example.final_project;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import br.com.simplepass.loadingbutton.customViews.CircularProgressButton;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
-import android.text.Layout;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -37,6 +37,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.tapadoo.alerter.Alerter;
 
 
 /**
@@ -54,6 +55,7 @@ public class AdsFragment extends Fragment {
     private FirebaseRecyclerAdapter adapter;
 
 
+
     SweetAlertDialog pDialog;
     ImageView publishButton;
 
@@ -65,6 +67,9 @@ public class AdsFragment extends Fragment {
     LinearLayout exhaustLayout;
 
     CircularProgressButton viewAllButton;
+
+    public EditText searchBar;
+    ImageView searchIcon;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -144,6 +149,38 @@ public class AdsFragment extends Fragment {
         exhaustLayout = view.findViewById(R.id.exhaustLayout);
         ignitionLayout = view.findViewById(R.id.ignitionLayout);
         publishButton = view.findViewById(R.id.add_ad);
+        searchBar = view.findViewById(R.id.searchBar);
+        searchIcon = view.findViewById(R.id.searchIcon);
+
+        searchIcon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (searchBar.getText().toString().trim().isEmpty()){
+
+                    Alerter.create(getActivity())
+                            .setTitle("Y-parts")
+                            .setText("The Search Filed Cannot be empty!")
+                            .enableSwipeToDismiss()
+                            .setDuration(3000)
+                            .setBackgroundColorRes(R.color.text_color_orange)
+                            .show();
+                }
+
+                else{
+
+                    String searchText = searchBar.getText().toString().trim();
+
+                    Intent i  = new Intent(getActivity(), searchFilter.class);
+
+                    i.putExtra("SEARCHTEXT", searchText);
+
+                    getActivity().startActivity(i);
+                }
+            }
+        });
+
+
 
 
         brakeLayout.setOnClickListener(new View.OnClickListener() {
@@ -306,10 +343,7 @@ public class AdsFragment extends Fragment {
                             @NonNull
                             @Override
                             public generalAds parseSnapshot(@NonNull DataSnapshot snapshot) {
-//                                    return new generalAds(snapshot.child("price").getValue().toString(),
-//                                            snapshot.child("productImage").getValue().toString(),
-//                                            snapshot.child("publisherImage").getValue().toString(),
-//                                            snapshot.child("title").getValue().toString());
+//
 
                                 generalAds generalAd = snapshot.getValue(generalAds.class);
 
@@ -399,7 +433,7 @@ public class AdsFragment extends Fragment {
                         openDetailActivity(model.getProductImage() , model.getDescription(), model.getCategory()
                                 , model.getPublishDate() , model.getPrice() , model.getCurrency() , model.getPriceType()
                                 , model.getWarranty() , model.getCondition() , model.getPublisherImage()
-                                , model.getPublisherUsername() , model.getPublisherEmail(), model.getPublisherphoneNumber(), model.getKey(), model.getTitle());
+                                , model.getPublisherUsername() , model.getPublisherEmail(), model.getPublisherPhoneNumber(), model.getKey(), model.getTitle(), model.getPublisherLatitude(), model.getPublisherLongitude());
 
                     }
                 });
@@ -411,6 +445,8 @@ public class AdsFragment extends Fragment {
 
 
     }
+
+
 
     public void openDetailActivity(String... detail){
 
@@ -433,6 +469,8 @@ public class AdsFragment extends Fragment {
             intent.putExtra("PUBLISHERPHONE" , detail[12]);
             intent.putExtra("ADKEY" , detail[13]);
             intent.putExtra("ADTITLE", detail[14]);
+            intent.putExtra("PUBLISHERLATITUDE", detail[15]);
+            intent.putExtra("PUBLISHERLONGITUDE", detail[16]);
 
 
         getActivity().startActivity(intent);
@@ -445,12 +483,14 @@ public class AdsFragment extends Fragment {
         public void onStart() {
             super.onStart();
             adapter.startListening();
+
         }
 
         @Override
         public void onStop() {
             super.onStop();
             adapter.stopListening();
+
         }
 
 
@@ -468,4 +508,5 @@ public class AdsFragment extends Fragment {
 
         //editprofileButton.revertAnimation();
     }
+
 }

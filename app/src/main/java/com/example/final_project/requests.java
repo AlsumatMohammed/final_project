@@ -14,6 +14,24 @@ public class requests {
     String publisherUsername;
     String publisherEmail;
     String publisherPhoneNumber;
+    String publisherLatitude;
+    String publisherLongitude;
+
+    public String getPublisherLatitude() {
+        return publisherLatitude;
+    }
+
+    public void setPublisherLatitude(String publisherLatitude) {
+        this.publisherLatitude = publisherLatitude;
+    }
+
+    public String getPublisherLongitude() {
+        return publisherLongitude;
+    }
+
+    public void setPublisherLongitude(String publisherLongitude) {
+        this.publisherLongitude = publisherLongitude;
+    }
 
     public String getTitle() {
         return title;

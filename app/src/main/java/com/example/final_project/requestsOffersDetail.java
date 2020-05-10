@@ -71,6 +71,8 @@ public class requestsOffersDetail extends AppCompatActivity {
     //PUBLISHERINFORMATION
     String publisherImage;
     String publisherPhone;
+    String publisherLatitude;
+    String publisherLongitude;
     SweetAlertDialog pDialog;
     Button messageNowButton, callNowButton;
     CircularProgressButton putOfferButton, putCommentButton;
@@ -89,6 +91,8 @@ public class requestsOffersDetail extends AppCompatActivity {
     offerComments offerComment;
 
     private BottomSheetDialog dialog;
+
+    ImageView getDirectionButtonDetailRequests;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -117,6 +121,7 @@ public class requestsOffersDetail extends AppCompatActivity {
         noOffersYet = findViewById(R.id.nolatestOffersDetailTv);
         putCommentButton = findViewById(R.id.addCommentButton);
 
+        getDirectionButtonDetailRequests = findViewById(R.id.getDirectionButtonDetailRequests);
 
 
         pDialog = new SweetAlertDialog(requestsOffersDetail.this, SweetAlertDialog.PROGRESS_TYPE);
@@ -138,6 +143,8 @@ public class requestsOffersDetail extends AppCompatActivity {
         publisherEmail = intent.getExtras().getString("PUBLSIHEREMAIL");
         publisherPhone = intent.getExtras().getString("PUBLISHERPHONE");
         requestKey = intent.getExtras().getString("REQUESTKEY");
+        publisherLatitude = intent.getExtras().getString("PUBLISHERLATITUDE");
+        publisherLongitude = intent.getExtras().getString("PUBLISHERLONGITUDE");
 
 
         descriptionView.setText(description);
@@ -183,6 +190,22 @@ public class requestsOffersDetail extends AppCompatActivity {
                     startActivity(callIntent);
                 }
 
+            }
+        });
+
+        getDirectionButtonDetailRequests.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Uri uri = Uri.parse("geo:"+publisherLatitude+","+publisherLongitude);
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW, (uri));
+                mapIntent.setPackage("com.google.android.apps.maps");
+
+
+                if (mapIntent.resolveActivity(getPackageManager()) != null){
+
+                    startActivity(mapIntent);
+                }
             }
         });
 
@@ -337,7 +360,7 @@ public class requestsOffersDetail extends AppCompatActivity {
 
     private void fetchLatestOffers(){
 
-        showDialog("Fetching Request and Offers, just a second");
+
         Query query = FirebaseDatabase.getInstance()
                 .getReference()
                 .child("Offers").orderByChild("requestKey").equalTo(requestKey);
@@ -351,7 +374,7 @@ public class requestsOffersDetail extends AppCompatActivity {
                             public offers parseSnapshot(@NonNull DataSnapshot snapshot) {
 //
 
-
+                                showDialog("Fetching Request and Offers, just a second");
                                 offers offer = snapshot.getValue(offers.class);
 
 
@@ -427,6 +450,8 @@ public class requestsOffersDetail extends AppCompatActivity {
 
                     }
                 });
+
+
                 Glide.with(holder.publisherImage.getContext())
                         .load(publisherImage)
                         .apply(options).override(40, 40).into(holder.publisherImage);
@@ -440,7 +465,7 @@ public class requestsOffersDetail extends AppCompatActivity {
                         openDetailActivity(model.getProductImage() , model.getDescription(), model.getCategory()
                                 , model.getPublishDate() , model.getPrice() , model.getCurrency() , model.getPriceType()
                                 , model.getWarranty() , model.getCondition() , model.getPublisherImage()
-                                , model.getPublisherUsername() , model.getPublisherEmail(), model.getPublisherPhoneNumber(), model.getOfferKey(), model.getTitle());
+                                , model.getPublisherUsername() , model.getPublisherEmail(), model.getPublisherPhoneNumber(), model.getOfferKey(), model.getTitle(), model.getPublisherLatitude(), model.getPublisherLongitude());
 
                     }
                 });
@@ -474,6 +499,8 @@ public class requestsOffersDetail extends AppCompatActivity {
         intent.putExtra("PUBLISHERPHONE" , detail[12]);
         intent.putExtra("ADKEY" , detail[13]);
         intent.putExtra("ADTITLE", detail[14]);
+        intent.putExtra("PUBLISHERLATITUDE", detail[15]);
+        intent.putExtra("PUBLISHERLONGITUDE", detail[16]);
 
 
         startActivity(intent);

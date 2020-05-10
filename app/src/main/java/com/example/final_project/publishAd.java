@@ -70,6 +70,8 @@ public class publishAd extends AppCompatActivity {
     public String publisher_name;
     public String publisher_phone;
     public String publisher_email;
+    public String publisherLatitude;
+    public String publisherLongitude;
 
     //categories
     public Spinner categories_spinner;
@@ -386,6 +388,7 @@ public class publishAd extends AppCompatActivity {
                 }
 
                 showDialog();
+                spinButton();
 
                 if (currencyReal.isChecked()){
                     currency = "YER";
@@ -414,7 +417,7 @@ public class publishAd extends AppCompatActivity {
                 db = FirebaseDatabase.getInstance().getReference();
 
 
-                if (publisher_name.isEmpty() || publisher_phone.isEmpty() || publisher_email.isEmpty()){
+                if (publisher_name.isEmpty() || publisher_phone.isEmpty() || publisher_email.isEmpty() || publisherLatitude.isEmpty() || publisherLongitude.isEmpty()){
 
                     Alerter.create(publishAd.this)
                             .setTitle("Y-parts")
@@ -425,6 +428,7 @@ public class publishAd extends AppCompatActivity {
                             .show();
                     Toast.makeText(publishAd.this, "publisher information not acquired, try again", Toast.LENGTH_SHORT).show();
                     dismissDialog();
+                    stopButton();
                     getPublisherInformation();
                     return;
 
@@ -436,7 +440,7 @@ public class publishAd extends AppCompatActivity {
 //
 
                 generalAd.setPublisherEmail(publisher_email);
-                generalAd.setPublisherphoneNumber(publisher_phone);
+                generalAd.setPublisherPhoneNumber(publisher_phone);
                 generalAd.setPublisherUsername(publisher_name);
                 generalAd.setTitle(title);
                 generalAd.setCategory(category);
@@ -447,6 +451,8 @@ public class publishAd extends AppCompatActivity {
                 generalAd.setPrice(price);
                 generalAd.setCurrency(currency);
                 generalAd.setPublishDate(publishDate);
+                generalAd.setPublisherLatitude(publisherLatitude);
+                generalAd.setPublisherLongitude(publisherLongitude);
                 generalAd.setProductImage(" ");
                 generalAd.setPublisherImage(" ");
 
@@ -579,6 +585,8 @@ public class publishAd extends AppCompatActivity {
                 publisher_name = userProfile.getUserName();
                 publisher_email = firebaseUser.getEmail();
                 publisher_phone = userProfile.getPhoneNumber();
+                publisherLatitude = userProfile.getLatitude();
+                publisherLongitude = userProfile.getLongitude();
                 publiserInformationConfirm = true;
                 Toast.makeText(publishAd.this, "publisher Information acquired", Toast.LENGTH_SHORT).show();
                 confirm(publiserInformationConfirm, publisherImageConfirm, sendingImageConfirm, productImageReferenceConfirm);
@@ -763,6 +771,7 @@ public class publishAd extends AppCompatActivity {
 
             Toast.makeText(this, "done", Toast.LENGTH_SHORT).show();
             dismissDialog();
+            stopButton();
             new SweetAlertDialog(publishAd.this, SweetAlertDialog.SUCCESS_TYPE)
                     .setTitleText("Awesome!")
                     .setContentText("Ad published!")
@@ -847,5 +856,15 @@ public class publishAd extends AppCompatActivity {
         pDialog.dismiss();
 
         //editprofileButton.revertAnimation();
+    }
+    public void spinButton() {
+
+        publishad_but.startAnimation();
+
+    }
+
+    public void stopButton() {
+
+        publishad_but.revertAnimation();
     }
 }

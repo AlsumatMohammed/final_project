@@ -71,6 +71,8 @@ public class putRequest extends AppCompatActivity {
     public String publisher_name;
     public String publisher_phone;
     public String publisher_email;
+    public String publisherLatitude;
+    public String publisherLongitude;
 
     //categories
     public Spinner categories_spinner;
@@ -287,7 +289,7 @@ public class putRequest extends AppCompatActivity {
                 }
 
                 showDialog("Putting Your Request");
-
+                spinButton();
                 title = title_et.getText().toString().trim();
                 description = description_et.getText().toString().trim();
                 publishDate = new SimpleDateFormat("EEE, d MMM yyyy", Locale.getDefault()).format(new Date());
@@ -306,6 +308,7 @@ public class putRequest extends AppCompatActivity {
                             .show();
                     Toast.makeText(putRequest.this, "publisher information not acquired, try again", Toast.LENGTH_SHORT).show();
                     dismissDialog();
+                    stopButton();
                     getPublisherInformation();
                     return;
 
@@ -316,6 +319,8 @@ public class putRequest extends AppCompatActivity {
                 request.setPublisherEmail(publisher_email);
                 request.setPublisherPhoneNumber(publisher_phone);
                 request.setPublisherUsername(publisher_name);
+                request.setPublisherLatitude(publisherLatitude);
+                request.setPublisherLongitude(publisherLongitude);
                 request.setTitle(title);
                 request.setCategory(category);
                 request.setCondition(condition);
@@ -446,6 +451,8 @@ public class putRequest extends AppCompatActivity {
                 publisher_name = userProfile.getUserName();
                 publisher_email = firebaseUser.getEmail();
                 publisher_phone = userProfile.getPhoneNumber();
+                publisherLatitude = userProfile.getLatitude();
+                publisherLongitude = userProfile.getLongitude();
                 publiserInformationConfirm = true;
                 Toast.makeText(putRequest.this, "publisher Information acquired", Toast.LENGTH_SHORT).show();
                 confirm(publiserInformationConfirm, publisherImageConfirm, sendingImageConfirm, productImageReferenceConfirm);
@@ -607,6 +614,7 @@ public class putRequest extends AppCompatActivity {
 
             Toast.makeText(this, "done", Toast.LENGTH_SHORT).show();
             dismissDialog();
+            stopButton();
             new SweetAlertDialog(putRequest.this, SweetAlertDialog.SUCCESS_TYPE)
                     .setTitleText("Awesome!")
                     .setContentText("Request published!")
@@ -698,4 +706,17 @@ public class putRequest extends AppCompatActivity {
         super.onStop();
 
     }
+
+    public void spinButton() {
+
+        putRequestButton.startAnimation();
+
+    }
+
+    public void stopButton() {
+
+        putRequestButton.revertAnimation();
+    }
+
+
 }

@@ -1,7 +1,5 @@
 package com.example.final_project;
 
-import android.widget.Toast;
-
 public class generalAds {
 
 
@@ -22,7 +20,26 @@ public class generalAds {
     String publisherImage;
     String publisherUsername;
     String publisherEmail;
-    String publisherphoneNumber;
+    String publisherPhoneNumber;
+    String publisherLatitude;
+
+    public String getPublisherLatitude() {
+        return publisherLatitude;
+    }
+
+    public void setPublisherLatitude(String publisherLatitude) {
+        this.publisherLatitude = publisherLatitude;
+    }
+
+    public String getPublisherLongitude() {
+        return publisherLongitude;
+    }
+
+    public void setPublisherLongitude(String publisherLongitude) {
+        this.publisherLongitude = publisherLongitude;
+    }
+
+    String publisherLongitude;
 
     public String getCategory() {
         return category;
@@ -96,12 +113,12 @@ public class generalAds {
         this.publisherEmail = publisherEmail;
     }
 
-    public String getPublisherphoneNumber() {
-        return publisherphoneNumber;
+    public String getPublisherPhoneNumber() {
+        return publisherPhoneNumber;
     }
 
-    public void setPublisherphoneNumber(String publisherphoneNumber) {
-        this.publisherphoneNumber = publisherphoneNumber;
+    public void setPublisherPhoneNumber(String publisherPhoneNumber) {
+        this.publisherPhoneNumber = publisherPhoneNumber;
     }
 
 
