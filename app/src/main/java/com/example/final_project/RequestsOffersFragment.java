@@ -59,7 +59,7 @@ public class RequestsOffersFragment extends Fragment {
     private RecyclerView recyclerViewLatestRequests;
     private LinearLayoutManager linearLayoutManagerLatestRequests;
     private FirebaseRecyclerAdapter adapterLatestRequests;
-    private CardView latestRequestsCard;
+
 
     String userType = "";
 
@@ -145,7 +145,7 @@ public class RequestsOffersFragment extends Fragment {
         recyclerViewLatestRequests = view.findViewById(R.id.latestRequestsRecyclerView);
         linearLayoutManagerLatestRequests = new LinearLayoutManager(getActivity());
         recyclerViewLatestRequests.setLayoutManager(linearLayoutManagerLatestRequests);
-        latestRequestsCard = view.findViewById(R.id.latestRequestsCard);
+
 
 
 

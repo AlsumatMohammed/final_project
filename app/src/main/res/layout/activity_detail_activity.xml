@@ -72,11 +72,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-            <ImageView
-                android:id="@+id/productImage"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:src="@color/black" />
+                <ImageView
+                    android:id="@+id/productImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:src="@color/black" />
 
                 <ImageView
                     android:id="@+id/getDirectionButton"
@@ -423,6 +423,22 @@
                     app:layout_constraintLeft_toRightOf="@id/favoriteAds"
                     app:layout_constraintTop_toTopOf="@id/favoriteAds" />
 
+
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="3dp"
+                    android:background="#DAD8D8"
+                    android:alpha=".5"
+                    app:layout_constraintTop_toBottomOf="@id/favoriteAds"
+                    app:layout_constraintLeft_toLeftOf="@id/favoriteAds"/>
+
+                <View
+                    android:layout_width="120dp"
+                    android:layout_height="3dp"
+                    android:background="@color/button"
+                    app:layout_constraintTop_toBottomOf="@id/favoriteAds"
+                    app:layout_constraintLeft_toLeftOf="@id/favoriteAds" />
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/previousAdsRecyclerview"
                     android:layout_width="wrap_content"
@@ -459,6 +475,21 @@
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
+                <View
+                    android:layout_width="wrap_content"
+                    android:layout_height="3dp"
+                    android:background="#DAD8D8"
+                    android:alpha=".5"
+                    app:layout_constraintTop_toBottomOf="@id/ratings_reviews"
+                    app:layout_constraintLeft_toLeftOf="@id/ratings_reviews"/>
+
+                <View
+                    android:layout_width="160dp"
+                    android:layout_height="3dp"
+                    android:background="@color/button"
+                    app:layout_constraintTop_toBottomOf="@id/ratings_reviews"
+                    app:layout_constraintLeft_toLeftOf="@id/ratings_reviews" />
+
 
                 <br.com.simplepass.loadingbutton.customViews.CircularProgressButton
                     android:id="@+id/addRatingButton"
@@ -471,7 +502,7 @@
                     android:drawableBottom="@drawable/more"
                     android:drawablePadding="10dp"
                     android:fontFamily="@font/montserrat_bold"
-                        android:text="Rate the Supplier"
+                    android:text="Rate the Supplier"
                     android:textColor="@color/button"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"

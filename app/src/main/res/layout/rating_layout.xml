@@ -15,7 +15,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/card_bg">
+        android:background="@drawable/card_bg"
+        android:paddingBottom="20dp">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/commenterImage"
@@ -52,6 +53,7 @@
                     android:textColor="@color/black"
                     android:textSize="15sp"
                     android:layout_margin="20dp"
+                    android:textAlignment="center"
 
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"

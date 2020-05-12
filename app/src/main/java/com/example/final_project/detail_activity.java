@@ -3,6 +3,7 @@ package com.example.final_project;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import br.com.simplepass.loadingbutton.customViews.CircularProgressButton;
@@ -346,7 +347,7 @@ public class detail_activity extends AppCompatActivity {
 
         public TextView title, price;
         public ImageView productimage;
-        public CardView cardView;
+        public ConstraintLayout cardView;
 
 
         public detailViewHolder(@NonNull View itemView) {
