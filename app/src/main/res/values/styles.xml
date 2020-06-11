@@ -78,4 +78,8 @@
         <item name="colorControlActivated">@color/text_color_orange</item>
     </style>
 
+    <style name="SwitchCompatStyle" >
+        <item name="android:thumb">@drawable/switch_thumb</item>
+        <item name="trackTint">@color/switch_color</item>
+    </style>
 </resources>

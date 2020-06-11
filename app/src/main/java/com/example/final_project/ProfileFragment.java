@@ -6,7 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.facebook.login.LoginManager;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.firebase.ui.database.SnapshotParser;
@@ -65,7 +66,7 @@ public class ProfileFragment extends Fragment {
 
 
     SweetAlertDialog pDialog;
-    public CardView previousCardProfile;
+    public ConstraintLayout previousCardProfile;
 
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
@@ -169,7 +170,7 @@ public class ProfileFragment extends Fragment {
         storageReference.child(firebaseAuth.getUid()).child("images").child("Profile Pic").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
-                Glide.with(getActivity()).load(uri).centerCrop().into(profileimageView);
+                Glide.with(getActivity()).load(uri).circleCrop().into(profileimageView);
                 dismissDialog();
 
 
@@ -181,7 +182,7 @@ public class ProfileFragment extends Fragment {
         final FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
 
 
-        databaseReference.child("userInfromation").child(firebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
+        databaseReference.child("userInformation").child(firebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
@@ -225,7 +226,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                signout();
+                signOut();
             }
         });
 
@@ -596,9 +597,11 @@ public class ProfileFragment extends Fragment {
     }
 
 
-    public void signout(){
+    public void signOut(){
 
         firebaseAuth.signOut();
+        LoginManager.getInstance().logOut();
+
 
         Intent intent = new Intent(getActivity(), login_screen.class);
         startActivity(intent);

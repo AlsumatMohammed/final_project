@@ -287,7 +287,8 @@
                         android:id="@+id/customer_supplier_name_et"
                         android:hint="Username"
                         android:inputType="text"
-                        android:maxLines="1">
+                        android:maxLines="1"
+                        >
 
                     </com.google.android.material.textfield.TextInputEditText>
 

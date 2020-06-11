@@ -563,7 +563,7 @@ public class publishOffer extends AppCompatActivity {
         DatabaseReference databaseReference = firebaseDatabase.getReference();
         final FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
 
-        databaseReference.child("userInfromation").child(firebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
+        databaseReference.child("userInformation").child(firebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 

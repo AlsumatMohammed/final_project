@@ -38,7 +38,7 @@ public class splashcreen extends AppCompatActivity {
         logo = findViewById(R.id.y_parts_logo_splash);
         //shape = findViewById(R.id.shape_splash);
 
-        loading = findViewById(R.id.loading);
+        //loading = findViewById(R.id.loading);
         //loading.setBackgroundResource(R.drawable.animation_loading);
         //anim = (AnimationDrawable) loading.getBackground();
 
@@ -53,7 +53,7 @@ public class splashcreen extends AppCompatActivity {
         logo.setAnimation(top);
         tv1.setAnimation(bottom);
         tv2.setAnimation(bottom);
-        loading.setAnimation(bottom);
+        //loading.setAnimation(bottom);
 
 //        tv3_wait.setVisibility(View.VISIBLE);
 //        tv3_wait.setAnimation(bottom);

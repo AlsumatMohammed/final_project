@@ -23,6 +23,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -121,6 +122,37 @@ public class AdsFragment extends Fragment {
 
         }
 
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference databaseReference = firebaseDatabase.getReference();
+
+        databaseReference.child("userInformation").child(firebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+
+                showDialog();
+
+                if (!dataSnapshot.exists()){
+
+                    Intent intent = new Intent(getActivity(), edit_profile.class);
+
+                    startActivity(intent);
+                    getActivity().finish();
+
+
+                }
+
+                dismissDialog();
+
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
 
 
         pDialog = new SweetAlertDialog(getActivity(), SweetAlertDialog.PROGRESS_TYPE);
@@ -263,11 +295,17 @@ public class AdsFragment extends Fragment {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference databaseReference = firebaseDatabase.getReference();
 
-        databaseReference.child("userInfromation").child(firebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
+        databaseReference.child("userInformation").child(firebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                 Userinformation userProfile = dataSnapshot.getValue(Userinformation.class);
+//
+//                if (!dataSnapshot.exists()){
+//
+//                    Toast.makeText(getActivity(), "you must edit your profile", Toast.LENGTH_SHORT).show();
+//                }
+
 
                 if (userProfile.getUserType().equals("supplier")){
 
@@ -330,7 +368,7 @@ public class AdsFragment extends Fragment {
 
     private void fetch() {
 
-        showDialog();
+        //showDialog();
         Query query = FirebaseDatabase.getInstance()
                 .getReference()
                 .child("GeneralAds");

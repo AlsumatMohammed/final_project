@@ -7,7 +7,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="slide1_desc">Sign up as customer or a supplier\nto get the most out of the app</string>
+    <string name="slide1_desc">Sign up as a customer or a supplier\nto get the most out of the app</string>
     <string name="slide2_desc">Explore and search through automobile parts published by suppliers</string>
     <string name="slide3_desc">Put requests asking suppliers for desired\nautomobile parts</string>
     <string name="slide4_desc">Receive offers from suppliers\nfor your published requests</string>

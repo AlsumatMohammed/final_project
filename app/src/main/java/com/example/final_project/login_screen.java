@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import br.com.simplepass.loadingbutton.customViews.CircularProgressButton;
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -73,7 +75,7 @@ public class login_screen extends AppCompatActivity implements View.OnClickListe
     public CircularProgressButton sign_in_button;
     public TextView sign_up_textview;
 
-    public ProgressDialog progressDialog;
+    SweetAlertDialog pDialog;
 
 
     private FirebaseAuth mAuth;
@@ -102,9 +104,11 @@ public class login_screen extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_login_screen);
 
         mAuth = FirebaseAuth.getInstance();
-        progressDialog = new ProgressDialog(login_screen.this);
-        progressDialog.setMessage("please wait!");
-        progressDialog.setCancelable(false);
+
+        pDialog = new SweetAlertDialog(login_screen.this, SweetAlertDialog.PROGRESS_TYPE);
+        pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+        pDialog.setTitleText("Just a second...");
+        pDialog.setCancelable(false);
 
         changeStatusBarColor();
 //        FacebookSdk.sdkInitialize(login_screen.this);
@@ -339,7 +343,18 @@ public class login_screen extends AppCompatActivity implements View.OnClickListe
 
                     hideProgress();
 
-                    Toast.makeText(login_screen.this, "cool", Toast.LENGTH_SHORT).show();
+                    new SweetAlertDialog(login_screen.this, SweetAlertDialog.SUCCESS_TYPE)
+                            .setTitleText("Welcome!")
+                            .setContentText("Continue to app!")
+                            .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                @Override
+                                public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                    Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                                    startActivity(i);
+                                    finish();
+                                }
+                            })
+                            .show();
 
                 }
 
@@ -366,10 +381,22 @@ public class login_screen extends AppCompatActivity implements View.OnClickListe
             public void onComplete(@NonNull Task<AuthResult> task) {
 
                 if (task.isSuccessful()){
-                    FirebaseUser user = mAuth.getCurrentUser();
 
+                    FirebaseUser user = mAuth.getCurrentUser();
                     Toast.makeText(login_screen.this, "task successful", Toast.LENGTH_SHORT).show();
 
+                    new SweetAlertDialog(login_screen.this, SweetAlertDialog.SUCCESS_TYPE)
+                            .setTitleText("Welcome!")
+                            .setContentText("Continue to app!")
+                            .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                                @Override
+                                public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                    Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                                    startActivity(i);
+                                    finish();
+                                }
+                            })
+                            .show();
                 }
 
                 else{
@@ -511,20 +538,28 @@ public class login_screen extends AppCompatActivity implements View.OnClickListe
         return true;
     }
 
-    public void showProgress(){
 
-        if (!progressDialog.isShowing()){
-            progressDialog.show();
+    public void showProgress(){
+        if (!pDialog.isShowing()){
+            pDialog.show();
         }
+
+        //editprofileButton.startAnimation();
 
     }
 
     public void hideProgress(){
-
-        if (progressDialog.isShowing()){
-            progressDialog.dismiss();
+        if (pDialog.isShowing()){
+            pDialog.dismiss();
         }
     }
+
+        //editprofileButton.revertAnimation();
+
+
+
+
+
 
     public void spinButton(){
 

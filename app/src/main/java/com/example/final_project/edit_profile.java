@@ -460,7 +460,7 @@ public class edit_profile extends AppCompatActivity {
 
 
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-        databaseReference.child("userInfromation").child(firebaseUser.getUid()).setValue(userinformation);
+        databaseReference.child("userInformation").child(firebaseUser.getUid()).setValue(userinformation);
         informationCheck = true;
         Toast.makeText(this, "user information updated", Toast.LENGTH_SHORT).show();
         confirm(imageCheck, informationCheck);
@@ -474,14 +474,12 @@ public class edit_profile extends AppCompatActivity {
 
 
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-        databaseReference.child("userInfromation").child(firebaseUser.getUid()).setValue(userinformation);
+        databaseReference.child("userInformation").child(firebaseUser.getUid()).setValue(userinformation);
         Toast.makeText(this, "user information updated", Toast.LENGTH_SHORT).show();
 
     }
 
     private void sendUserData() {
-
-
 
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference databaseReference = firebaseDatabase.getReference(firebaseAuth.getUid());

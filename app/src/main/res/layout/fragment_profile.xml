@@ -51,15 +51,7 @@
             android:layout_marginLeft="10dp"/>
 
 
-        <ImageView
-            android:id="@+id/logout_fragmentprofile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/logout"
-            android:fontFamily="@font/montserrat_bold"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="@id/ypartsTv"
-            app:layout_constraintBottom_toBottomOf="@id/tireImage"/>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -88,133 +80,94 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:background="@color/text_color_orange"
-                android:paddingBottom="20dp">
+                android:background="@drawable/profilecard"
+                android:paddingBottom="20dp"
+                android:layout_margin="8dp">
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/profile_imageprofile_fragment"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
+                    android:layout_width="85dp"
+                    android:layout_height="85dp"
                     android:src="@drawable/avatar"
+                    app:civ_border_color="@color/material_blue_grey_80"
                     app:civ_border_width="2dp"
-                    app:civ_border_color="@color/black"
-                    app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"/>
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:layout_margin="20dp"/>
+
+                <TextView
+                    android:id="@+id/myAccountTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:text="My Account"
+                    android:textColor="@color/whiteTextColor"
+                    android:textSize="25sp"
+                    app:layout_constraintLeft_toRightOf="@id/profile_imageprofile_fragment"
+                    app:layout_constraintTop_toTopOf="@id/profile_imageprofile_fragment" />
+
+                <TextView
+                    android:id="@+id/editTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/myAccountTV"
+                    app:layout_constraintBottom_toBottomOf="@id/myAccountTV"
+                    android:textColor="@color/whiteTextColor"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:text="EDIT"
+                    android:layout_marginRight="10dp"/>
 
                 <TextView
                     android:id="@+id/username_fragmentprofile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Username"
-                    android:textSize="20sp"
+                    android:textSize="15sp"
                     android:layout_marginTop="10dp"
-                    android:fontFamily="@font/montserrat_bold"
-                    app:layout_constraintTop_toBottomOf="@id/profile_imageprofile_fragment"
-                    app:layout_constraintLeft_toLeftOf="@id/profile_imageprofile_fragment"
-                    app:layout_constraintRight_toRightOf="@id/profile_imageprofile_fragment"/>
-
-
-                <TextView
-                    android:id="@+id/mobileTv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Mobile"
-                    android:fontFamily="@font/montserrat_bold"
-                    android:textSize="20sp"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="20dp"
-                    app:layout_constraintTop_toBottomOf="@id/username_fragmentprofile"
-                    app:layout_constraintLeft_toLeftOf="@id/username_fragmentprofile"
-                    app:layout_constraintRight_toRightOf="@id/username_fragmentprofile"/>
+                    android:fontFamily="@font/montserrat"
+                    android:textColor="@color/whiteTextColor"
+                    app:layout_constraintTop_toBottomOf="@id/myAccountTV"
+                    app:layout_constraintLeft_toLeftOf="@id/myAccountTV"/>
 
 
                 <TextView
                     android:id="@+id/phone_fragmentprofile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="716434383"
                     android:layout_gravity="center"
                     android:fontFamily="@font/montserrat"
+                    android:text="716434383"
                     android:textSize="15sp"
-                    app:layout_constraintLeft_toLeftOf="@id/mobileTv"
-                    app:layout_constraintTop_toBottomOf="@id/mobileTv"
-                    app:layout_constraintRight_toRightOf="@id/mobileTv"/>
+                    android:layout_marginTop="2dp"
+                    app:layout_constraintTop_toBottomOf="@id/email_fragmentprofile"
+                    app:layout_constraintLeft_toLeftOf="@id/email_fragmentprofile"
+                    android:textColor="@color/whiteTextColor"
+                    />
 
-                <Button
-                    android:id="@+id/phoneEditButton"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:background="@drawable/edit_icon"
-                    android:layout_gravity="center"
-                    app:layout_constraintRight_toRightOf="parent"
-                    android:layout_marginRight="20dp"
-                    app:layout_constraintTop_toTopOf="@id/mobileTv"
-                    app:layout_constraintBottom_toBottomOf="@id/phone_fragmentprofile"/>
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/phone_call"
-                    android:layout_marginLeft="20dp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/mobileTv"
-                    app:layout_constraintBottom_toBottomOf="@id/phone_fragmentprofile"/>
-
-
-                <TextView
-                    android:id="@+id/emailTv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Email"
-                    android:fontFamily="@font/montserrat_bold"
-                    android:textSize="20sp"
-                    app:layout_constraintTop_toBottomOf="@id/phone_fragmentprofile"
-                    app:layout_constraintLeft_toLeftOf="@id/phone_fragmentprofile"
-                    app:layout_constraintRight_toRightOf="@id/phone_fragmentprofile"
-                    android:layout_marginTop="30dp"/>
 
                 <TextView
                     android:id="@+id/email_fragmentprofile"
                     android:layout_width="250dp"
                     android:layout_height="wrap_content"
-                    android:text="mohammedsaleh@gmail.com"
                     android:fontFamily="@font/montserrat"
+                    android:text="mohammedsaleh@gmail.com"
+                    android:textColor="@color/whiteTextColor"
                     android:textSize="15sp"
-                    android:gravity="center"
-                    app:layout_constraintLeft_toLeftOf="@id/emailTv"
-                    app:layout_constraintRight_toRightOf="@id/emailTv"
-                    app:layout_constraintTop_toBottomOf="@id/emailTv"/>
-                <Button
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:background="@drawable/edit_icon"
-                    app:layout_constraintTop_toTopOf="@id/emailTv"
-                    app:layout_constraintBottom_toBottomOf="@id/email_fragmentprofile"
-                    app:layout_constraintRight_toRightOf="parent"
-                    android:layout_marginRight="20dp"/>
-
+                    android:layout_marginTop="2dp"
+                    app:layout_constraintLeft_toLeftOf="@id/username_fragmentprofile"
+                    app:layout_constraintTop_toBottomOf="@id/username_fragmentprofile" />
 
                 <ImageView
+                    android:id="@+id/editButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/email"
-                    app:layout_constraintTop_toTopOf="@id/emailTv"
-                    app:layout_constraintBottom_toBottomOf="@id/email_fragmentprofile"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    android:layout_marginLeft="20dp"/>
+                    android:background="@drawable/edit_icon"
+                    app:layout_constraintLeft_toLeftOf="@id/editTV"
+                    app:layout_constraintTop_toBottomOf="@id/editTV"
+                    app:layout_constraintRight_toRightOf="@id/editTV"/>
 
-                <TextView
-                    android:id="@+id/userTypeTv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="User type"
-                    android:fontFamily="@font/montserrat_bold"
-                    android:textSize="20sp"
-                    app:layout_constraintTop_toBottomOf="@id/email_fragmentprofile"
-                    app:layout_constraintLeft_toLeftOf="@id/email_fragmentprofile"
-                    app:layout_constraintRight_toRightOf="@id/email_fragmentprofile"
-                    android:layout_marginTop="30dp"/>
 
                 <TextView
                     android:id="@+id/usertype_fragmentprofile"
@@ -223,33 +176,174 @@
                     android:fontFamily="@font/montserrat"
                     android:text="Customer"
                     android:textSize="15sp"
-                    app:layout_constraintEnd_toEndOf="@+id/userTypeTv"
-                    app:layout_constraintStart_toStartOf="@+id/userTypeTv"
-                    app:layout_constraintTop_toBottomOf="@id/userTypeTv"/>
+                    android:layout_marginTop="2dp"
+                    android:textColor="@color/whiteTextColor"
+                    app:layout_constraintLeft_toLeftOf="@id/phone_fragmentprofile"
+                    app:layout_constraintTop_toBottomOf="@id/phone_fragmentprofile"/>
 
-                <Button
-                    android:id="@+id/customerEditButton"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:background="@drawable/edit_icon"
-                    android:layout_gravity="center"
-                    app:layout_constraintTop_toTopOf="@id/userTypeTv"
-                    app:layout_constraintBottom_toBottomOf="@id/usertype_fragmentprofile"
-                    app:layout_constraintRight_toRightOf="parent"
-                    android:layout_marginRight="20dp"/>
-
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/user"
-                    app:layout_constraintTop_toTopOf="@id/userTypeTv"
-                    app:layout_constraintBottom_toBottomOf="@id/usertype_fragmentprofile"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    android:layout_marginLeft="20dp"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/additionalCard"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/card_detail"
+            android:padding="10dp"
+            app:layout_constraintTop_toBottomOf="@id/constraint3"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent">
+
+           <ImageView
+               android:id="@+id/notificationImage"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:src="@drawable/bell"
+               app:layout_constraintLeft_toLeftOf="parent"
+               app:layout_constraintTop_toTopOf="parent"
+               android:layout_marginTop="10dp"
+               android:layout_marginLeft="10dp"/>
+
+            <TextView
+                android:id="@+id/notificationTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat"
+                android:text="Notification"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+               android:layout_marginLeft="25dp"
+                app:layout_constraintLeft_toRightOf="@id/notificationImage"
+                app:layout_constraintTop_toTopOf="@id/notificationImage"
+                app:layout_constraintBottom_toBottomOf="@id/notificationImage"/>
+
+            <Switch
+                style="@style/SwitchCompatStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                app:layout_constraintBottom_toBottomOf="@id/notificationTv"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@id/notificationTv"
+                 />
+
+
+            <View
+                android:id="@+id/line1"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginLeft="5dp"
+                android:background="@color/text_color_orange"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/notificationTv" />
+
+            <ImageView
+                android:id="@+id/helpImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/help"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="10dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/line1"/>
+
+            <TextView
+                android:id="@+id/helpTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat"
+                android:text="Help &amp; Feedback"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:layout_marginLeft="25dp"
+                app:layout_constraintLeft_toRightOf="@id/helpImage"
+                app:layout_constraintTop_toTopOf="@id/helpImage"
+                app:layout_constraintBottom_toBottomOf="@id/helpImage"/>
+
+            <View
+                android:id="@+id/line2"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginLeft="5dp"
+                android:background="@color/text_color_orange"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/helpTv" />
+
+            <ImageView
+                android:id="@+id/aboutImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/about"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="10dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/line2"/>
+
+            <TextView
+                android:id="@+id/aboutTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat"
+                android:text="About the app"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:layout_marginLeft="25dp"
+                app:layout_constraintLeft_toRightOf="@id/aboutImage"
+                app:layout_constraintTop_toTopOf="@id/aboutImage"
+                app:layout_constraintBottom_toBottomOf="@id/aboutImage"/>
+
+
+            <View
+                android:id="@+id/line3"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginLeft="5dp"
+                android:background="@color/text_color_orange"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/aboutTv" />
+
+            <ImageView
+                android:id="@+id/logout_fragmentprofile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/logout"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="10dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/line3"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="10dp"/>
+
+            <TextView
+                android:id="@+id/logoutTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/montserrat"
+                android:text="Logout"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:layout_marginLeft="25dp"
+                app:layout_constraintLeft_toRightOf="@id/logout_fragmentprofile"
+                app:layout_constraintTop_toTopOf="@id/logout_fragmentprofile"
+                app:layout_constraintBottom_toBottomOf="@id/logout_fragmentprofile"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/favoriteCard"
@@ -260,7 +354,7 @@
                     android:layout_marginRight="10dp"
                     android:background="@drawable/card_detail"
                     android:padding="10dp"
-                    app:layout_constraintTop_toBottomOf="@id/constraint3"
+                    app:layout_constraintTop_toBottomOf="@id/additionalCard"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent">
 
@@ -307,6 +401,7 @@
 
 
                 <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/previousCardProfile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
@@ -347,18 +442,6 @@
                         app:layout_constraintTop_toBottomOf="@id/previousAdsProfiletv" />
 
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:fontFamily="@font/montserrat_bold"
-                        android:text="No previous published Ads"
-                        android:textColor="@color/title_text_color"
-                        android:textSize="15sp"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintRight_toRightOf="parent"/>
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/previousAdsProfileRecyclerView"

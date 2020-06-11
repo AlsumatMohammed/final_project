@@ -8,12 +8,15 @@ import cn.pedant.SweetAlert.SweetAlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -57,25 +60,24 @@ public class sign_up extends AppCompatActivity {
     //private ProgressDialog progressDialog;
 
 
-    //facebook variables
-    private CallbackManager callbackManager;
-    private LoginButton facebook_signup_button;
 
-
-    //google variables
-    private SignInButton Google_signInButton;
-
-    private GoogleSignInClient googleSignInClient;
-    private static final int RC_SIGN_IN = 9001;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (Build.VERSION.SDK_INT >= 21) {
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+        }
+
+
         setContentView(R.layout.activity_sign_up);
 
 
 //        progressDialog = new ProgressDialog(sign_up.this);
 //        progressDialog.setMessage("please wait!");
 //        progressDialog.setCancelable(false);
+
+        changeStatusBarColor();
         pDialog = new SweetAlertDialog(sign_up.this, SweetAlertDialog.PROGRESS_TYPE);
         pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
         pDialog.setCancelable(false);
@@ -96,54 +98,6 @@ public class sign_up extends AppCompatActivity {
 
 
 
-        facebook_signup_button = findViewById(R.id.facebook_icon_signup);
-        callbackManager = CallbackManager.Factory.create();
-
-
-
-        facebook_signup_button.setPermissions("email", "public_profile");
-
-        facebook_signup_button.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-
-                handleFacebookToken(loginResult.getAccessToken());
-                //Toast.makeText(login_screen.this, "okay", Toast.LENGTH_SHORT).show();
-
-            }
-
-            @Override
-            public void onCancel() {
-
-                Toast.makeText(sign_up.this, "cancel", Toast.LENGTH_SHORT).show();
-
-            }
-
-            @Override
-            public void onError(FacebookException error) {
-
-                //Log.d(TAG, "facebook:onError", error);
-                Toast.makeText(sign_up.this, "Error", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        //end facebook auth
-
-        //google authentication
-
-        Google_signInButton = findViewById(R.id.google_button_signup);
-
-        GoogleSignInOptions gso  = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id)).requestEmail().build();
-
-        googleSignInClient = GoogleSignIn.getClient(sign_up.this, gso);
-
-        Google_signInButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                signIn();
-            }
-        });
 
 
         email_sign_up_et.addTextChangedListener(new TextWatcher() {
@@ -270,6 +224,14 @@ public class sign_up extends AppCompatActivity {
 
 
     }
+
+    private void changeStatusBarColor() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(Color.TRANSPARENT);
+        }
+    }
     public void handleFacebookToken(AccessToken token){
 
         showDialog("Just a second");
@@ -304,70 +266,9 @@ public class sign_up extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        callbackManager.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == RC_SIGN_IN){
-
-            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-
-            try{
-
-                GoogleSignInAccount account = task.getResult(ApiException.class);
-                firebaseAuthWithgoogle(account);
-            }
 
 
 
-            catch (ApiException e){
-
-                Toast.makeText(this, "could not sign in with google", Toast.LENGTH_SHORT).show();
-
-            }
-
-
-        }
-    }
-
-    private void firebaseAuthWithgoogle(GoogleSignInAccount acct){
-
-        showDialog("Just A Second");
-
-        AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
-        mAuth.signInWithCredential(credential).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-
-                if (task.isSuccessful()){
-
-                   dismissDialog();
-
-                        Intent intent = new Intent(sign_up.this, getting_you.class);
-                        startActivity(intent);
-                        finish();
-                }
-
-                else{
-
-                    Toast.makeText(sign_up.this, "Authentication failed", Toast.LENGTH_SHORT).show();
-
-                }
-
-               dismissDialog();
-            }
-        });
-
-
-    }
-
-    private void signIn(){
-
-        Intent signInIntent = googleSignInClient.getSignInIntent();
-        startActivityForResult(signInIntent, RC_SIGN_IN);
-
-    }
 
 
 
