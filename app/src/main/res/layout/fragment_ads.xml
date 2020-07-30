@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".AdsFragment"
-    android:background="#fff">
+    android:background="#292B30">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -16,8 +16,21 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:background="@color/text_color_orange"
+        android:background="#40444C"
         android:padding="10dp">
+
+
+        <ImageView
+            android:id="@+id/searchIconToolBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/search_icon"
+            app:layout_constraintTop_toTopOf="@id/ypartsTv"
+            app:layout_constraintBottom_toBottomOf="@id/ypartsTv"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginRight="10dp"/>
+
+
 
         <TextView
             android:id="@+id/ypartsTv"
@@ -28,17 +41,29 @@
             app:layout_constraintRight_toRightOf="parent"
             android:text="Y-parts"
             android:fontFamily="@font/montserrat_bold"
-            android:textColor="@color/whiteTextColor"
+            android:textColor="#B3B3B3"
             android:textSize="20sp"
             />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/ypartsTv"
-            app:layout_constraintLeft_toLeftOf="@id/ypartsTv"
-            app:layout_constraintRight_toRightOf="@id/ypartsTv"
+            app:layout_constraintTop_toTopOf="@id/ypartsTv"
+            app:layout_constraintBottom_toBottomOf="@id/ypartsTv"
+            app:layout_constraintRight_toLeftOf="@id/ypartsTv"
+            android:layout_marginRight="5dp"
             android:src="@drawable/tire"/>
+
+        <ImageView
+            android:id="@+id/add_ad"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/add_icon"
+            app:layout_constraintTop_toTopOf="@id/ypartsTv"
+            app:layout_constraintBottom_toBottomOf="@id/ypartsTv"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginLeft="10dp"
+            />
 
 
 
@@ -70,7 +95,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:paddingBottom="10dp"
-        android:background="#F1F0F0">
+        android:background="#292B30">
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -80,7 +105,19 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:background="@color/text_color_orange">
+            android:background="#2A2930"
+            >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:src="@drawable/ad_background"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="20dp"/>
 
 
             <TextView
@@ -92,7 +129,7 @@
                 android:fontFamily="@font/montserrat_bold"
                 android:text="Y-Parts | Buy and Sell Auto Parts"
                 android:textSize="15sp"
-                android:textColor="@color/whiteTextColor"
+                android:textColor="#FFFFFF"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -102,7 +139,7 @@
                 android:layout_width="50dp"
                 android:layout_height="1dp"
                 android:layout_gravity="center"
-                android:background="@color/whiteTextColor"
+                android:background="@color/mainTextColor1"
                 app:layout_constraintStart_toStartOf="@+id/textView2"
                 app:layout_constraintTop_toBottomOf="@+id/textView2">
 
@@ -116,7 +153,7 @@
                 android:fontFamily="@font/montserrat"
                 android:text="List your parts for free today!"
                 android:textSize="12sp"
-                android:textColor="@color/whiteTextColor"
+                android:textColor="@color/mainTextColor1"
                 app:layout_constraintLeft_toLeftOf="@id/view"
                 app:layout_constraintTop_toBottomOf="@id/view" />
 
@@ -124,12 +161,12 @@
             <EditText
                 android:id="@+id/searchBar"
                 android:layout_width="270dp"
-                android:layout_height="40dp"
+                android:layout_height="35dp"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/card_bg"
+                android:background="@drawable/searchbar_background"
                 android:fontFamily="@font/montserrat"
                 android:hint="Search for key words..."
-                android:padding="10dp"
+                android:padding="11dp"
                 android:textSize="10sp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
@@ -144,16 +181,18 @@
                 app:layout_constraintBottom_toBottomOf="@id/searchBar"
                 app:layout_constraintLeft_toRightOf="@id/searchBar"
                 android:layout_marginLeft="10dp"/>
-            <com.airbnb.lottie.LottieAnimationView
-                android:id="@+id/add_ad"
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                app:layout_constraintLeft_toLeftOf="@id/searchBar"
-                app:layout_constraintRight_toRightOf="@id/searchBar"
-                app:layout_constraintTop_toBottomOf="@id/searchBar"
-                app:lottie_autoPlay="true"
-                app:lottie_fileName="adding_button .json"
-                app:lottie_loop="true" />
+
+
+<!--            <com.airbnb.lottie.LottieAnimationView-->
+<!--                android:id="@+id/add_ad"-->
+<!--                android:layout_width="70dp"-->
+<!--                android:layout_height="70dp"-->
+<!--                app:layout_constraintLeft_toLeftOf="@id/searchBar"-->
+<!--                app:layout_constraintRight_toRightOf="@id/searchBar"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/searchBar"-->
+<!--                app:lottie_autoPlay="true"-->
+<!--                app:lottie_fileName="adding_button .json"-->
+<!--                app:lottie_loop="true" />-->
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -165,8 +204,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="10dp"
-            android:elevation="10dp"
-            app:cardBackgroundColor="#F0F2F2"
+            android:elevation="30dp"
+            app:cardBackgroundColor="#2A2930"
             app:cardCornerRadius="20dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -213,6 +252,7 @@
                         android:fontFamily="@font/montserrat_bold"
                         android:text="Engines"
                         android:textSize="10sp"
+                        android:textColor="#E9E6D9"
                         app:layout_constraintLeft_toLeftOf="@id/engineButton"
                         app:layout_constraintRight_toRightOf="@id/engineButton"
                         app:layout_constraintTop_toBottomOf="@id/engineButton" />
@@ -252,6 +292,7 @@
                         android:fontFamily="@font/montserrat_bold"
                         android:text="Brakes"
                         android:textSize="10sp"
+                        android:textColor="#E9E6D9"
                         app:layout_constraintLeft_toLeftOf="@id/brakeSystemButton"
                         app:layout_constraintRight_toRightOf="@id/brakeSystemButton"
                         app:layout_constraintTop_toBottomOf="@id/brakeSystemButton" />
@@ -290,6 +331,7 @@
                         android:fontFamily="@font/montserrat_bold"
                         android:text="Exhausts"
                         android:textSize="10sp"
+                        android:textColor="#E9E6D9"
                         app:layout_constraintLeft_toLeftOf="@id/exhaustButton"
                         app:layout_constraintRight_toRightOf="@id/exhaustButton"
                         app:layout_constraintTop_toBottomOf="@id/exhaustButton" />
@@ -331,6 +373,7 @@
                         android:fontFamily="@font/montserrat_bold"
                         android:text="Suspensions"
                         android:textSize="10sp"
+                        android:textColor="#E9E6D9"
                         app:layout_constraintLeft_toLeftOf="@id/suspensionButton"
                         app:layout_constraintRight_toRightOf="@id/suspensionButton"
                         app:layout_constraintTop_toBottomOf="@id/suspensionButton" />
@@ -370,6 +413,7 @@
                         android:fontFamily="@font/montserrat_bold"
                         android:text="Lights"
                         android:textSize="10sp"
+                        android:textColor="#E9E6D9"
                         app:layout_constraintLeft_toLeftOf="@id/lightButton"
                         app:layout_constraintRight_toRightOf="@id/lightButton"
                         app:layout_constraintTop_toBottomOf="@id/lightButton" />
@@ -409,6 +453,7 @@
                         android:fontFamily="@font/montserrat_bold"
                         android:text="Ignitions"
                         android:textSize="10sp"
+                        android:textColor="#E9E6D9"
                         app:layout_constraintLeft_toLeftOf="@id/lightButton"
                         app:layout_constraintRight_toRightOf="@id/lightButton"
                         app:layout_constraintTop_toBottomOf="@id/lightButton" />
@@ -422,17 +467,16 @@
                     android:layout_height="49dp"
                     android:layout_gravity="center"
                     android:layout_marginTop="20dp"
+                    android:layout_marginBottom="20dp"
                     android:background="@drawable/buttons"
                     android:fontFamily="@font/montserrat_bold"
                     android:text="View all categories"
-                    android:textColor="@color/layout_color_white"
+                    android:textColor="@color/mainTextColor1"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/suspensionLayout"
-                    app:spinning_bar_color="@color/text_color_orange"
-                    app:spinning_bar_padding="6dp"
-                    app:spinning_bar_width="4dp">
+                    android:textSize="15sp">
 
                 </br.com.simplepass.loadingbutton.customViews.CircularProgressButton>
 
@@ -475,23 +519,17 @@
                 android:layout_margin="10dp"
                 android:fontFamily="@font/montserrat_bold"
                 android:text="Latest Ads"
-                android:textColor="@color/title_text_color"
+                android:textColor="#B3B3B3"
                 android:textSize="15sp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <View
-                android:layout_width="wrap_content"
-                android:layout_height="3dp"
-                android:alpha=".5"
-                android:background="#DAD8D8"
-                app:layout_constraintLeft_toLeftOf="@id/adsTv"
-                app:layout_constraintTop_toBottomOf="@id/adsTv" />
 
             <View
-                android:layout_width="80dp"
+                android:layout_width="match_parent"
                 android:layout_height="3dp"
-                android:background="@color/button"
+                android:background="#B3B3B3"
+                android:layout_marginLeft="10dp"
                 app:layout_constraintLeft_toLeftOf="@id/adsTv"
                 app:layout_constraintTop_toBottomOf="@id/adsTv" />
 

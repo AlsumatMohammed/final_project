@@ -74,8 +74,8 @@
     </style>
 
     <style name="RatingBar" parent="Theme.AppCompat">
-        <item name="colorControlNormal">@color/button</item>
-        <item name="colorControlActivated">@color/text_color_orange</item>
+        <item name="colorControlNormal">#B3B3B3</item>
+        <item name="colorControlActivated">@color/mainTextColor1</item>
     </style>
 
     <style name="SwitchCompatStyle" >

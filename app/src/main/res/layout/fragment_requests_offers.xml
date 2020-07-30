@@ -4,7 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".RequestsOffersFragment">
+    tools:context=".RequestsOffersFragment"
+    android:background="#292B30"
+    >
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraint1"
         android:layout_width="match_parent"
@@ -12,7 +14,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:background="@color/text_color_orange"
+        android:background="#40444C"
         android:padding="10dp">
 
         <TextView
@@ -24,16 +26,17 @@
             app:layout_constraintRight_toRightOf="parent"
             android:text="Y-parts"
             android:fontFamily="@font/montserrat_bold"
-            android:textColor="@color/whiteTextColor"
+            android:textColor="#B3B3B3"
             android:textSize="20sp"
             />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/ypartsTv"
-            app:layout_constraintLeft_toLeftOf="@id/ypartsTv"
-            app:layout_constraintRight_toRightOf="@id/ypartsTv"
+            app:layout_constraintTop_toTopOf="@id/ypartsTv"
+            app:layout_constraintBottom_toBottomOf="@id/ypartsTv"
+            app:layout_constraintRight_toLeftOf="@id/ypartsTv"
+            android:layout_marginRight="5dp"
             android:src="@drawable/tire"/>
 
 
@@ -46,6 +49,17 @@
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_marginLeft="10dp"/>
 
+
+        <ImageView
+            android:id="@+id/addRequestButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/add_icon"
+            app:layout_constraintTop_toTopOf="@id/ypartsTv"
+            app:layout_constraintBottom_toBottomOf="@id/ypartsTv"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginLeft="10dp"
+            />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.core.widget.NestedScrollView
@@ -59,22 +73,23 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+
             >
 
-            <br.com.simplepass.loadingbutton.customViews.CircularProgressButton
-                android:id="@+id/addRequestButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="10dp"
-                android:background="@drawable/comment_button"
-                android:fontFamily="@font/montserrat_bold"
-                android:text="Put a request "
-                android:textColor="@color/button"
-                android:textSize="15sp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+<!--            <br.com.simplepass.loadingbutton.customViews.CircularProgressButton-->
+<!--                -->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_gravity="center"-->
+<!--                android:layout_margin="10dp"-->
+<!--                android:background="@drawable/buttons"-->
+<!--                android:fontFamily="@font/montserrat_bold"-->
+<!--                android:text="Put a request "-->
+<!--                android:textColor="@color/mainTextColor1"-->
+<!--                android:textSize="15sp"-->
+<!--                app:layout_constraintLeft_toLeftOf="parent"-->
+<!--                app:layout_constraintRight_toRightOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent" />-->
 
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -86,32 +101,26 @@
                     android:layout_marginRight="10dp"
                     android:background="@drawable/card_detail"
                     android:padding="10dp"
-                    app:layout_constraintTop_toBottomOf="@id/addRequestButton">
+                    >
 
                     <TextView
                         android:id="@+id/myRequestsTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
+                        android:layout_margin="10dp"
                         android:fontFamily="@font/montserrat_bold"
                         android:text="My Requests:"
-                        android:textColor="@color/title_text_color"
+                        android:textColor="#B3B3B3"
                         android:textSize="15sp"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <View
-                        android:layout_width="wrap_content"
-                        android:layout_height="3dp"
-                        android:alpha=".5"
-                        android:background="#DAD8D8"
-                        app:layout_constraintLeft_toLeftOf="@id/myRequestsTv"
-                        app:layout_constraintTop_toBottomOf="@id/myRequestsTv" />
 
                     <View
-                        android:layout_width="100dp"
+                        android:layout_width="match_parent"
                         android:layout_height="3dp"
-                        android:background="@color/button"
+                        android:background="#B3B3B3"
+                        android:layout_marginLeft="10dp"
                         app:layout_constraintLeft_toLeftOf="@id/myRequestsTv"
                         app:layout_constraintTop_toBottomOf="@id/myRequestsTv" />
 
@@ -152,26 +161,20 @@
                         android:id="@+id/latestRequestsTv"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
+                        android:layout_margin="10dp"
                         android:fontFamily="@font/montserrat_bold"
                         android:text="Latest Requests:"
-                        android:textColor="@color/title_text_color"
+                        android:textColor="#B3B3B3"
                         android:textSize="15sp"
                         app:layout_constraintLeft_toLeftOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <View
-                        android:layout_width="wrap_content"
-                        android:layout_height="3dp"
-                        android:alpha=".5"
-                        android:background="#DAD8D8"
-                        app:layout_constraintLeft_toLeftOf="@id/latestRequestsTv"
-                        app:layout_constraintTop_toBottomOf="@id/latestRequestsTv" />
 
                     <View
-                        android:layout_width="130dp"
+                        android:layout_width="match_parent"
                         android:layout_height="3dp"
-                        android:background="@color/button"
+                        android:background="#B3B3B3"
+                        android:layout_marginLeft="10dp"
                         app:layout_constraintLeft_toLeftOf="@id/latestRequestsTv"
                         app:layout_constraintTop_toBottomOf="@id/latestRequestsTv" />
 

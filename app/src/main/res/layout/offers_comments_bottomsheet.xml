@@ -2,7 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#292B30">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -13,7 +14,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:cardCornerRadius="10dp"
-        app:cardBackgroundColor="#F0F2F2"
+        app:cardBackgroundColor="#40444C"
 
         >
 
@@ -42,15 +43,22 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/offersCommentLayout"
                 android:layout_margin="20dp"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:background="@drawable/custom_input"
+                app:hintEnabled="false"
+                app:errorTextAppearance="@color/button">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="60dp"
                     android:id="@+id/offersCommentEt"
                     android:hint="Comment"
                     android:inputType="text"
-                    android:maxLines="2">
+                    android:maxLines="2"
+                    android:textSize="14sp"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:textColorHint="@color/mainTextColor2">
 
                 </com.google.android.material.textfield.TextInputEditText>
 
@@ -63,7 +71,7 @@
                 android:fontFamily="@font/montserrat_bold"
                 android:text="Note: You cannot edit this later"
                 android:layout_margin="10dp"
-                android:textColor="@color/red2"
+                android:textColor="@color/mainTextColor1"
                 android:textSize="10sp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/positive"

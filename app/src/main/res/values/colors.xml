@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#008577</color>
-    <color name="colorPrimaryDark">#FFBD59</color>
+    <color name="colorPrimaryDark">#292B30</color>
     <color name="colorAccent">#C5EAF3</color>
-    <color name="button">#021F32</color>
+<!--    <color name="button">#021F32</color>-->
+    <color name="button">#32C0D7</color>
     <color name="red2">#E3354B</color>
     <color name="layout_color_white">#FFFFFF</color>
     <color name = "text_color">#E3354B</color>
@@ -13,7 +14,10 @@
     <color name="blue_splash_screen">#107FAA</color>
     <color name="text_color_blue">#C5EAF3</color>
 <!--    <color name="text_color_orange">#FA7A00</color>-->
-    <color name="text_color_orange">#FFBD59</color>
+<!--    <color name="text_color_orange">#FFBD59</color>-->
+    <color name="text_color_orange">#E9E6D9</color>
+    <color name="mainTextColor1">#FFFFFF</color>
+    <color name="mainTextColor2">#E9E6D9</color>
     <color name="bottomNavigationTintColor">#B2B2B2</color>
     <color name="bottomNavigationBackground">#F7F7F7</color>
     <color name="whiteTextColor">#fff</color>

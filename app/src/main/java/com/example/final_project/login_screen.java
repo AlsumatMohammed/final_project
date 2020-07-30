@@ -88,6 +88,7 @@ public class login_screen extends AppCompatActivity implements View.OnClickListe
     //google variables
     private SignInButton Google_signInButton;
 
+
     private GoogleSignInClient googleSignInClient;
     private static final int RC_SIGN_IN = 9001;
 
@@ -154,6 +155,7 @@ public class login_screen extends AppCompatActivity implements View.OnClickListe
 
 
         //google authentication
+
 
         Google_signInButton = findViewById(R.id.google_button);
 

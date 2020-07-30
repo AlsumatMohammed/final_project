@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#F0F2F2"
+    android:background="#2A2930"
     android:paddingTop="15dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     >
@@ -43,7 +43,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginLeft="40dp"
             android:text="Brake systems"
-            android:textColor="@color/content_text_color"
+            android:textColor="#E9E6D9"
             android:textSize="10sp"
 
             />
@@ -60,7 +60,7 @@
             android:layout_marginLeft="40dp"
             android:layout_marginTop="25dp"
             android:text="Title Text"
-            android:textColor="@color/title_text_color"
+            android:textColor="#FFFFFF"
             android:textSize="18sp" />
 
 
@@ -75,7 +75,7 @@
             android:layout_marginRight="16dp"
             android:lineSpacingExtra="8dp"
             android:text="$ 200"
-            android:textColor="@color/content_text_color"
+            android:textColor="@color/mainTextColor1"
             android:textSize="15sp" />
 
         <TextView
@@ -89,7 +89,7 @@
             android:layout_marginRight="16dp"
             android:lineSpacingExtra="8dp"
             android:text="By:"
-            android:textColor="@color/content_text_color"
+            android:textColor="@color/mainTextColor1"
             android:textSize="15sp" />
 
 
@@ -105,7 +105,7 @@
             android:layout_toEndOf="@+id/by_tv"
             android:lineSpacingExtra="8dp"
             android:text="publisherName"
-            android:textColor="@color/content_text_color"
+            android:textColor="@color/mainTextColor1"
             android:textSize="15sp" />
 
         <TextView
@@ -118,7 +118,7 @@
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
             android:text="March.25.2020"
-            android:textColor="@color/content_text_color"
+            android:textColor="#E9E6D9"
             android:textSize="10sp"
 
             />
@@ -148,7 +148,7 @@
                 android:layout_height="300dp"
                 android:src="@drawable/avatar"
                 app:civ_border_width="1dp"
-                app:civ_border_color="@color/text_color_orange"
+                app:civ_border_color="#E9E6D9"
                 android:layout_below="@id/publisherName"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentLeft="true"
@@ -169,7 +169,7 @@
         android:layout_marginTop="16dp"
         android:src="@drawable/avatar"
         app:civ_border_width="2dp"
-        app:civ_border_color="@color/text_color_orange"
+        app:civ_border_color="#E9E6D9"
         app:layout_constraintEnd_toStartOf="@id/relativeLayout"
         app:layout_constraintStart_toStartOf="@id/relativeLayout"
         app:layout_constraintTop_toTopOf="@id/relativeLayout"

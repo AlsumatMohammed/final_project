@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".splashcreen"
-    android:background="@color/layout_color_white">
+    android:background="#292B30">
 
 <!--    <ImageView-->
 <!--        android:id="@+id/y_parts_logo_splash"-->
@@ -31,7 +31,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:lottie_autoPlay="true"
-        app:lottie_fileName="lf30_editor_BlLI1Q.json"
+        app:lottie_fileName="car_animation.json"
         android:layout_marginTop="50dp"
         app:lottie_loop="true"/>
 
@@ -43,7 +43,7 @@
         android:layout_marginTop="48dp"
         android:fontFamily="@font/montserrat_bold"
         android:text="Y-PARTS"
-        android:textColor="@color/button"
+        android:textColor="#B3B3B3"
         android:textSize="25sp"
         android:transitionName="logo_text"
         app:layout_constraintEnd_toEndOf="@id/y_parts_logo_splash"
@@ -58,7 +58,7 @@
         android:layout_marginTop="20dp"
         android:fontFamily="@font/raleway_medium"
         android:text="Automobile parts at your fingertips"
-        android:textColor="@color/text_color_orange"
+        android:textColor="@color/mainTextColor1"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="@id/y_parts_tv_splash"
         app:layout_constraintHorizontal_bias="0.488"

@@ -64,7 +64,7 @@ public class RequestsOffersFragment extends Fragment {
     String userType = "";
 
     SweetAlertDialog pDialog;
-    CircularProgressButton addRequestsOffersButton;
+    ImageView addRequestsOffersButton;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;

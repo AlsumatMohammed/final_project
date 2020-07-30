@@ -71,6 +71,7 @@ public class AdsFragment extends Fragment {
 
     public EditText searchBar;
     ImageView searchIcon;
+    ImageView searchIconToolBar;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -183,6 +184,7 @@ public class AdsFragment extends Fragment {
         publishButton = view.findViewById(R.id.add_ad);
         searchBar = view.findViewById(R.id.searchBar);
         searchIcon = view.findViewById(R.id.searchIcon);
+        searchIconToolBar = view.findViewById(R.id.searchIconToolBar);
 
         searchIcon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -209,6 +211,20 @@ public class AdsFragment extends Fragment {
 
                     getActivity().startActivity(i);
                 }
+            }
+        });
+
+        searchIconToolBar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                String searchText = searchBar.getText().toString().trim();
+
+                Intent i  = new Intent(getActivity(), searchFilter.class);
+
+                i.putExtra("SEARCHTEXT", searchText);
+
+                getActivity().startActivity(i);
             }
         });
 

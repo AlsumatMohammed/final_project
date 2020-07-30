@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
             finish();
         }
 
-        String email = firebaseUser.getEmail();
+//        String email = firebaseUser.getEmail();
 
 //        TextView textView = findViewById(R.id.textView4);
 //

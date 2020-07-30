@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".getting_you"
-    style="@style/Platform.MaterialComponents">
+    style="@style/Platform.MaterialComponents"
+    android:background="#292B30">
 
 
     <com.airbnb.lottie.LottieAnimationView
@@ -18,7 +19,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:lottie_autoPlay="true"
-        app:lottie_fileName="3678-fluid-loading-animation.json"
+        app:lottie_fileName="odometer_animation.json"
         app:lottie_loop="true">
 
     </com.airbnb.lottie.LottieAnimationView>

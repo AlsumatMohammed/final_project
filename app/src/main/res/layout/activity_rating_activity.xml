@@ -5,6 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Rating_activity"
+    android:background="#292B30"
+
     >
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraint1"
@@ -13,7 +15,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:background="@color/text_color_orange"
+        android:background="#40444C"
         android:padding="10dp">
 
         <TextView
@@ -25,16 +27,17 @@
             app:layout_constraintRight_toRightOf="parent"
             android:text="Y-parts"
             android:fontFamily="@font/montserrat_bold"
-            android:textColor="@color/whiteTextColor"
+            android:textColor="#B3B3B3"
             android:textSize="20sp"
             />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/ypartsTv"
-            app:layout_constraintLeft_toLeftOf="@id/ypartsTv"
-            app:layout_constraintRight_toRightOf="@id/ypartsTv"
+            app:layout_constraintTop_toTopOf="@id/ypartsTv"
+            app:layout_constraintBottom_toBottomOf="@id/ypartsTv"
+            app:layout_constraintRight_toLeftOf="@id/ypartsTv"
+            android:layout_marginRight="5dp"
             android:src="@drawable/tire"/>
 
 
@@ -81,7 +84,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/positive"
         app:cardCornerRadius="10dp"
-        app:cardBackgroundColor="#F0F2F2"
+        app:cardBackgroundColor="#40444C"
 
         >
 
@@ -118,15 +121,22 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/rating_comment_layout"
                 android:layout_margin="20dp"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:background="@drawable/custom_input"
+                app:hintEnabled="false"
+                app:errorTextAppearance="@color/button">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="60dp"
                     android:id="@+id/rating_comment_et"
                     android:hint="Comment"
                     android:inputType="text"
-                    android:maxLines="2">
+                    android:maxLines="2"
+                    android:textSize="14sp"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:textColorHint="@color/mainTextColor2">
 
                 </com.google.android.material.textfield.TextInputEditText>
 
@@ -139,7 +149,7 @@
                 android:fontFamily="@font/montserrat_bold"
                 android:text="Note: You cannot edit this later"
                 android:layout_margin="10dp"
-                android:textColor="@color/red2"
+                android:textColor="@color/mainTextColor1"
                 android:textSize="10sp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/positive"

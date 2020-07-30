@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".edit_profile">
+    tools:context=".edit_profile"
+    android:background="#292B30">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraint1"
@@ -14,7 +15,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:background="@color/text_color_orange"
+        android:background="#40444C"
         android:padding="10dp">
 
         <TextView
@@ -26,19 +27,18 @@
             app:layout_constraintRight_toRightOf="parent"
             android:text="Y-parts"
             android:fontFamily="@font/montserrat_bold"
-            android:textColor="@color/whiteTextColor"
+            android:textColor="#B3B3B3"
             android:textSize="20sp"
             />
 
         <ImageView
-            android:id="@+id/tireImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/ypartsTv"
-            app:layout_constraintLeft_toLeftOf="@id/ypartsTv"
-            app:layout_constraintRight_toRightOf="@id/ypartsTv"
+            app:layout_constraintTop_toTopOf="@id/ypartsTv"
+            app:layout_constraintBottom_toBottomOf="@id/ypartsTv"
+            app:layout_constraintRight_toLeftOf="@id/ypartsTv"
+            android:layout_marginRight="5dp"
             android:src="@drawable/tire"/>
-
 
         <ImageView
             android:layout_width="wrap_content"
@@ -53,11 +53,11 @@
             android:id="@+id/locationButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/location"
+            android:src="@drawable/ic_location"
             android:fontFamily="@font/montserrat_bold"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="@id/ypartsTv"
-            app:layout_constraintBottom_toBottomOf="@id/tireImage"/>
+            app:layout_constraintBottom_toBottomOf="@id/ypartsTv"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -76,7 +76,8 @@
             android:text="Do not worry.."
             android:layout_marginTop="10dp"
             android:layout_marginLeft="30dp"
-            android:fontFamily="@font/montserrat_bold">
+            android:fontFamily="@font/montserrat_bold"
+            android:textColor="@color/mainTextColor1">
 
         </TextView>
 
@@ -86,7 +87,8 @@
             android:text="You can change this information later"
             android:layout_marginTop="2dp"
             android:layout_marginLeft="30dp"
-            android:fontFamily="@font/montserrat_bold">
+            android:fontFamily="@font/montserrat_bold"
+            android:textColor="@color/mainTextColor1">
 
         </TextView>
 
@@ -120,7 +122,7 @@
             class="android.widget.TextView"
             android:layout_width="100dp"
             android:layout_height="2dp"
-            android:background="@color/text_color_orange"
+            android:background="#B3B3B3"
             android:layout_gravity="center">
 
         </view>
@@ -139,7 +141,7 @@
             class="android.widget.TextView"
             android:layout_width="100dp"
             android:layout_height="2dp"
-            android:background="#E8E8E8"
+            android:background="#B3B3B3"
             android:layout_gravity="center">
 
         </view>
@@ -168,7 +170,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Sign Up"
-            android:layout_marginLeft="30dp">
+            android:layout_marginLeft="30dp"
+            android:textColor="@color/mainTextColor2">
 
         </TextView>
 
@@ -176,7 +179,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Create Profile"
-            android:layout_marginLeft="50dp">
+            android:layout_marginLeft="50dp"
+            android:textColor="@color/mainTextColor2">
 
         </TextView>
 
@@ -184,7 +188,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Enjoy!"
-            android:layout_marginLeft="70dp">
+            android:layout_marginLeft="70dp"
+            android:textColor="@color/mainTextColor2">
 
         </TextView>
 
@@ -198,7 +203,7 @@
         android:elevation="5dp"
         app:cardCornerRadius="20dp"
         android:layout_gravity="center"
-        android:background="@color/whiteCardColor"
+        app:cardBackgroundColor="#40444C"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp">
 
@@ -222,7 +227,7 @@
                     android:src="@drawable/avatar"
                     android:padding="10dp"
                     app:civ_border_width="2dp"
-                    app:civ_border_color="@color/text_color_orange">
+                    app:civ_border_color="@color/mainTextColor2">
 
                 </de.hdodenhof.circleimageview.CircleImageView>
             </LinearLayout>
@@ -249,7 +254,8 @@
                         android:text="User type:"
                         android:textSize="15sp"
                         android:fontFamily="@font/montserrat_bold"
-                        android:layout_marginRight="20dp">
+                        android:layout_marginRight="20dp"
+                        android:textColor="@color/mainTextColor1">
 
                     </TextView>
 
@@ -259,7 +265,8 @@
                         android:layout_height="wrap_content"
                         android:text="Customer"
                         android:checked="true"
-                        android:fontFamily="@font/montserrat">
+                        android:fontFamily="@font/montserrat"
+                        android:textColor="@color/mainTextColor2">
 
                     </RadioButton>
 
@@ -269,7 +276,8 @@
                         android:layout_height="wrap_content"
                         android:text="Supplier"
                         android:layout_marginLeft="10dp"
-                        android:fontFamily="@font/montserrat">
+                        android:fontFamily="@font/montserrat"
+                        android:textColor="@color/mainTextColor2">
 
                     </RadioButton>
                 </RadioGroup>
@@ -279,15 +287,22 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/customer_supplier_name_inputlayout"
                     android:layout_marginTop="20dp"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:background="@drawable/custom_input"
+                    app:hintEnabled="false"
+                    app:errorTextAppearance="@color/button">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="60dp"
                         android:id="@+id/customer_supplier_name_et"
                         android:hint="Username"
                         android:inputType="text"
                         android:maxLines="1"
+                        android:textSize="14sp"
+                        android:paddingStart="12dp"
+                        android:paddingEnd="12dp"
+                        android:textColorHint="@color/mainTextColor2"
                         >
 
                     </com.google.android.material.textfield.TextInputEditText>
@@ -295,20 +310,28 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
 
+
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:id="@+id/customer_supplier_phone_inputlayout"
                     android:layout_marginTop="10dp"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:background="@drawable/custom_input"
+                    app:hintEnabled="false"
+                    app:errorTextAppearance="@color/button">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="60dp"
                         android:id="@+id/customer_supplier_phone_et"
                         android:hint="Phone number"
                         android:inputType="number"
-                        android:maxLines="1">
+                        android:maxLines="1"
+                        android:textSize="14sp"
+                        android:paddingStart="12dp"
+                        android:paddingEnd="12dp"
+                        android:textColorHint="@color/mainTextColor2">
 
                     </com.google.android.material.textfield.TextInputEditText>
 
@@ -328,7 +351,8 @@
                         android:layout_height="wrap_content"
                         android:text="Email Address: "
                         android:textSize="17sp"
-                        android:fontFamily="@font/montserrat_bold">
+                        android:fontFamily="@font/montserrat_bold"
+                        android:textColor="@color/mainTextColor1">
 
                     </TextView>
 
@@ -339,7 +363,8 @@
                         android:text="test@gmail.com "
                         android:textSize="15sp"
                         android:fontFamily="@font/montserrat_bold"
-                        android:layout_marginLeft="5dp">
+                        android:layout_marginLeft="5dp"
+                        android:textColor="@color/mainTextColor2">
 
                     </TextView>
                 </LinearLayout>
