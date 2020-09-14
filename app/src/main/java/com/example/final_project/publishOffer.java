@@ -73,6 +73,7 @@ public class publishOffer extends AppCompatActivity {
     public String publisher_email = "";
     public String publisherLatitude = "";
     public String publisherLongitude = "";
+    public String publisherState = "";
 
     //categories
     public Spinner categories_spinner;
@@ -430,6 +431,7 @@ public class publishOffer extends AppCompatActivity {
                 offer.setPublisherUsername(publisher_name);
                 offer.setPublisherLatitude(publisherLatitude);
                 offer.setPublisherLongitude(publisherLongitude);
+                offer.setPublisherState(publisherState);
                 offer.setTitle(title);
                 offer.setCategory(category);
                 offer.setCondition(condition);
@@ -574,6 +576,7 @@ public class publishOffer extends AppCompatActivity {
                 publisher_phone = userProfile.getPhoneNumber();
                 publisherLatitude = userProfile.getLatitude();
                 publisherLongitude = userProfile.getLongitude();
+                publisherState = userProfile.getPublisherState();
                 publiserInformationConfirm = true;
                 Toast.makeText(publishOffer.this, "publisher Information acquired", Toast.LENGTH_SHORT).show();
                 confirm(publiserInformationConfirm, publisherImageConfirm, sendingImageConfirm, productImageReferenceConfirm);

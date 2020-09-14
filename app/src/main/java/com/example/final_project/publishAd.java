@@ -72,6 +72,7 @@ public class publishAd extends AppCompatActivity {
     public String publisher_email;
     public String publisherLatitude;
     public String publisherLongitude;
+    public String publisherState;
 
     //categories
     public Spinner categories_spinner;
@@ -417,7 +418,7 @@ public class publishAd extends AppCompatActivity {
                 db = FirebaseDatabase.getInstance().getReference();
 
 
-                if (publisher_name.isEmpty() || publisher_phone.isEmpty() || publisher_email.isEmpty() || publisherLatitude.isEmpty() || publisherLongitude.isEmpty()){
+                if (publisher_name.isEmpty() || publisher_phone.isEmpty() || publisher_email.isEmpty() || publisherLatitude.isEmpty() || publisherLongitude.isEmpty()|| publisherState.isEmpty()){
 
                     Alerter.create(publishAd.this)
                             .setTitle("Y-parts")
@@ -453,6 +454,7 @@ public class publishAd extends AppCompatActivity {
                 generalAd.setPublishDate(publishDate);
                 generalAd.setPublisherLatitude(publisherLatitude);
                 generalAd.setPublisherLongitude(publisherLongitude);
+                generalAd.setPublisherState(publisherState);
                 generalAd.setProductImage(" ");
                 generalAd.setPublisherImage(" ");
 
@@ -587,6 +589,7 @@ public class publishAd extends AppCompatActivity {
                 publisher_phone = userProfile.getPhoneNumber();
                 publisherLatitude = userProfile.getLatitude();
                 publisherLongitude = userProfile.getLongitude();
+                publisherState = userProfile.getPublisherState();
                 publiserInformationConfirm = true;
                 Toast.makeText(publishAd.this, "publisher Information acquired", Toast.LENGTH_SHORT).show();
                 confirm(publiserInformationConfirm, publisherImageConfirm, sendingImageConfirm, productImageReferenceConfirm);

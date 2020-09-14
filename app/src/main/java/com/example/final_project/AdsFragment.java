@@ -322,6 +322,15 @@ public class AdsFragment extends Fragment {
 //                    Toast.makeText(getActivity(), "you must edit your profile", Toast.LENGTH_SHORT).show();
 //                }
 
+                if (userProfile.getPublisherState().equals("unverified")&& userProfile.getUserType().equals("supplier")){
+                    Alerter.create(getActivity())
+                            .setTitle("Y-parts")
+                            .setText("Your Account has not yet been verified!")
+                            .enableSwipeToDismiss()
+                            .setDuration(3000)
+                            .setBackgroundColorRes(R.color.text_color_orange)
+                            .show();
+                }
 
                 if (userProfile.getUserType().equals("supplier")){
 
@@ -330,7 +339,11 @@ public class AdsFragment extends Fragment {
                 else{
                     publishButton.setVisibility(View.GONE);
                 }
+
+
             }
+
+
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -480,6 +493,7 @@ public class AdsFragment extends Fragment {
 
                     dismissDialog();
 
+
                 holder.rev_layout.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -487,7 +501,8 @@ public class AdsFragment extends Fragment {
                         openDetailActivity(model.getProductImage() , model.getDescription(), model.getCategory()
                                 , model.getPublishDate() , model.getPrice() , model.getCurrency() , model.getPriceType()
                                 , model.getWarranty() , model.getCondition() , model.getPublisherImage()
-                                , model.getPublisherUsername() , model.getPublisherEmail(), model.getPublisherPhoneNumber(), model.getKey(), model.getTitle(), model.getPublisherLatitude(), model.getPublisherLongitude());
+                                , model.getPublisherUsername() , model.getPublisherEmail(), model.getPublisherPhoneNumber(), model.getKey(), model.getTitle(), model.getPublisherLatitude(), model.getPublisherLongitude(), model.getPublisherState());
+
 
                     }
                 });
@@ -525,6 +540,8 @@ public class AdsFragment extends Fragment {
             intent.putExtra("ADTITLE", detail[14]);
             intent.putExtra("PUBLISHERLATITUDE", detail[15]);
             intent.putExtra("PUBLISHERLONGITUDE", detail[16]);
+            intent.putExtra("PUBLISHERSTATE", detail[17]);
+
 
 
         getActivity().startActivity(intent);

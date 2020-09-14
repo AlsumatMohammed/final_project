@@ -80,6 +80,7 @@ public class detail_activity extends AppCompatActivity {
     String publisherEmail;
     String publisherLatitude;
     String publisherLongitude;
+    String publisherState;
     String adKey;
     String adtitle;
     String productImage;
@@ -94,6 +95,7 @@ public class detail_activity extends AppCompatActivity {
     //PUBLISHERINFORMATION
     String publisherImage;
     String publisherPhone;
+    ImageView userState;
 
     boolean checkAd = false;
 
@@ -132,7 +134,8 @@ public class detail_activity extends AppCompatActivity {
         publisherUserNameView = findViewById(R.id.publisherUsername_detail);
         publisherPhoneView = findViewById(R.id.publisherPhone_detail);
         publisherEmailView = findViewById(R.id.publisherEmail_detail);
-
+        userState = findViewById(R.id.userState);
+        userState.setVisibility(View.GONE);
         Intent intent = this.getIntent();
 
         productImage = intent.getExtras().getString("PRODUCT_IMAGE");
@@ -153,6 +156,7 @@ public class detail_activity extends AppCompatActivity {
         adtitle = intent.getExtras().getString("ADTITLE");
         publisherLatitude = intent.getExtras().getString("PUBLISHERLATITUDE");
         publisherLongitude = intent.getExtras().getString("PUBLISHERLONGITUDE");
+        publisherState = intent.getExtras().getString("PUBLISHERSTATE");
 
         Uri productImagePath = Uri.parse(productImage);
         Uri publisherImagePath = Uri.parse(publisherImage);
@@ -266,6 +270,13 @@ public class detail_activity extends AppCompatActivity {
         publisherUserNameView.setText(publisherUserName);
         publisherEmailView.setText(publisherEmail);
         publisherPhoneView.setText(publisherPhone);
+
+        Toast.makeText(this, publisherState, Toast.LENGTH_SHORT).show();
+        if (publisherState.equals("verified")){
+            userState.setVisibility(View.VISIBLE);
+        }
+
+
 
 
 

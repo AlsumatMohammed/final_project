@@ -465,7 +465,7 @@ public class requestsOffersDetail extends AppCompatActivity {
                         openDetailActivity(model.getProductImage() , model.getDescription(), model.getCategory()
                                 , model.getPublishDate() , model.getPrice() , model.getCurrency() , model.getPriceType()
                                 , model.getWarranty() , model.getCondition() , model.getPublisherImage()
-                                , model.getPublisherUsername() , model.getPublisherEmail(), model.getPublisherPhoneNumber(), model.getOfferKey(), model.getTitle(), model.getPublisherLatitude(), model.getPublisherLongitude());
+                                , model.getPublisherUsername() , model.getPublisherEmail(), model.getPublisherPhoneNumber(), model.getOfferKey(), model.getTitle(), model.getPublisherLatitude(), model.getPublisherLongitude(), model.getPublisherState());
 
                     }
                 });
@@ -501,6 +501,7 @@ public class requestsOffersDetail extends AppCompatActivity {
         intent.putExtra("ADTITLE", detail[14]);
         intent.putExtra("PUBLISHERLATITUDE", detail[15]);
         intent.putExtra("PUBLISHERLONGITUDE", detail[16]);
+        intent.putExtra("PUBLISHERSTATE", detail[17]);
 
 
         startActivity(intent);

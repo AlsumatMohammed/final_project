@@ -60,6 +60,7 @@ public class ProfileFragment extends Fragment {
     public TextView emailAddress;
     public TextView userType;
     public ImageView logoutButton;
+    public ImageView userState;
 
 
     public ImageView profileimageView;
@@ -155,6 +156,7 @@ public class ProfileFragment extends Fragment {
         logoutButton = view.findViewById(R.id.logout_fragmentprofile);
         previousCardProfile = view.findViewById(R.id.previousCardProfile);
 
+        userState = view.findViewById(R.id.userStateProfileFragment);
 
 
         publisherEmail = firebaseAuth.getCurrentUser().getEmail();
@@ -195,9 +197,16 @@ public class ProfileFragment extends Fragment {
                 emailAddress.setText(firebaseUser.getEmail());
                 userType.setText(userProfile.getUserType());
 
+                userState.setVisibility(View.GONE);
                 if (userProfile.getUserType().equals("customer")){
 
                     previousCardProfile.setVisibility(View.GONE);
+                    userState.setVisibility(View.GONE);
+
+                }
+
+                if (userProfile.getUserType().equals("supplier")&& userProfile.getPublisherState().equals("verified")){
+                    userState.setVisibility(View.VISIBLE);
                 }
 
 
@@ -287,7 +296,7 @@ public class ProfileFragment extends Fragment {
                             @Override
                             public generalAds parseSnapshot(@NonNull DataSnapshot snapshot) {
 //
-                                showDialog();
+                               // showDialog();
 
                                 generalAds generalAd = snapshot.getValue(generalAds.class);
 
@@ -433,7 +442,7 @@ public class ProfileFragment extends Fragment {
                             @Override
                             public generalAds parseSnapshot(@NonNull DataSnapshot snapshot) {
 //
-                                showDialog();
+                                //showDialog();
                                 generalAds generalAd = snapshot.getValue(generalAds.class);
 
 

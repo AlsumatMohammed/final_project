@@ -7,6 +7,15 @@ public class Userinformation {
     public String phoneNumber;
     public String latitude;
     public String longitude;
+    public String publisherState;
+
+    public String getPublisherState() {
+        return publisherState;
+    }
+
+    public void setPublisherState(String publisherState) {
+        this.publisherState = publisherState;
+    }
 
     public String getLatitude() {
         return latitude;
@@ -31,12 +40,13 @@ public class Userinformation {
     public Userinformation() {
     }
 
-    public Userinformation(String userName, String userType, String phoneNumber, String latitude, String longitude) {
+    public Userinformation(String userName, String userType, String phoneNumber, String latitude, String longitude, String publisherState) {
         this.userName = userName;
         this.userType = userType;
         this.phoneNumber = phoneNumber;
         this.latitude = latitude;
         this.longitude = longitude;
+        this.publisherState = publisherState;
     }
 
 

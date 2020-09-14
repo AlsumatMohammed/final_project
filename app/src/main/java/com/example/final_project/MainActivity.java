@@ -2,6 +2,7 @@ package com.example.final_project;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -10,12 +11,18 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserInfo;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import cn.pedant.SweetAlert.SweetAlertDialog;
 import io.grpc.internal.SharedResourceHolder;
 
 import android.view.KeyEvent;
@@ -32,11 +39,13 @@ public class MainActivity extends AppCompatActivity {
     FirebaseUser firebaseUser;
     FirebaseAuth mAuth;
     BottomNavigationView navigation;
+    SweetAlertDialog pDialog;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setSupportActionBar(toolbar);
+
 
 //        final ProgressDialog progressDialog = new ProgressDialog(MainActivity.this);
 //        progressDialog.setMessage("please wait!");
@@ -44,8 +53,14 @@ public class MainActivity extends AppCompatActivity {
 //        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 //        progressDialog.show();
 
+        pDialog = new SweetAlertDialog(MainActivity.this, SweetAlertDialog.PROGRESS_TYPE);
+        pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
+        pDialog.setTitleText("Loading ...");
+        pDialog.setCancelable(false);
 
-        loadFragment(new AdsFragment());
+
+
+
 
         navigation = findViewById(R.id.navigation);
         navigation.setSelectedItemId(R.id.ads);
@@ -61,12 +76,44 @@ public class MainActivity extends AppCompatActivity {
             finish();
         }
 
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference databaseReference = firebaseDatabase.getReference();
+
+        databaseReference.child("userInformation").child(firebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+
+                showDialog();
+
+                if (!dataSnapshot.exists()){
+
+                    Intent intent = new Intent(MainActivity.this, edit_profile.class);
+
+                    startActivity(intent);
+                    MainActivity.this.finish();
+
+
+                }
+
+                dismissDialog();
+
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
 //        String email = firebaseUser.getEmail();
 
 //        TextView textView = findViewById(R.id.textView4);
 //
 //        textView.setText(email);
-
+        loadFragment(new AdsFragment());
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -174,6 +221,19 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void showDialog(){
+        pDialog.show();
+
+        //editprofileButton.startAnimation();
+
+    }
+
+    public void dismissDialog(){
+        pDialog.dismiss();
+
+        //editprofileButton.revertAnimation();
     }
 }
 

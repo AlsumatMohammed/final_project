@@ -108,17 +108,17 @@
                     app:layout_constraintLeft_toRightOf="@id/profile_imageprofile_fragment"
                     app:layout_constraintTop_toTopOf="@id/profile_imageprofile_fragment" />
 
-                <TextView
-                    android:id="@+id/editTV"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/myAccountTV"
-                    app:layout_constraintBottom_toBottomOf="@id/myAccountTV"
-                    android:textColor="@color/mainTextColor2"
-                    android:fontFamily="@font/montserrat_bold"
-                    android:text="EDIT"
-                    android:layout_marginRight="10dp"/>
+<!--                <TextView-->
+<!--                    android:id="@+id/editTV"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    app:layout_constraintRight_toRightOf="parent"-->
+<!--                    app:layout_constraintTop_toTopOf="@id/myAccountTV"-->
+<!--                    app:layout_constraintBottom_toBottomOf="@id/myAccountTV"-->
+<!--                    android:textColor="@color/mainTextColor2"-->
+<!--                    android:fontFamily="@font/montserrat_bold"-->
+<!--                    android:text="EDIT"-->
+<!--                    android:layout_marginRight="10dp"/>-->
 
                 <TextView
                     android:id="@+id/username_fragmentprofile"
@@ -132,6 +132,15 @@
                     app:layout_constraintTop_toBottomOf="@id/myAccountTV"
                     app:layout_constraintLeft_toLeftOf="@id/myAccountTV"/>
 
+                <ImageView
+                    android:id="@+id/userStateProfileFragment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toEndOf="@id/username_fragmentprofile"
+                    app:layout_constraintTop_toTopOf="@id/username_fragmentprofile"
+                    app:layout_constraintBottom_toBottomOf="@id/username_fragmentprofile"
+                    android:src="@drawable/ic_verified"
+                    android:layout_marginStart="10dp"/>
 
                 <TextView
                     android:id="@+id/phone_fragmentprofile"
@@ -160,14 +169,14 @@
                     app:layout_constraintLeft_toLeftOf="@id/username_fragmentprofile"
                     app:layout_constraintTop_toBottomOf="@id/username_fragmentprofile" />
 
-                <ImageView
-                    android:id="@+id/editButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/edit_icon"
-                    app:layout_constraintLeft_toLeftOf="@id/editTV"
-                    app:layout_constraintTop_toBottomOf="@id/editTV"
-                    app:layout_constraintRight_toRightOf="@id/editTV"/>
+<!--                <ImageView-->
+<!--                    android:id="@+id/editButton"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:background="@drawable/edit_icon"-->
+<!--                    app:layout_constraintLeft_toLeftOf="@id/editTV"-->
+<!--                    app:layout_constraintTop_toBottomOf="@id/editTV"-->
+<!--                    app:layout_constraintRight_toRightOf="@id/editTV"/>-->
 
 
                 <TextView
@@ -298,7 +307,8 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat"
                 android:text="About the app"
-                android:textColor="@color/mainTextColor1"              android:textSize="18sp"
+                android:textColor="@color/mainTextColor1"
+                android:textSize="18sp"
                 android:layout_marginLeft="25dp"
                 app:layout_constraintLeft_toRightOf="@id/aboutImage"
                 app:layout_constraintTop_toTopOf="@id/aboutImage"
@@ -364,7 +374,7 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="10dp"
                         android:fontFamily="@font/montserrat_bold"
-                        android:text="Favourite Ads:"
+                        android:text="Favourites"
                         android:textColor="#B3B3B3"
                         android:textSize="15sp"
                         app:layout_constraintLeft_toLeftOf="parent"

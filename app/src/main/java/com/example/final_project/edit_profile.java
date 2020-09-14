@@ -109,7 +109,7 @@ public class edit_profile extends AppCompatActivity {
         getLocationButton = findViewById(R.id.locationButton);
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
 
-        userInformationNull();
+        //userInformationNull();
 
         profileImageView = findViewById(R.id.profile_image_editprofile);
         profileImageView.setOnClickListener(new View.OnClickListener() {
@@ -456,7 +456,9 @@ public class edit_profile extends AppCompatActivity {
             user_type = "supplier";
         }
 
-        Userinformation userinformation = new Userinformation(userName, user_type, phone, latitude, longitude);
+        String publisherState = "unverified";
+
+        Userinformation userinformation = new Userinformation(userName, user_type, phone, latitude, longitude, publisherState);
 
 
         FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
@@ -467,17 +469,7 @@ public class edit_profile extends AppCompatActivity {
 
     }
 
-    private void userInformationNull() {
 
-
-        Userinformation userinformation = new Userinformation("null", "null", "null", "null", "null");
-
-
-        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
-        databaseReference.child("userInformation").child(firebaseUser.getUid()).setValue(userinformation);
-        Toast.makeText(this, "user information updated", Toast.LENGTH_SHORT).show();
-
-    }
 
     private void sendUserData() {
 

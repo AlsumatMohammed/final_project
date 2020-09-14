@@ -22,6 +22,15 @@ public class generalAds {
     String publisherEmail;
     String publisherPhoneNumber;
     String publisherLatitude;
+    String publisherState;
+
+    public String getPublisherState() {
+        return publisherState;
+    }
+
+    public void setPublisherState(String publisherState) {
+        this.publisherState = publisherState;
+    }
 
     public String getPublisherLatitude() {
         return publisherLatitude;
