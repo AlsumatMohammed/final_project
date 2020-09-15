@@ -39,6 +39,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.tapadoo.alerter.Alerter;
+import com.yarolegovich.lovelydialog.LovelyInfoDialog;
 
 
 /**
@@ -323,12 +324,20 @@ public class AdsFragment extends Fragment {
 //                }
 
                 if (userProfile.getPublisherState().equals("unverified")&& userProfile.getUserType().equals("supplier")){
-                    Alerter.create(getActivity())
-                            .setTitle("Y-parts")
-                            .setText("Your Account has not yet been verified!")
-                            .enableSwipeToDismiss()
-                            .setDuration(3000)
-                            .setBackgroundColorRes(R.color.text_color_orange)
+//                    Alerter.create(getActivity())
+//                            .setTitle("Y-parts")
+//                            .setText("Your Account has not yet been verified!")
+//                            .enableSwipeToDismiss()
+//                            .setDuration(3000)
+//                            .setBackgroundColorRes(R.color.text_color_orange)
+//                            .show();
+
+                    new LovelyInfoDialog(getActivity())
+                            .setTopColorRes(R.color.toolbar)
+                            .setIcon(R.drawable.ic_verified_dialog)
+                            .setNotShowAgainOptionChecked(true)
+                            .setTitle("Unverified Account")
+                            .setMessage("Your account hasn't been verified.\nFor speeding up the verification process,\ncontact y-parts@gmail.com")
                             .show();
                 }
 

@@ -503,7 +503,6 @@ public class requestsOffersDetail extends AppCompatActivity {
         intent.putExtra("PUBLISHERLONGITUDE", detail[16]);
         intent.putExtra("PUBLISHERSTATE", detail[17]);
 
-
         startActivity(intent);
 
 

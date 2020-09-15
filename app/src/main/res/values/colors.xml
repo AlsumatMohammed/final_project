@@ -16,6 +16,7 @@
 <!--    <color name="text_color_orange">#FA7A00</color>-->
 <!--    <color name="text_color_orange">#FFBD59</color>-->
     <color name="text_color_orange">#E9E6D9</color>
+    <color name="toolbar">#40444C</color>
     <color name="mainTextColor1">#FFFFFF</color>
     <color name="mainTextColor2">#E9E6D9</color>
     <color name="bottomNavigationTintColor">#B2B2B2</color>

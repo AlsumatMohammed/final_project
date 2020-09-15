@@ -68,6 +68,12 @@ dependencies {
     //shimmer
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
 
+    //LovelyDialog
+    implementation 'com.yarolegovich:lovely-dialog:1.1.1'
+
+
+
+
 
 
 }

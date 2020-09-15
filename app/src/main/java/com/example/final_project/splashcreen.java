@@ -4,8 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ActivityOptions;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Pair;
@@ -18,6 +22,12 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.yarolegovich.lovelydialog.LovelyStandardDialog;
 
 public class splashcreen extends AppCompatActivity {
 
@@ -92,8 +102,10 @@ public class splashcreen extends AppCompatActivity {
 //
 //                final ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(splashcreen.this, pairs);
 
+                //checking Internet connection
 
-                 firebaseUser = mAuth.getCurrentUser();
+
+                firebaseUser = mAuth.getCurrentUser();
 
                 if (firebaseUser == null){
 
@@ -104,10 +116,36 @@ public class splashcreen extends AppCompatActivity {
 
                 if (firebaseUser != null){
 
-                    Toast.makeText(splashcreen.this, "not null", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(splashcreen.this, "not null", Toast.LENGTH_SHORT).show();
+//
+//                    startActivity(intent_home);
+//                    finish();
+                    FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+                    DatabaseReference databaseReference = firebaseDatabase.getReference();
 
-                    startActivity(intent_home);
-                    finish();
+                    databaseReference.child("userInformation").child(firebaseUser.getUid()).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                            if (!dataSnapshot.exists()) {
+
+                                Intent intent = new Intent(splashcreen.this, edit_profile.class);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                Toast.makeText(splashcreen.this, "not null", Toast.LENGTH_SHORT).show();
+//
+                                startActivity(intent_home);
+                                finish();
+                            }
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
                 }
 
 //                FirebaseAuth.AuthStateListener authStateListener = new FirebaseAuth.AuthStateListener() {
@@ -124,5 +162,39 @@ public class splashcreen extends AppCompatActivity {
 
             }
         }, SPLASHTIME);
+    }
+
+    public boolean checkInternet(){
+
+        ConnectivityManager conMgr =  (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = conMgr.getActiveNetworkInfo();
+        if (netInfo == null){
+
+            new LovelyStandardDialog(this, LovelyStandardDialog.ButtonLayout.VERTICAL)
+                    .setTopColorRes(R.color.toolbar)
+                    .setButtonsColorRes(R.color.toolbar)
+                    .setIcon(R.drawable.ic_verified_dialog)
+                    .setTitle("No network connection")
+                    .setMessage("There's seems to be a problem with your internet connection")
+                    .setPositiveButton("Retry", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                        }
+                    })
+                    .setNegativeButton("Exit", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+
+                        }
+                    })
+                    .show();
+
+            return false;
+        }
+        else{
+
+        }
+        return true;
     }
 }
