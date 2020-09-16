@@ -51,6 +51,14 @@
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_marginLeft="10dp"/>
 
+        <ImageView
+            android:id="@+id/logout_fragmentprofile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/logout"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
@@ -328,30 +336,20 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/aboutTv" />
 
-            <ImageView
-                android:id="@+id/logout_fragmentprofile"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/logout"
-                android:layout_marginTop="20dp"
-                android:layout_marginLeft="10dp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/line3"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_marginBottom="10dp"/>
 
-            <TextView
-                android:id="@+id/logoutTv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/montserrat"
-                android:text="Logout"
-                android:textColor="@color/mainTextColor1"
-                android:textSize="18sp"
-                android:layout_marginLeft="25dp"
-                app:layout_constraintLeft_toRightOf="@id/logout_fragmentprofile"
-                app:layout_constraintTop_toTopOf="@id/logout_fragmentprofile"
-                app:layout_constraintBottom_toBottomOf="@id/logout_fragmentprofile"/>
+
+<!--            <TextView-->
+<!--                android:id="@+id/logoutTv"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:fontFamily="@font/montserrat"-->
+<!--                android:text="Logout"-->
+<!--                android:textColor="@color/mainTextColor1"-->
+<!--                android:textSize="18sp"-->
+<!--                android:layout_marginLeft="25dp"-->
+<!--                app:layout_constraintLeft_toRightOf="@id/logout_fragmentprofile"-->
+<!--                app:layout_constraintTop_toTopOf="@id/logout_fragmentprofile"-->
+<!--                app:layout_constraintBottom_toBottomOf="@id/logout_fragmentprofile"/>-->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

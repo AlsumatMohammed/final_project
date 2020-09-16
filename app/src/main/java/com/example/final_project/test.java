@@ -13,6 +13,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,22 +42,13 @@ public class test extends AppCompatActivity {
     private FirebaseRecyclerAdapter adapterRatings;
     String adKey;
     //Merlin merlin;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
 
 //
-//         merlin = new Merlin.Builder().withConnectableCallbacks().build(this);
-//
-//
-//        merlin.registerConnectable(new Connectable() {
-//            @Override
-//            public void onConnect() {
-//                Toast.makeText(test.this, "Internet", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-
 
 
 //        new LovelyInfoDialog(this)
@@ -67,30 +59,9 @@ public class test extends AppCompatActivity {
 //                .setMessage("Your account hasn't been verified.\nFor speeding up the verification process,\ncontact y-parts@gmail.com")
 //                .show();
 
-//        ConnectivityManager conMgr =  (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
-//        NetworkInfo netInfo = conMgr.getActiveNetworkInfo();
-//        if (netInfo == null){
+
+
 //
-//            new LovelyStandardDialog(this, LovelyStandardDialog.ButtonLayout.VERTICAL)
-//                    .setTopColorRes(R.color.toolbar)
-//                    .setButtonsColorRes(R.color.toolbar)
-//                    .setIcon(R.drawable.ic_verified_dialog)
-//                    .setTitle("No network connection")
-//                    .setMessage("There's seems to be a problem with your internet connection")
-//                    .setPositiveButton("Retry", new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View v) {
-//
-//
-//                        }
-//                    })
-//                    .setNegativeButton("Exit", new View.OnClickListener() {
-//                        @Override
-//                        public void onClick(View view) {
-//
-//                        }
-//                    })
-//                    .show();
 //
 //        }
 //
@@ -137,6 +108,47 @@ public class test extends AppCompatActivity {
         }
         return true;
     }
+
+//    public boolean isConnected() {
+//        boolean connected = false;
+//        try {
+//            ConnectivityManager cm = (ConnectivityManager)getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+//            NetworkInfo nInfo = cm.getActiveNetworkInfo();
+//            connected = nInfo != null && nInfo.isAvailable() && nInfo.isConnected();
+//            return connected;
+//        } catch (Exception e) {
+//            Log.e("Connectivity Exception", e.getMessage());
+//        }
+//
+//
+//            new LovelyStandardDialog(this, LovelyStandardDialog.ButtonLayout.VERTICAL)
+//                    .setTopColorRes(R.color.toolbar)
+//                    .setButtonsColorRes(R.color.toolbar)
+//                    .setIcon(R.drawable.ic_verified_dialog)
+//                    .setTitle("No network connection")
+//                    .setMessage("There's seems to be a problem with your internet connection")
+//                    .setPositiveButton("Retry", new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View v) {
+//
+//                            isConnected();
+//
+//                        }
+//                    })
+//                    .setNegativeButton("Exit", new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View view) {
+//
+//
+//                        }
+//                    })
+//                    .show();
+//
+//
+//
+//
+//        return connected;
+//    }
 
 
 

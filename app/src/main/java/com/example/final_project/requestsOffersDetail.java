@@ -214,7 +214,7 @@ public class requestsOffersDetail extends AppCompatActivity {
             public void onClick(View view) {
 
                 final View v = getLayoutInflater().inflate(R.layout.offers_comments_bottomsheet, null);
-                 dialog = new BottomSheetDialog(requestsOffersDetail.this);
+                dialog = new BottomSheetDialog(requestsOffersDetail.this);
                 dialog.setContentView(v);
 
                 final TextInputLayout commentLayout = v.findViewById(R.id.offersCommentLayout);

@@ -148,6 +148,15 @@
 
                         </com.google.android.material.textfield.TextInputLayout>
 
+                        <TextView
+                            android:id="@+id/forgetPasswordButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Forget Password?"
+                            android:fontFamily="@font/montserrat_bold"
+                            android:textColor="@color/mainTextColor2"
+                            android:layout_gravity="right"
+                            android:layout_marginTop="7dp"/>
 
                         <br.com.simplepass.loadingbutton.customViews.CircularProgressButton
                             android:id="@+id/signin_button"

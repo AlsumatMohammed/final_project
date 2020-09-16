@@ -39,7 +39,10 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -74,6 +77,8 @@ public class login_screen extends AppCompatActivity implements View.OnClickListe
     public TextInputEditText password_editText;
     public CircularProgressButton sign_in_button;
     public TextView sign_up_textview;
+    public TextView forgetPasswordButton;
+
 
     SweetAlertDialog pDialog;
 
@@ -169,6 +174,89 @@ public class login_screen extends AppCompatActivity implements View.OnClickListe
 
         // end google
 
+        //password button
+        forgetPasswordButton = findViewById(R.id.forgetPasswordButton);
+        forgetPasswordButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                final View v = getLayoutInflater().inflate(R.layout.password_bottomsheet, null);
+                final BottomSheetDialog dialog = new BottomSheetDialog(login_screen.this);
+                dialog.setContentView(v);
+
+                final TextInputLayout passwordEmailLayout = v.findViewById(R.id.passwordResetLayout);
+                final TextInputEditText passwordEditText = v.findViewById(R.id.passwordResetEditText);
+
+                passwordEditText.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable editable) {
+
+                        String email = passwordEditText.getText().toString().trim();
+                        checkEmail(email, passwordEmailLayout);
+                    }
+                });
+                dialog.show();
+
+                final CircularProgressButton resetPasswordButton = v.findViewById(R.id.PasswordResetButton);
+
+                resetPasswordButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        String email = passwordEditText.getText().toString().trim();
+
+                        if (!checkEmail(email, passwordEmailLayout)){
+                            return;
+                        }
+                        resetPasswordButton.startAnimation();
+                        showDialog("Sending Reset Link");
+                        mAuth.sendPasswordResetEmail(email).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+
+
+                                resetPasswordButton.stopAnimation();
+                                dismissDialog();
+                                new SweetAlertDialog(login_screen.this, SweetAlertDialog.SUCCESS_TYPE)
+                                        .setTitleText("Success!")
+                                        .setContentText(" The Reset Link Was Sent To Your Email")
+                                        .show();
+                                dialog.hide();
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+
+                                dismissDialog();
+                                Alerter.create(login_screen.this)
+                                        .setTitle("Y-parts")
+                                        .setText("something went wrong. Try again !")
+                                        .enableSwipeToDismiss()
+                                        .setDuration(3000)
+                                        .setBackgroundColorRes(R.color.text_color_orange)
+
+                                        .show();
+                                resetPasswordButton.stopAnimation();
+
+                            }
+                        });
+
+                    }
+                });
+            }
+        });
+
+        //end password button
 
 
         email_layout = findViewById(R.id.textInputLayoutEmail);
@@ -507,7 +595,7 @@ public class login_screen extends AppCompatActivity implements View.OnClickListe
         String email = email_editText.getText().toString().trim();
         if (email.isEmpty() || !isValidEmail(email)){
 
-            email_layout.setError("Enter a vaild Email address");
+            email_layout.setError("Enter a valid Email address");
 
 
             return false;
@@ -516,6 +604,24 @@ public class login_screen extends AppCompatActivity implements View.OnClickListe
 
         else{
             email_layout.setErrorEnabled(false);
+        }
+
+        return true;
+    }
+
+    private boolean checkEmail(String email, TextInputLayout textinputLayout ){
+
+        if (email.isEmpty() || !isValidEmail(email)){
+
+            textinputLayout.setError("Enter a valid Email address");
+
+
+            return false;
+
+        }
+
+        else{
+            textinputLayout.setErrorEnabled(false);
         }
 
         return true;
@@ -572,6 +678,21 @@ public class login_screen extends AppCompatActivity implements View.OnClickListe
     public void stopButton(){
 
         sign_in_button.revertAnimation();
+    }
+
+    public void showDialog(String message){
+
+        pDialog.setTitleText(message);
+        pDialog.show();
+
+        //editprofileButton.startAnimation();
+
+    }
+
+    public void dismissDialog(){
+        pDialog.dismiss();
+
+        //editprofileButton.revertAnimation();
     }
 
 
