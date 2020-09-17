@@ -33,19 +33,22 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".requestsOffersDetail"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar.Bridge" />
         <activity
             android:name=".putRequest"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".test"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar.Bridge">
+
+
+        </activity>
         <activity
             android:name=".Rating_activity"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".detail_activity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar.Bridge" />
         <activity
             android:name=".publishAd"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -61,6 +64,7 @@
         <activity
             android:name=".splashcreen"
             android:theme="@style/AppTheme.NoActionBar">
+
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

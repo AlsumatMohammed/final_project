@@ -366,7 +366,7 @@ public class AdsFragment extends Fragment {
 
                 Intent intent = new Intent(getActivity() , publishAd.class);
                 startActivity(intent);
-                getActivity().finish();
+//                getActivity().finish();
             }
         });
 

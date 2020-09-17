@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.lifecycle.ReportFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import br.com.simplepass.loadingbutton.customViews.CircularProgressButton;
@@ -15,13 +16,17 @@ import android.content.pm.ResolveInfo;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,7 +35,12 @@ import com.bumptech.glide.request.RequestOptions;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.firebase.ui.database.SnapshotParser;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -68,7 +78,8 @@ public class detail_activity extends AppCompatActivity {
 
 
 
-    Button favouriteButton, callNowButton, messageNowButton;
+
+    MaterialButton callNowButton,favouriteButton,messageNowButton, shareButton , reportButton;
     CircularProgressButton addRating;
 
     public RatingBar supplierRatingBar;
@@ -98,6 +109,7 @@ public class detail_activity extends AppCompatActivity {
     ImageView userState;
 
     boolean checkAd = false;
+    boolean checkReport = false;
 
 
     ImageView getDirectionButton;
@@ -116,8 +128,11 @@ public class detail_activity extends AppCompatActivity {
         supplierRatingBar = findViewById(R.id.ratingBar_detail);
         callNowButton = findViewById(R.id.callNow_button);
         messageNowButton = findViewById(R.id.messageNow_button);
-
+        shareButton = findViewById(R.id.shareButtonAdsDetail);
+        reportButton = findViewById(R.id.reportButtonAdsDetail);
         favouriteButton = findViewById(R.id.favouriteButton);
+
+
         addRating = findViewById(R.id.addRatingButton);
         pDialog = new SweetAlertDialog(detail_activity.this, SweetAlertDialog.PROGRESS_TYPE);
         pDialog.getProgressHelper().setBarColor(Color.parseColor("#A5DC86"));
@@ -303,7 +318,7 @@ public class detail_activity extends AppCompatActivity {
                 if (checkAd){
                     Alerter.create(detail_activity.this)
                             .setTitle("Y-parts")
-                            .setText("This is already in favourites!")
+                            .setText("This is already in your favorites!")
                             .enableSwipeToDismiss()
                             .setDuration(3000)
                             .setBackgroundColorRes(R.color.text_color_orange)
@@ -338,6 +353,7 @@ public class detail_activity extends AppCompatActivity {
                 generalAd.setProductImage(productImage);
                 generalAd.setPublisherImage(publisherImage);
                 generalAd.setKey(adKey);
+                generalAd.setPublisherState(publisherState);
                 favouriteAdsReference.setValue(generalAd);
 
 
@@ -347,7 +363,110 @@ public class detail_activity extends AppCompatActivity {
                         .setTitleText("Awesome!")
                         .setContentText("Added to favourites!")
                         .show();
-                favouriteButton.setBackground(getResources().getDrawable(R.drawable.star));
+                //favouriteButton.setBackground(getResources().getDrawable(R.drawable.star));
+                favouriteButton.setIcon(getResources().getDrawable(R.drawable.ic_favourite_filled));
+            }
+        });
+
+        addedReport();
+        reportButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (checkReport){
+                    Alerter.create(detail_activity.this)
+                            .setTitle("Y-parts")
+                            .setText("You have reported this already!")
+                            .enableSwipeToDismiss()
+                            .setDuration(3000)
+                            .setBackgroundColorRes(R.color.text_color_orange)
+                            .show();
+                    return;
+
+                }
+
+
+                final View v = getLayoutInflater().inflate(R.layout.report_bottomshett_layout, null);
+                final BottomSheetDialog dialog = new BottomSheetDialog(detail_activity.this);
+                dialog.setContentView(v);
+
+                //spinner set up
+                final Spinner reportSpinner = v.findViewById(R.id.reportSpinnerBottomSheet);
+                final String[] report_array = getResources().getStringArray(R.array.report_array);
+                ArrayAdapter<String> reportAdapter =
+                        new ArrayAdapter<String> (getApplicationContext(),
+                                R.layout.spinner_layout, R.id.textView,
+                                report_array);
+
+                reportSpinner.setAdapter(reportAdapter);
+
+
+                final TextInputLayout messageLayout = v.findViewById(R.id.reportLayout);
+                final TextInputEditText messageEditText = v.findViewById(R.id.reportEditText);
+                messageEditText.addTextChangedListener(new TextWatcher() {
+                    @Override
+                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    }
+
+                    @Override
+                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                    }
+
+                    @Override
+                    public void afterTextChanged(Editable editable) {
+
+                        String message = messageEditText.getText().toString().trim();
+                        checkMessage(message, messageLayout);
+                    }
+                });
+                dialog.show();
+
+
+                final CircularProgressButton reportBottomSheetButton = v.findViewById(R.id.reportButtonBottomSheet);
+                reportBottomSheetButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        String message = messageEditText.getText().toString().trim();
+
+                        if (!checkMessage(message, messageLayout)){
+                            return;
+                        }
+
+                        FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                        String userEmail = firebaseUser.getEmail();
+                        String complaint = reportSpinner.getSelectedItem().toString().trim();
+                        String reportAdKey = adKey;
+
+                        showDialog("Sending Report!");
+                        reportBottomSheetButton.startAnimation();
+
+                        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+                        DatabaseReference databaseReference = firebaseDatabase.getReference();
+
+                        DatabaseReference reportReference = databaseReference.child("reports").child(firebaseAuth.getUid()).push();
+
+                        Report report = new Report();
+
+                        report.setComplaint(complaint);
+                        report.setUserEmail(userEmail);
+                        report.setReportedAdKey(reportAdKey);
+                        report.setReportMessage(message);
+                        reportReference.setValue(report);
+
+
+
+                        dismissDialog();
+                        reportBottomSheetButton.stopAnimation();
+                        new SweetAlertDialog(detail_activity.this, SweetAlertDialog.SUCCESS_TYPE)
+                                .setTitleText("Done!")
+                                .setContentText("Report Sent Successfully")
+                                .show();
+                        dialog.hide();
+
+                    }
+                });
 
             }
         });
@@ -680,7 +799,43 @@ public class detail_activity extends AppCompatActivity {
                     if (generalAd.getKey().equals(adKey)){
 
                         checkAd = true;
-                        favouriteButton.setBackground(getResources().getDrawable(R.drawable.star));
+                        //favouriteButton.setBackground(getResources().getDrawable(R.drawable.star));
+                        favouriteButton.setIcon(getResources().getDrawable(R.drawable.ic_favourite_filled));
+                        break;
+                    }
+
+                }
+
+                dismissDialog();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+    }
+    private void addedReport(){
+
+        showDialog("Loading");
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference databaseReference = firebaseDatabase.getReference();
+
+        DatabaseReference favouriteAdsReference = databaseReference.child("reports").child(firebaseAuth.getUid());
+
+        favouriteAdsReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot data: dataSnapshot.getChildren()){
+
+                    Report report = data.getValue(Report.class);
+
+                    if (report.getReportedAdKey().equals(adKey)){
+
+                        checkReport = true;
                         break;
                     }
 
@@ -698,7 +853,29 @@ public class detail_activity extends AppCompatActivity {
 
     }
 
+    private boolean checkMessage(String message, TextInputLayout textinputLayout ){
 
+        if (message.isEmpty()){
+
+            textinputLayout.setError("Message cannot be empty");
+
+
+            return false;
+
+        }
+
+        else if (message.length()>120){
+
+            textinputLayout.setError("Message cannot be more than 120 characters");
+            return false;
+        }
+
+        else{
+            textinputLayout.setErrorEnabled(false);
+        }
+
+        return true;
+    }
 
 
 

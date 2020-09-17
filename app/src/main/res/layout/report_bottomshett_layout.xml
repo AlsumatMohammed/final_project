@@ -3,24 +3,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="10dp"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintLeft_toLeftOf="parent"
-    app:layout_constraintRight_toRightOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    android:background="#292B30">
+    android:background="#292B30"
+
+   >
+
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:cardCornerRadius="10dp"
         app:cardBackgroundColor="#40444C"
-
         >
 
         <LinearLayout
@@ -28,25 +24,55 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="#292B30">
+
+
+
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@drawable/ic_report"
+                android:backgroundTint="@color/text_color_orange"
+                android:layout_gravity="center"/>
 
             <TextView
                 android:id="@+id/rateTv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/montserrat_bold"
-                android:text="Reset Password"
+                android:text="Report"
                 android:layout_margin="10dp"
                 android:textColor="@color/text_color_orange"
                 android:textSize="20sp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/positive"
                 android:layout_gravity="center"/>
-
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/text_color_orange"/>
+        </LinearLayout>
+            <Spinner
+                android:id="@+id/reportSpinnerBottomSheet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:gravity="center"
+                android:spinnerMode="dropdown"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:backgroundTint="@color/text_color_orange"
+                />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/passwordResetLayout"
+                android:id="@+id/reportLayout"
                 android:layout_margin="20dp"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:background="@drawable/custom_input"
@@ -56,8 +82,8 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
-                    android:id="@+id/passwordResetEditText"
-                    android:hint="ُEnter your e-mail"
+                    android:id="@+id/reportEditText"
+                    android:hint="ُMessage"
                     android:inputType="text"
                     android:maxLines="2"
                     android:textSize="14sp"
@@ -73,19 +99,20 @@
 
 
             <br.com.simplepass.loadingbutton.customViews.CircularProgressButton
-                android:id="@+id/PasswordResetButton"
+                android:id="@+id/reportButtonBottomSheet"
                 android:layout_width="300dp"
                 android:layout_height="49dp"
                 android:background="@drawable/buttons"
                 android:fontFamily="@font/montserrat_bold"
-                android:text="Send Reset Link"
+                android:text="Send Report"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
                 android:layout_gravity="center"
                 android:textColor="@color/layout_color_white"
                 app:spinning_bar_width="4dp"
                 app:spinning_bar_color="@color/text_color_orange"
-                app:spinning_bar_padding="6dp"/>
+                app:spinning_bar_padding="6dp"
+                android:textAllCaps="false"/>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

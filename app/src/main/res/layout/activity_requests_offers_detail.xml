@@ -547,21 +547,28 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/text_color_orange"
+        android:background="#575D68"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="parent"
         >
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/callNowButtonOffersDetail"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/text_color_orange"
-            android:text="Call Now"
-            android:elevation="10dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="Call Now"
+            android:textAllCaps="false"
+            android:textColor="@color/whiteTextColor"
+            app:icon="@drawable/ic_phone_dark"
+            app:iconGravity="textStart"
+            app:iconPadding="10dp"
+            android:background="@color/text_color_orange"
+            app:backgroundTint="#575D68"
 
             />
 
@@ -575,14 +582,20 @@
             />
 
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/messageNowButtonOffersDetail"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/text_color_orange"
-            android:text="Message Now"
-            android:elevation="10dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="Send Message"
+            android:textAllCaps="false"
+            android:textColor="@color/whiteTextColor"
+            app:icon="@drawable/ic_message_black"
+            app:iconGravity="textStart"
+            app:iconPadding="10dp"
+            app:backgroundTint="#575D68"
             />
 
     </LinearLayout>

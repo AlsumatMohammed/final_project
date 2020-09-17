@@ -91,7 +91,7 @@
                 android:textColor="@color/layout_color_white"
                 app:spinning_bar_width="4dp"
                 app:spinning_bar_color="@color/text_color_orange"
-                app:spinning_bar_padding="6dp"/>
+                app:spinning_bar_padding="6dp" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

@@ -84,8 +84,8 @@ public class test extends AppCompatActivity {
                     .setTopColorRes(R.color.toolbar)
                     .setButtonsColorRes(R.color.toolbar)
                     .setIcon(R.drawable.ic_verified_dialog)
-                    .setTitle("No network connection")
-                    .setMessage("There's seems to be a problem with your internet connection")
+                    .setTitle("Report")
+//                    .setMessage("Fill The Form Down Below ")
                     .setPositiveButton("Retry", new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
