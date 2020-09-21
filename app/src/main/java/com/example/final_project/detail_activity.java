@@ -4,19 +4,28 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.NotificationCompat;
+import androidx.core.text.HtmlCompat;
 import androidx.lifecycle.ReportFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import br.com.simplepass.loadingbutton.customViews.CircularProgressButton;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.Html;
+import android.text.Spanned;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,6 +59,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.tapadoo.alerter.Alerter;
 
 import java.util.List;
+import java.util.Random;
 
 public class detail_activity extends AppCompatActivity {
 
@@ -173,7 +183,7 @@ public class detail_activity extends AppCompatActivity {
         publisherLongitude = intent.getExtras().getString("PUBLISHERLONGITUDE");
         publisherState = intent.getExtras().getString("PUBLISHERSTATE");
 
-        Uri productImagePath = Uri.parse(productImage);
+        final Uri productImagePath = Uri.parse(productImage);
         Uri publisherImagePath = Uri.parse(publisherImage);
 
         publisherUserNameViewPrevious.setText(publisherUserName);
@@ -233,6 +243,37 @@ public class detail_activity extends AppCompatActivity {
             }
         });
 
+        //share Button
+        shareButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+
+                String priceShare="" ;
+                if (currency.equals("YER")){
+                    priceShare =price+""+currency+" "+"("+priceType+")";
+                }
+                else if (currency.equals("$")){
+                    priceShare = currency+""+price+"("+priceType+")";
+                }
+
+                if (price.isEmpty()){
+                    priceShare = "FREE";
+                }
+
+
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                sendIntent.putExtra(Intent.EXTRA_TEXT, "\t\t\t\t\t\t\t\t\t\t\t\t\t\t"+"Y-parts\n"+"\n"+"Description: "+description+"\n\n"+"Price: "+priceShare+"\n\n"
+                        +"Warranty: "+warranty+"\n\n"+"Condition: "+condition+"\n\n"+"Publisher: "+publisherUserName+"\n\n"+"ImageLink: "+productImage);
+                sendIntent.setType("text/plain");
+                Intent shareIntent = Intent.createChooser(sendIntent, null);
+                startActivity(shareIntent);
+
+            }
+        });
+
 
 
         RequestOptions options = new RequestOptions()
@@ -261,10 +302,10 @@ public class detail_activity extends AppCompatActivity {
 
 
         if (currency.equals("YER")){
-            priceView.setText(price+" "+currency+" "+"("+priceType+")");
+            priceView.setText(price+""+currency+" "+"("+priceType+")");
         }
         else if (currency.equals("$")){
-            priceView.setText(currency+" "+price+"("+priceType+")");
+            priceView.setText(currency+""+price+"("+priceType+")");
         }
 
 
@@ -293,6 +334,7 @@ public class detail_activity extends AppCompatActivity {
 
 
 
+         
 
 
         recyclerView = findViewById(R.id.previousAdsRecyclerview);
@@ -834,7 +876,6 @@ public class detail_activity extends AppCompatActivity {
                     Report report = data.getValue(Report.class);
 
                     if (report.getReportedAdKey().equals(adKey)){
-
                         checkReport = true;
                         break;
                     }
@@ -876,6 +917,8 @@ public class detail_activity extends AppCompatActivity {
 
         return true;
     }
+
+
 
 
 

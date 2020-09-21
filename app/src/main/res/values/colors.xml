@@ -19,6 +19,7 @@
     <color name="toolbar">#40444C</color>
     <color name="mainTextColor1">#FFFFFF</color>
     <color name="mainTextColor2">#E9E6D9</color>
+    <color name="cardColor">#2A2930</color>
     <color name="bottomNavigationTintColor">#B2B2B2</color>
     <color name="bottomNavigationBackground">#F7F7F7</color>
     <color name="whiteTextColor">#fff</color>

@@ -240,6 +240,7 @@
                 app:layout_constraintBottom_toBottomOf="@id/notificationImage"/>
 
             <Switch
+                android:id="@+id/notificationSwitch"
                 style="@style/SwitchCompatStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -263,78 +264,110 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/notificationTv" />
 
-            <ImageView
-                android:id="@+id/helpImage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/help"
-                android:layout_marginTop="20dp"
-                android:layout_marginLeft="10dp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/line1"/>
 
-            <TextView
-                android:id="@+id/helpTv"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/helpLinearLayout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/montserrat"
-                android:text="Help &amp; Feedback"
-                android:textColor="@color/mainTextColor1"
-                android:textSize="18sp"
-                android:layout_marginLeft="25dp"
-                app:layout_constraintLeft_toRightOf="@id/helpImage"
-                app:layout_constraintTop_toTopOf="@id/helpImage"
-                app:layout_constraintBottom_toBottomOf="@id/helpImage"/>
+                android:orientation="horizontal"
+                android:layout_marginRight="5dp"
+                android:layout_marginLeft="5dp"
+                android:paddingBottom="10dp"
+                app:layout_constraintTop_toBottomOf="@id/line1"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent">
+
+
+                <ImageView
+                    android:id="@+id/helpImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/help"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="20dp"/>
+
+                <TextView
+                    android:id="@+id/helpTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat"
+                    android:text="Help &amp; Feedback"
+                    android:textColor="@color/mainTextColor1"
+                    android:textSize="18sp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="20dp"
+                    app:layout_constraintLeft_toRightOf="@id/helpImage"
+                    app:layout_constraintTop_toTopOf="@id/helpImage"
+                    app:layout_constraintBottom_toBottomOf="@id/helpImage"/>
+            </LinearLayout>
+
+
 
             <View
                 android:id="@+id/line2"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginRight="5dp"
                 android:layout_marginLeft="5dp"
                 android:background="#B3B3B3"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/helpTv" />
+                app:layout_constraintTop_toBottomOf="@id/helpLinearLayout" />
 
-            <ImageView
-                android:id="@+id/aboutImage"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/aboutTheAppLinearLayout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:src="@drawable/about"
-                android:layout_marginTop="20dp"
-                android:layout_marginLeft="10dp"
+                android:orientation="horizontal"
+                android:layout_marginRight="5dp"
+                android:layout_marginLeft="5dp"
+                android:paddingBottom="10dp"
+                app:layout_constraintTop_toBottomOf="@id/line2"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/line2"/>
+                app:layout_constraintRight_toRightOf="parent">
 
-            <TextView
-                android:id="@+id/aboutTv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/montserrat"
-                android:text="About the app"
-                android:textColor="@color/mainTextColor1"
-                android:textSize="18sp"
-                android:layout_marginLeft="25dp"
-                app:layout_constraintLeft_toRightOf="@id/aboutImage"
-                app:layout_constraintTop_toTopOf="@id/aboutImage"
-                app:layout_constraintBottom_toBottomOf="@id/aboutImage"/>
+                <ImageView
+                    android:id="@+id/aboutImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/about"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="20dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/line2"/>
 
+                <TextView
+                    android:id="@+id/aboutTv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/montserrat"
+                    android:text="About the app"
+                    android:textColor="@color/mainTextColor1"
+                    android:textSize="18sp"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="20dp"
+                    app:layout_constraintLeft_toRightOf="@id/aboutImage"
+                    app:layout_constraintTop_toTopOf="@id/aboutImage"
+                    app:layout_constraintBottom_toBottomOf="@id/aboutImage"/>
+
+
+            </LinearLayout>
 
             <View
                 android:id="@+id/line3"
                 android:layout_width="match_parent"
                 android:layout_height="2dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginRight="5dp"
                 android:layout_marginLeft="5dp"
                 android:background="#B3B3B3"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/aboutTv" />
+                app:layout_constraintTop_toBottomOf="@id/aboutTheAppLinearLayout" />
 
 
 

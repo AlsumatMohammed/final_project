@@ -91,7 +91,12 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:background="@drawable/card_detail"
-                android:padding="10dp">
+                android:paddingTop="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+
+               >
+
 
 
 
@@ -254,20 +259,112 @@
                     android:text="Used"
                     android:textSize="13sp"
                     android:textColor="@color/mainTextColor1"
-
                     app:layout_constraintLeft_toRightOf="@id/condition"
                     app:layout_constraintTop_toBottomOf="@id/warranty_detail" />
 
-                <Button
-                    android:id="@+id/favouriteButton"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_margin="10dp"
-                    android:background="@drawable/star_black"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                <view
+                    android:id="@+id/view2"
+                    class="android.widget.TextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_gravity="center"
+                    android:background="@color/whiteTextColor"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/condition_detail" />
+                    app:layout_constraintTop_toBottomOf="@id/condition"
+                    android:layout_marginTop="10dp"
+
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintTop_toBottomOf="@id/view2"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toLeftOf="parent"
+
+                    >
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/shareButtonAdsDetail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.5"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:text="Share"
+                        android:textAllCaps="false"
+                        android:textColor="@color/whiteTextColor"
+                        app:icon="@drawable/ic_share"
+                        app:iconGravity="textStart"
+                        app:iconPadding="10dp"
+                        app:backgroundTint="#2A2930"
+                        app:iconTint="@color/whiteTextColor"
+                        android:fontFamily="@font/montserrat"
+                        android:textSize="12dp"
+                        />
+                    <view
+                        class="android.widget.TextView"
+                        android:layout_width="0.5dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:background="@color/whiteTextColor"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/condition"
+
+                        />
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/favouriteButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:text="Add to Favorites"
+                        android:textAllCaps="false"
+                        android:textColor="@color/whiteTextColor"
+                        app:icon="@drawable/ic_favorite"
+                        app:iconGravity="textStart"
+                        app:iconPadding="10dp"
+                        android:background="@color/text_color_orange"
+                        app:backgroundTint="#2A2930"
+                        android:fontFamily="@font/montserrat"
+                        android:textSize="12dp"/>
+
+                    <view
+                        class="android.widget.TextView"
+                        android:layout_width="0.5dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:background="@color/whiteTextColor"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/condition"
+
+                        />
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/reportButtonAdsDetail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.5"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:text="Report"
+                        android:textAllCaps="false"
+                        android:textColor="@color/whiteTextColor"
+                        app:icon="@drawable/ic_report"
+                        app:iconGravity="textStart"
+                        app:iconPadding="10dp"
+                        android:background="@color/text_color_orange"
+                        app:backgroundTint="#2A2930"
+                        android:fontFamily="@font/montserrat"
+                        android:textSize="12dp"
+                        />
+                </LinearLayout>
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -406,7 +503,9 @@
                     android:theme="@style/RatingBar"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/publisherEmail_detail" />
+                    app:layout_constraintTop_toBottomOf="@id/publisherEmail_detail"
+                    android:isIndicator="true"
+                    />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -552,23 +651,29 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/text_color_orange"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="parent"
+        android:background="#575D68"
         >
 
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/callNow_button"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/text_color_orange"
-            android:text="Call Now"
-            android:elevation="10dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="Call Now"
+            android:textAllCaps="false"
+            android:textColor="@color/whiteTextColor"
+            app:icon="@drawable/ic_phone_dark"
+            app:iconGravity="textStart"
+            app:iconPadding="10dp"
+            android:background="@color/text_color_orange"
+            app:backgroundTint="#575D68"
             />
 
         <view
@@ -577,18 +682,23 @@
             android:layout_width="1dp"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:background="@color/whiteTextColor"
-            />
+            android:background="@color/whiteTextColor" />
 
-        <Button
+
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/messageNow_button"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/text_color_orange"
-            android:text="Message Now"
-            android:elevation="10dp"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            />
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="Send Message"
+            android:textAllCaps="false"
+            android:textColor="@color/whiteTextColor"
+            app:icon="@drawable/ic_message_black"
+            app:iconGravity="textStart"
+            app:iconPadding="10dp"
+            app:backgroundTint="#575D68"/>
 
     </LinearLayout>
 

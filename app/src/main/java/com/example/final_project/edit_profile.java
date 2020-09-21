@@ -411,9 +411,9 @@ public class edit_profile extends AppCompatActivity {
             return false;
         }
 
-        if (!((phoneNumber.length() == 9) || (phoneNumber.length() == 6) || (phoneNumber.length() == 8))) {
+        if (!(phoneNumber.length() == 9)) {
 
-            phone_layout.setError("phone number can only be 9, 8, or 6 digits ");
+            phone_layout.setError("phone number can only be 9 digits ");
             return false;
 
         } else {

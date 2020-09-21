@@ -53,5 +53,6 @@
         <item>Fake</item>
     </string-array>
 
+    <string name="description">Hello, %1$s! You have &lt;b>%2$d new messages&lt;/b></string>
 
 </resources>

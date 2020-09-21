@@ -3,16 +3,24 @@ package com.example.final_project;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.core.app.NotificationCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import br.com.simplepass.loadingbutton.customViews.CircularProgressButton;
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.Color;
+import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -52,6 +60,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 
 public class requestsOffersDetail extends AppCompatActivity {
 
@@ -63,7 +72,7 @@ public class requestsOffersDetail extends AppCompatActivity {
     String publisherEmail;
     String requestKey;
     String productImage;
-    String description ;
+    String description;
     String category;
     String publishDate;
     String warranty;
@@ -93,6 +102,7 @@ public class requestsOffersDetail extends AppCompatActivity {
     private BottomSheetDialog dialog;
 
     ImageView getDirectionButtonDetailRequests;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -175,9 +185,8 @@ public class requestsOffersDetail extends AppCompatActivity {
             public void onClick(View view) {
 
 
-
                 //PHONE INTENT
-                Uri number = Uri.parse("tel:"+publisherPhone);
+                Uri number = Uri.parse("tel:" + publisherPhone);
                 Intent callIntent = new Intent(Intent.ACTION_DIAL, number);
 
                 PackageManager packageManager = getPackageManager();
@@ -186,7 +195,7 @@ public class requestsOffersDetail extends AppCompatActivity {
 
                 //PHONE END
 
-                if (isIntentSafe){
+                if (isIntentSafe) {
                     startActivity(callIntent);
                 }
 
@@ -197,12 +206,12 @@ public class requestsOffersDetail extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Uri uri = Uri.parse("geo:"+publisherLatitude+","+publisherLongitude);
+                Uri uri = Uri.parse("geo:" + publisherLatitude + "," + publisherLongitude);
                 Intent mapIntent = new Intent(Intent.ACTION_VIEW, (uri));
                 mapIntent.setPackage("com.google.android.apps.maps");
 
 
-                if (mapIntent.resolveActivity(getPackageManager()) != null){
+                if (mapIntent.resolveActivity(getPackageManager()) != null) {
 
                     startActivity(mapIntent);
                 }
@@ -251,14 +260,12 @@ public class requestsOffersDetail extends AppCompatActivity {
 
                         offerComment = new offerComments();
 
-                        if (!isValidComment(commentText, commentLayout)){
+                        if (!isValidComment(commentText, commentLayout)) {
 
                             return;
                         }
 
                         showDialog("Putting comment, just a second!");
-
-
 
 
                         String date = new SimpleDateFormat("EEE, d MMM yyyy", Locale.getDefault()).format(new Date());
@@ -283,26 +290,23 @@ public class requestsOffersDetail extends AppCompatActivity {
                         getPublisherImage();
 
 
-
                     }
                 });
 
 
-
             }
 
-            public boolean isValidComment( String comment, TextInputLayout textInputLayout){
+            public boolean isValidComment(String comment, TextInputLayout textInputLayout) {
 
-                 if (comment.isEmpty()){
+                if (comment.isEmpty()) {
 
-                     textInputLayout.setError("Comment cannot be empty");
-                     return false;
+                    textInputLayout.setError("Comment cannot be empty");
+                    return false;
 
-                 }
-                 else {
-                     textInputLayout.setErrorEnabled(false);
-                 }
-                 return true;
+                } else {
+                    textInputLayout.setErrorEnabled(false);
+                }
+                return true;
 
 
             }
@@ -357,8 +361,7 @@ public class requestsOffersDetail extends AppCompatActivity {
     }
 
 
-
-    private void fetchLatestOffers(){
+    private void fetchLatestOffers() {
 
 
         Query query = FirebaseDatabase.getInstance()
@@ -380,14 +383,12 @@ public class requestsOffersDetail extends AppCompatActivity {
 
 
 
-
                                 return offer;
                             }
                         }).build();
 
 
         //adapter settings
-
 
 
         adapterLatestOffers = new FirebaseRecyclerAdapter<offers, LatestOffersViewHolder>(options) {
@@ -420,15 +421,14 @@ public class requestsOffersDetail extends AppCompatActivity {
                 String currency = model.getCurrency();
                 String price = model.getPrice();
 
-                if (currency.equals("YER")){
-                    holder.price.setText(model.getPrice()+" "+currency);
-                }
-                else if (currency.equals("$")){
-                    holder.price.setText(currency+" "+model.getPrice());
+                if (currency.equals("YER")) {
+                    holder.price.setText(model.getPrice() + " " + currency);
+                } else if (currency.equals("$")) {
+                    holder.price.setText(currency + " " + model.getPrice());
                 }
 
 
-                if (price.isEmpty()){
+                if (price.isEmpty()) {
                     holder.price.setText("FREE");
                 }
 
@@ -462,10 +462,10 @@ public class requestsOffersDetail extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
 
-                        openDetailActivity(model.getProductImage() , model.getDescription(), model.getCategory()
-                                , model.getPublishDate() , model.getPrice() , model.getCurrency() , model.getPriceType()
-                                , model.getWarranty() , model.getCondition() , model.getPublisherImage()
-                                , model.getPublisherUsername() , model.getPublisherEmail(), model.getPublisherPhoneNumber(), model.getOfferKey(), model.getTitle(), model.getPublisherLatitude(), model.getPublisherLongitude(), model.getPublisherState());
+                        openDetailActivity(model.getProductImage(), model.getDescription(), model.getCategory()
+                                , model.getPublishDate(), model.getPrice(), model.getCurrency(), model.getPriceType()
+                                , model.getWarranty(), model.getCondition(), model.getPublisherImage()
+                                , model.getPublisherUsername(), model.getPublisherEmail(), model.getPublisherPhoneNumber(), model.getOfferKey(), model.getTitle(), model.getPublisherLatitude(), model.getPublisherLongitude(), model.getPublisherState());
 
                     }
                 });
@@ -478,26 +478,26 @@ public class requestsOffersDetail extends AppCompatActivity {
 
     }
 
-    public void openDetailActivity(String... detail){
+    public void openDetailActivity(String... detail) {
 
         Intent intent = new Intent(requestsOffersDetail.this, detail_activity.class);
 
-        intent.putExtra("PRODUCT_IMAGE" , detail[0]);
-        intent.putExtra("DESCRIPTION" , detail[1]);
-        intent.putExtra("CATEGORY" , detail[2]);
-        intent.putExtra("PUBLISHDATE" , detail[3]);
-        intent.putExtra("PRICE" , detail[4]);
-        intent.putExtra("CURRENCY" , detail[5]);
-        intent.putExtra("PRICETYPE" , detail[6]);
-        intent.putExtra("WARRANTY" , detail[7]);
-        intent.putExtra("CONDITION" , detail[8]);
+        intent.putExtra("PRODUCT_IMAGE", detail[0]);
+        intent.putExtra("DESCRIPTION", detail[1]);
+        intent.putExtra("CATEGORY", detail[2]);
+        intent.putExtra("PUBLISHDATE", detail[3]);
+        intent.putExtra("PRICE", detail[4]);
+        intent.putExtra("CURRENCY", detail[5]);
+        intent.putExtra("PRICETYPE", detail[6]);
+        intent.putExtra("WARRANTY", detail[7]);
+        intent.putExtra("CONDITION", detail[8]);
 
         //PUBLISHER
-        intent.putExtra("PUBLISHERIMAGE" , detail[9]);
-        intent.putExtra("PUBLISHERUSERNAME" , detail[10]);
-        intent.putExtra("PUBLSIHEREMAIL" , detail[11]);
-        intent.putExtra("PUBLISHERPHONE" , detail[12]);
-        intent.putExtra("ADKEY" , detail[13]);
+        intent.putExtra("PUBLISHERIMAGE", detail[9]);
+        intent.putExtra("PUBLISHERUSERNAME", detail[10]);
+        intent.putExtra("PUBLSIHEREMAIL", detail[11]);
+        intent.putExtra("PUBLISHERPHONE", detail[12]);
+        intent.putExtra("ADKEY", detail[13]);
         intent.putExtra("ADTITLE", detail[14]);
         intent.putExtra("PUBLISHERLATITUDE", detail[15]);
         intent.putExtra("PUBLISHERLONGITUDE", detail[16]);
@@ -506,8 +506,8 @@ public class requestsOffersDetail extends AppCompatActivity {
         startActivity(intent);
 
 
-
     }
+
     public class offerCommentsViewHolder extends RecyclerView.ViewHolder {
 
         public TextView commenterName, comment, date;
@@ -520,7 +520,7 @@ public class requestsOffersDetail extends AppCompatActivity {
             super(itemView);
 
             commenterName = itemView.findViewById(R.id.commentername);
-            comment  = itemView.findViewById(R.id.comment_tv);
+            comment = itemView.findViewById(R.id.comment_tv);
             date = itemView.findViewById(R.id.ratingDate);
             commenterImage = itemView.findViewById(R.id.commenterImage);
             cardView = itemView.findViewById(R.id.constraint);
@@ -528,15 +528,10 @@ public class requestsOffersDetail extends AppCompatActivity {
             commentRatingBar.setVisibility(View.GONE);
 
 
-
-
-
-
         }
 
 
     }
-
 
 
     private void fetchComments() {
@@ -557,8 +552,6 @@ public class requestsOffersDetail extends AppCompatActivity {
 //
 
 
-
-
                                 offerComments comment = snapshot.getValue(offerComments.class);
                                 noComments.setVisibility(View.GONE);
 
@@ -570,7 +563,6 @@ public class requestsOffersDetail extends AppCompatActivity {
 
 
         //adapter settings
-
 
 
         adapterComments = new FirebaseRecyclerAdapter<offerComments, offerCommentsViewHolder>(options) {
@@ -601,7 +593,6 @@ public class requestsOffersDetail extends AppCompatActivity {
                 Uri commenterImage = Uri.parse(model.getCommenterImage());
 
 
-
                 RequestOptions options = new RequestOptions()
                         .centerCrop()
                         .placeholder(R.drawable.ad_placeholder)
@@ -612,10 +603,8 @@ public class requestsOffersDetail extends AppCompatActivity {
                         .apply(options).override(60, 60).into(holder.commenterImage);
 
 
-
             }
         };
-
 
 
         recyclerViewComments.setAdapter(adapterComments);
@@ -623,7 +612,7 @@ public class requestsOffersDetail extends AppCompatActivity {
 
     }
 
-    public void getPublisherInformation(){
+    public void getPublisherInformation() {
 
         final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
@@ -637,7 +626,7 @@ public class requestsOffersDetail extends AppCompatActivity {
                 showDialog("just a second");
                 Userinformation userProfile = dataSnapshot.getValue(Userinformation.class);
 
-                if (userProfile.getUserType().equals("customer")){
+                if (userProfile.getUserType().equals("customer")) {
 
                     putOfferButton.setVisibility(View.GONE);
                 }
@@ -647,7 +636,6 @@ public class requestsOffersDetail extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
 
 
             }
@@ -687,7 +675,8 @@ public class requestsOffersDetail extends AppCompatActivity {
             }
         });
     }
-    public void getPublisherInformation2(){
+
+    public void getPublisherInformation2() {
 
         final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
         final FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
@@ -705,7 +694,7 @@ public class requestsOffersDetail extends AppCompatActivity {
                 DatabaseReference databaseReference1 = firebaseDatabase.getReference();
                 databaseReference1.child("offerComments").child(offerComment.getKey()).child("username").setValue(commenterUserName);
                 userNameCheck = true;
-                Toast.makeText(requestsOffersDetail.this, "publisher Information acquired"+commenterUserName, Toast.LENGTH_SHORT).show();
+                Toast.makeText(requestsOffersDetail.this, "publisher Information acquired" + commenterUserName, Toast.LENGTH_SHORT).show();
                 check(userNameCheck, imageCheck);
 
             }
@@ -721,9 +710,9 @@ public class requestsOffersDetail extends AppCompatActivity {
 
     }
 
-    public void check(boolean username, boolean image){
+    public void check(boolean username, boolean image) {
 
-        if (username && image){
+        if (username && image) {
 
             dismissDialog();
             Toast.makeText(this, "done", Toast.LENGTH_SHORT).show();
@@ -732,19 +721,14 @@ public class requestsOffersDetail extends AppCompatActivity {
                     .setTitleText("Awesome!")
                     .setContentText("Comment added!")
                     .show();
-        }
-
-
-        else{
+        } else {
             Toast.makeText(this, "not yet", Toast.LENGTH_SHORT).show();
         }
 
     }
 
 
-
-
-    public void showDialog(String message){
+    public void showDialog(String message) {
 
         pDialog.setTitleText(message);
         pDialog.show();
@@ -753,11 +737,12 @@ public class requestsOffersDetail extends AppCompatActivity {
 
     }
 
-    public void dismissDialog(){
+    public void dismissDialog() {
         pDialog.dismiss();
 
         //editprofileButton.revertAnimation();
     }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -772,5 +757,36 @@ public class requestsOffersDetail extends AppCompatActivity {
         super.onStop();
         adapterLatestOffers.stopListening();
         adapterComments.stopListening();
+    }
+
+    public void shownotification(String message){
+
+
+        NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+        String NOTIFICATION_CHANNEL_ID = "com.example.final_project"; //your app package name
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, "Notification",
+                    NotificationManager.IMPORTANCE_DEFAULT);
+
+            notificationChannel.setDescription("Techrush Channel");
+            notificationChannel.enableLights(true);
+            notificationChannel.setLightColor(Color.BLUE);
+            notificationChannel.setVibrationPattern(new long[]{0, 1000, 500, 1000});
+            notificationManager.createNotificationChannel(notificationChannel);
+        }
+
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, NOTIFICATION_CHANNEL_ID);
+
+        notificationBuilder.setAutoCancel(true)
+                .setDefaults(Notification.DEFAULT_ALL)
+                .setWhen(System.currentTimeMillis())
+                .setSmallIcon(R.drawable.tire)
+                .setContentTitle(message)
+                .setContentText(message)
+                .setContentInfo("Info");
+
+        notificationManager.notify(new Random().nextInt(),notificationBuilder.build());
+
     }
 }

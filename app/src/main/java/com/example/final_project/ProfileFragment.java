@@ -1,12 +1,21 @@
 package com.example.final_project;
 
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.NotificationCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,8 +25,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,7 +39,9 @@ import com.facebook.login.LoginManager;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.firebase.ui.database.SnapshotParser;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -36,9 +50,14 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.RemoteMessage;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.tapadoo.alerter.Alerter;
+import com.yarolegovich.lovelydialog.LovelyInfoDialog;
+
+import java.util.Random;
 
 
 /**
@@ -63,7 +82,10 @@ public class ProfileFragment extends Fragment {
     public ImageView userState;
 
 
+    public Switch notificationSwitch;
     public ImageView profileimageView;
+    public LinearLayout helpAndFeedbackLayout;
+    public LinearLayout aboutTheAppLayout;
 
 
     SweetAlertDialog pDialog;
@@ -148,6 +170,37 @@ public class ProfileFragment extends Fragment {
         View view =  inflater.inflate(R.layout.fragment_profile, container, false);
 
 
+        notificationSwitch = view.findViewById(R.id.notificationSwitch);
+
+        SharedPreferences settings = (getActivity()).getSharedPreferences("settings", Context.MODE_PRIVATE);
+        boolean silent = settings.getBoolean("switchkey", false);
+        notificationSwitch.setChecked(silent);
+
+        notificationSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
+
+                if (notificationSwitch.isChecked()) {
+
+                    Toast.makeText(getActivity(), "notification is on", Toast.LENGTH_SHORT).show();
+                    subscribeToNotifications();
+
+                }
+
+                else{
+                    Toast.makeText(getActivity(), "notification is off", Toast.LENGTH_SHORT).show();
+                    unsubscribeToNotification();
+
+                }
+
+                SharedPreferences settings =  (getActivity()).getSharedPreferences("settings", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = settings.edit();
+                editor.putBoolean("switchkey", isChecked);
+                editor.commit();
+
+            }
+        });
+
         username = view.findViewById(R.id.username_fragmentprofile);
         phoneNumber = view.findViewById(R.id.phone_fragmentprofile);
         emailAddress = view.findViewById(R.id.email_fragmentprofile);
@@ -155,6 +208,35 @@ public class ProfileFragment extends Fragment {
         profileimageView = view.findViewById(R.id.profile_imageprofile_fragment);
         logoutButton = view.findViewById(R.id.logout_fragmentprofile);
         previousCardProfile = view.findViewById(R.id.previousCardProfile);
+        helpAndFeedbackLayout = view.findViewById(R.id.helpLinearLayout);
+
+        helpAndFeedbackLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                new LovelyInfoDialog(getActivity())
+                        .setTopColorRes(R.color.cardColor)
+                        .setIcon(R.drawable.help)
+                        //This will add Don't show again checkbox to the dialog. You can pass any ID as argument
+//                        .setNotShowAgainOptionEnabled(0)
+//                        .setNotShowAgainOptionChecked(true)
+                        .setTitle("Help And Feedback:")
+                        .setMessage("For any information or inquiry, feel free to contact: alsumatmohammed@gmail.com.\n The administration will reply to you as soon as possible")
+                        .show();
+            }
+        });
+
+        aboutTheAppLayout = view.findViewById(R.id.aboutTheAppLinearLayout);
+        aboutTheAppLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                //shownotification("yparts");
+
+
+            }
+        });
+
 
         userState = view.findViewById(R.id.userStateProfileFragment);
 
@@ -620,6 +702,77 @@ public class ProfileFragment extends Fragment {
 
         getActivity().finish();
 
+
+    }
+    public void subscribeToNotifications(){
+
+
+        showDialog();
+        FirebaseMessaging.getInstance().subscribeToTopic("general_notification")
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+
+                        if (!task.isSuccessful()){
+                            Toast.makeText(getActivity(), " Failed to subscribe to notifications", Toast.LENGTH_SHORT).show();
+                            dismissDialog();
+                        }
+                        else{
+                            Toast.makeText(getActivity(), " Successfully Subscribed to notifications", Toast.LENGTH_SHORT).show();
+                        dismissDialog();
+                        }
+                    }
+                });
+    }
+
+    public void unsubscribeToNotification(){
+
+
+        FirebaseMessaging.getInstance().unsubscribeFromTopic("general_notification")
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+
+                        if (!task.isSuccessful()){
+                            Toast.makeText(getActivity(), " Failed to unsubscribe to notifications", Toast.LENGTH_SHORT).show();
+                            dismissDialog();
+                        }
+                        else{
+                            Toast.makeText(getActivity(), " Successfully unSubscribed to notifications", Toast.LENGTH_SHORT).show();
+                            dismissDialog();
+                        }
+                    }
+                });
+    }
+
+    public void shownotification(String message){
+
+
+        NotificationManager notificationManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+        String NOTIFICATION_CHANNEL_ID = "com.example.final_project"; //your app package name
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel notificationChannel = new NotificationChannel(NOTIFICATION_CHANNEL_ID, "Notification",
+                    NotificationManager.IMPORTANCE_DEFAULT);
+
+            notificationChannel.setDescription("Techrush Channel");
+            notificationChannel.enableLights(true);
+            notificationChannel.setLightColor(Color.BLUE);
+            notificationChannel.setVibrationPattern(new long[]{0, 1000, 500, 1000});
+            notificationManager.createNotificationChannel(notificationChannel);
+        }
+
+        NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(getActivity(), NOTIFICATION_CHANNEL_ID);
+
+        notificationBuilder.setAutoCancel(true)
+                .setDefaults(Notification.DEFAULT_ALL)
+                .setWhen(System.currentTimeMillis())
+                .setSmallIcon(R.drawable.tire)
+                .setContentTitle(message)
+                .setContentText(message)
+                .setContentInfo("Info");
+
+        notificationManager.notify(new Random().nextInt(),notificationBuilder.build());
 
     }
 
