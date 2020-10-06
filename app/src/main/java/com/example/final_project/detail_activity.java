@@ -202,6 +202,15 @@ public class detail_activity extends AppCompatActivity {
             }
         });
 
+        messageNowButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String url = "https://api.whatsapp.com/send?phone="+"+967"+publisherPhone;
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
+            }
+        });
         callNowButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -348,6 +357,8 @@ public class detail_activity extends AppCompatActivity {
 
         recyclerViewRatings = findViewById(R.id.ratingsRecyclerview);
         linearLayoutManager = new LinearLayoutManager(detail_activity.this);
+        linearLayoutManager.setReverseLayout(true);
+        linearLayoutManager.setStackFromEnd(true);
         recyclerViewRatings.setLayoutManager(linearLayoutManager);
         fetchRatings();
 

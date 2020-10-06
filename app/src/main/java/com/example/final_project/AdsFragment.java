@@ -372,6 +372,8 @@ public class AdsFragment extends Fragment {
 
         recyclerView = view.findViewById(R.id.recycler_view1);
         linearLayoutManager = new LinearLayoutManager(getActivity());
+        linearLayoutManager.setReverseLayout(true);
+        linearLayoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(linearLayoutManager);
 
 

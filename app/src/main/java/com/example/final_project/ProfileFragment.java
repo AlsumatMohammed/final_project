@@ -88,6 +88,7 @@ public class ProfileFragment extends Fragment {
     public LinearLayout aboutTheAppLayout;
 
 
+
     SweetAlertDialog pDialog;
     public ConstraintLayout previousCardProfile;
 
@@ -216,12 +217,12 @@ public class ProfileFragment extends Fragment {
 
                 new LovelyInfoDialog(getActivity())
                         .setTopColorRes(R.color.cardColor)
-                        .setIcon(R.drawable.help)
+                        .setIcon(R.drawable.ic_feedback)
                         //This will add Don't show again checkbox to the dialog. You can pass any ID as argument
 //                        .setNotShowAgainOptionEnabled(0)
 //                        .setNotShowAgainOptionChecked(true)
                         .setTitle("Help And Feedback:")
-                        .setMessage("For any information or inquiry, feel free to contact: alsumatmohammed@gmail.com.\n The administration will reply to you as soon as possible")
+                        .setMessage("For any information or inquiry, feel free to contact: yparts@info.com.\n The administration will reply to you as soon as possible")
                         .show();
             }
         });
@@ -230,12 +231,21 @@ public class ProfileFragment extends Fragment {
         aboutTheAppLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                //shownotification("yparts");
+                new LovelyInfoDialog(getActivity())
+               .setTopColorRes(R.color.cardColor)
+                        .setIcon(R.drawable.ic_about)
+                        //This will add Don't show again checkbox to the dialog. You can pass any ID as argument
+//                        .setNotShowAgainOptionEnabled(0)
+//                        .setNotShowAgainOptionChecked(true)
+                        .setTitle("About the App")
+                        .setMessage("Y-Parts is a mobile application that provides an online Auto-parts service\nto ease the process of buying used and new Auto-Parts in Yemen\nby offering a variety of services to both buyers and sellers\ngiving the buyer many different offerings from sellers to choose from,\nextending the selling capability for sellers,\nand opening the used Auto-Parts marketspace without boundaries for all.")
+                        .show();
 
 
             }
         });
+
+
 
 
         userState = view.findViewById(R.id.userStateProfileFragment);
@@ -324,6 +334,8 @@ public class ProfileFragment extends Fragment {
 
         recyclerView = view.findViewById(R.id.favouritesAdsRecyclerview);
         linearLayoutManager = new LinearLayoutManager(getActivity());
+        linearLayoutManager.setReverseLayout(true);
+        linearLayoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(linearLayoutManager);
 
 
@@ -331,6 +343,8 @@ public class ProfileFragment extends Fragment {
 
         previousAdsRecyclerView = view.findViewById(R.id.previousAdsProfileRecyclerView);
         linearLayoutManagerPrevious = new LinearLayoutManager(getActivity());
+        linearLayoutManagerPrevious.setReverseLayout(true);
+        linearLayoutManagerPrevious.setStackFromEnd(true);
         previousAdsRecyclerView.setLayoutManager(linearLayoutManagerPrevious);
         fetchPreviousAds();
         return view;

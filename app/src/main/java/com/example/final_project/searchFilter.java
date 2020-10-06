@@ -62,6 +62,8 @@ public class searchFilter extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.resultsRecyclerView);
         linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setReverseLayout(true);
+        linearLayoutManager.setStackFromEnd(true);
         recyclerView.setLayoutManager(linearLayoutManager);
 
 

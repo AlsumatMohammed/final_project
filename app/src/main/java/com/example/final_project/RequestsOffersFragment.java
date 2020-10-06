@@ -140,10 +140,14 @@ public class RequestsOffersFragment extends Fragment {
 
         recyclerViewMyRequests= view.findViewById(R.id.myRequestsRecyclerView);
         linearLayoutManagerMyRequests = new LinearLayoutManager(getActivity());
+        linearLayoutManagerMyRequests.setReverseLayout(true);
+        linearLayoutManagerMyRequests.setStackFromEnd(true);
         recyclerViewMyRequests.setLayoutManager(linearLayoutManagerMyRequests);
 
         recyclerViewLatestRequests = view.findViewById(R.id.latestRequestsRecyclerView);
         linearLayoutManagerLatestRequests = new LinearLayoutManager(getActivity());
+        linearLayoutManagerLatestRequests.setReverseLayout(true);
+        linearLayoutManagerLatestRequests.setStackFromEnd(true);
         recyclerViewLatestRequests.setLayoutManager(linearLayoutManagerLatestRequests);
 
 

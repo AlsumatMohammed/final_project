@@ -62,6 +62,8 @@ public class categoriesFilter extends AppCompatActivity {
         categoryTv.setText(category);
         recyclerViewCategoriesFilter = findViewById(R.id.categoriesFilterRecyclerView);
         linearLayoutManagerCategoriesFilter = new LinearLayoutManager(categoriesFilter.this);
+        linearLayoutManagerCategoriesFilter.setReverseLayout(true);
+        linearLayoutManagerCategoriesFilter.setStackFromEnd(true);
         recyclerViewCategoriesFilter.setLayoutManager(linearLayoutManagerCategoriesFilter);
 
         Toast.makeText(this, category, Toast.LENGTH_SHORT).show();

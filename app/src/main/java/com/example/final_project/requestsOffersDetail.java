@@ -55,6 +55,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.tapadoo.alerter.Alerter;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -121,6 +122,7 @@ public class requestsOffersDetail extends AppCompatActivity {
         warrantyView = findViewById(R.id.warrantyDetailRequestsOffers);
         conditionView = findViewById(R.id.conditionDetailRequestsOffers);
         putOfferButton = findViewById(R.id.putOffersButton);
+        putOfferButton.setVisibility(View.GONE);
         publisherImageView = findViewById(R.id.publisherImageDetailOffers);
         publisherPhoneView = findViewById(R.id.publisherPhoneDetailOffers);
         publisherEmailView = findViewById(R.id.publisherEmailDetailOffers);
@@ -180,6 +182,15 @@ public class requestsOffersDetail extends AppCompatActivity {
                 .load(publisherImage)
                 .apply(options).override(90, 90).into(publisherImageView);
 
+        messageNowButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String url = "https://api.whatsapp.com/send?phone="+"+967"+publisherPhone;
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
+            }
+        });
         callNowButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -288,6 +299,7 @@ public class requestsOffersDetail extends AppCompatActivity {
                         databaseReference.setValue(offerComment);
                         getPublisherInformation2();
                         getPublisherImage();
+                        dialog.hide();
 
 
                     }
@@ -318,20 +330,39 @@ public class requestsOffersDetail extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent1 = new Intent(requestsOffersDetail.this, publishOffer.class);
 
-                intent1.putExtra("REQUESTKEY", requestKey);
+                final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+                final FirebaseUser firebaseUser = firebaseAuth.getCurrentUser();
+                String publisher_email = firebaseUser.getEmail();
+                if (publisher_email.equals(publisherEmail)){
+                    Alerter.create(requestsOffersDetail.this)
+                            .setTitle("Y-parts")
+                            .setText("You Cannot Put Offers for Your Requests")
+                            .enableSwipeToDismiss()
+                            .setDuration(3000)
+                            .setBackgroundColorRes(R.color.text_color_orange)
+                            .show();                    return;
+                }
+                else{
+                    intent1.putExtra("REQUESTKEY", requestKey);
 
-                startActivity(intent1);
+                    startActivity(intent1);
+                }
+
             }
         });
 
         recyclerViewLatestOffers = findViewById(R.id.latestOffersDetailRecyclerView);
         linearLayoutManagerLatestOffers = new LinearLayoutManager(this);
+        linearLayoutManagerLatestOffers.setReverseLayout(true);
+        linearLayoutManagerLatestOffers.setStackFromEnd(true);
         recyclerViewLatestOffers.setLayoutManager(linearLayoutManagerLatestOffers);
 
         fetchLatestOffers();
 
         recyclerViewComments = findViewById(R.id.commentsRecyclerviewOffersDetail);
         linearLayoutManagerComments = new LinearLayoutManager(requestsOffersDetail.this);
+        linearLayoutManagerComments.setReverseLayout(true);
+        linearLayoutManagerComments.setStackFromEnd(true);
         recyclerViewComments.setLayoutManager(linearLayoutManagerComments);
         fetchComments();
     }
@@ -626,9 +657,9 @@ public class requestsOffersDetail extends AppCompatActivity {
                 showDialog("just a second");
                 Userinformation userProfile = dataSnapshot.getValue(Userinformation.class);
 
-                if (userProfile.getUserType().equals("customer")) {
+                if (userProfile.getUserType().equals("supplier")) {
 
-                    putOfferButton.setVisibility(View.GONE);
+                    putOfferButton.setVisibility(View.VISIBLE);
                 }
                 dismissDialog();
 

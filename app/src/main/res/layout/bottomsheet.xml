@@ -68,7 +68,8 @@
         app:layout_constraintTop_toBottomOf="@id/add_from_gallery"
         app:layout_constraintBottom_toBottomOf="parent"
         android:fontFamily="@font/montserrat_bold"
-        android:textSize="15sp">
+        android:textSize="15sp"
+        android:textColor="@color/whiteTextColor">
 
     </TextView>
 
@@ -76,7 +77,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Camera"
-
+        android:textColor="@color/whiteTextColor"
         app:layout_constraintEnd_toEndOf="@id/add_from_camera"
         app:layout_constraintStart_toStartOf="@id/add_from_camera"
         app:layout_constraintTop_toBottomOf="@id/add_from_camera"
